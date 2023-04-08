@@ -1,0 +1,32 @@
+    .periodicTable {
+        display: grid;
+        grid-template-columns: repeat(18, minmax(100px, 1fr));
+        grid-gap: 5px;
+    }
+
+    .element {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #ccc;
+    }
+
+    .elementNumbers {
+        display: flex;
+    }
+
+    .atomicNumber {
+        flex: 1;
+        text-align: left;
+    }
+
+    .atomicMass {
+        flex: 2;
+        text-align: right;
+    }
+
+    .symbol {
+        display: block;
+        font-size: 24px;
+        font-weight: 700;
+    }
