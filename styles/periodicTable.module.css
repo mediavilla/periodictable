@@ -1,32 +1,64 @@
-    .periodicTable {
-        display: grid;
-        grid-template-columns: repeat(18, minmax(100px, 1fr));
-        grid-gap: 5px;
-    }
+/* Make the table fit within the body */
+.periodicTable {
+    display: grid;
+    grid-template-columns: repeat(18, minmax(4%, 1fr));
+    /* Updated to use percentage instead of fixed pixels */
+    grid-gap: 5px;
+    box-sizing: border-box;
+    /* Ensure padding and border are included in the width calculations */
+}
 
-    .element {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid #ccc;
-    }
+.element {
+    display: flex;
+    padding: 0.2em;
+    border: 1px solid #ccc;
+}
 
-    .elementNumbers {
-        display: flex;
-    }
+.elementCardBig {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
 
-    .atomicNumber {
-        flex: 1;
-        text-align: left;
-    }
+.elementCardMedium {
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
 
-    .atomicMass {
-        flex: 2;
-        text-align: right;
-    }
+/* grid-area: row-start / column-start / row-end / column-end; */
 
-    .symbol {
-        display: block;
-        font-size: 24px;
-        font-weight: 700;
-    }
+.atomicNumber {
+    grid-area: 1 / 1 / 2 / 2;
+    text-align: left;
+    font-size: 0.6em;
+}
+
+.symbol {
+    grid-area: 2 / 1 / 3 / 2;
+    font-size: 2em;
+    font-weight: 700;
+    text-align: center;
+}
+
+.name {
+    grid-area: 3 / 1 / 4 / 2;
+    text-align: center;
+    font-size: 0.5em;
+}
+
+
+.econfig {
+    grid-area: 4 / 1 / 5 / 3;
+    text-align: center;
+}
+
+.atomicMass {
+    grid-area: 1 / 2 / 2 / 3;
+    text-align: right;
+}

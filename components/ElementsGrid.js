@@ -7,8 +7,15 @@ export default function ElementsGrid({ elements }) {
       {elements.map((element) => {
         // console.log(element.col18Xpos, element.col18Ypos); // Log the properties
 
-        // Limit the atomic mass to 5 digits after the decimal point
-        const atomicMass = parseFloat(element.atomic_mass).toFixed(5);
+        // Calculate the number of digits before the decimal point
+        const digitsBeforeDecimal = Math.floor(element.atomic_mass).toString().length;
+
+        // Calculate the number of digits to display after the decimal point
+        const digitsAfterDecimal = 4 - digitsBeforeDecimal;
+
+        // Limit the atomic mass to 5 digits in total and remove trailing zeros
+        const atomicMass = Number(Number(element.atomic_mass).toFixed(digitsAfterDecimal));
+
 
         return (
           <div
@@ -20,13 +27,11 @@ export default function ElementsGrid({ elements }) {
             }}
 
           >
-            <div className={styles.elementNumbers}>
+            <div className={styles.elementCardMedium}>
               <div className={styles.atomicNumber}>{element.number}</div>
-              <div className={styles.atomicMass}>{element.atomicMass}</div>
+              <div className={styles.symbol}>{element.symbol}</div>
+              <div className={styles.name}>{element.name}</div>
             </div>
-            <div className={styles.symbol}>{element.symbol}</div>
-            <div>{element.name}</div>
-            <div>{element.econfig_shorthand}</div>
           </div>
         );
       })}
