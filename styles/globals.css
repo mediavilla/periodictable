@@ -11,7 +11,7 @@ html {
 }
 
 body {
-    width: 80%;
+    width: 80vw;
     margin: 0 auto;
     padding: 0;
     -webkit-font-smoothing: antialiased;
