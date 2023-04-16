@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from '@/styles/periodicTable.module.css'
+import Link from 'next/link'
 
 export default function ElementsGrid({ elements }) {
   return (
@@ -41,7 +42,7 @@ export default function ElementsGrid({ elements }) {
         }
 
         return (
-          <div
+          <Link href={`/element/${element.name}`}
             key={element.number}
             className={`${styles.element} ${element.category} ${getCategoryClassName(element.category)}`}
             style={{
@@ -55,7 +56,9 @@ export default function ElementsGrid({ elements }) {
               <div className={styles.symbol}>{element.symbol}</div>
               <div className={styles.name}>{element.name}</div>
             </div>
-          </div>
+
+          </Link>
+
         );
       })}
     </div>

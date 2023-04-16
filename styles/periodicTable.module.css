@@ -20,6 +20,11 @@
     width: 100%;
 }
 
+a.element {
+    text-decoration: none;
+    color: #070707;
+}
+
 
 .elementCardBig {
     width: 100%;
@@ -128,6 +133,11 @@
 .reactiveNonMetals {
     background-color: #F8D6EB;
     border-color: #FF00FF;
+}
+
+a.element.reactiveNonMetals:hover {
+    background-color: #FF00FF;
+    color: #FFFFFF;
 }
 
 .AlkaliMetals {

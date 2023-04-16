@@ -30,6 +30,8 @@ code {
     color: #eaeaea;
 }
 
+/* UPDATE THIS TO USE THE NEW COLOR SCHEME */
+/*
 a {
     color: #ffe604;
     background-image: linear-gradient(to top, #ffe604 50%, #222 50%);
@@ -52,6 +54,7 @@ a:visited:hover {
     text-shadow: none;
     background-position: 0 100%;
 }
+*/
 
 ::selection {
     color: #444;
