@@ -145,9 +145,19 @@ a.element.reactiveNonMetals:hover {
     border-color: #05B6BB;
 }
 
+a.element.AlkaliMetals:hover {
+    background-color: #05B6BB;
+    color: #FFFFFF;
+}
+
 .AlkalineEarthMetals {
     background-color: #FFD9D8;
     border-color: #DD201C;
+}
+
+a.element.AlkalineEarthMetals:hover {
+    background-color: #DD201C;
+    color: #FFFFFF;
 }
 
 .TransitionMetals {
@@ -155,14 +165,29 @@ a.element.reactiveNonMetals:hover {
     border-color: #0070FF;
 }
 
+a.element.TransitionMetals:hover {
+    background-color: #0070FF;
+    color: #FFFFFF;
+}
+
 .unknownProperties {
     background-color: #DDDDDD;
     border-color: #454545;
 }
 
+a.element.unknownProperties:hover {
+    background-color: #454545;
+    color: #FFFFFF;
+}
+
 .lanthanide {
     background-color: #EBDFF8;
     border-color: #7A00FF;
+}
+
+a.element.lanthanide:hover {
+    background-color: #7A00FF;
+    color: #FFFFFF;
 }
 
 .lanthanum {
@@ -171,11 +196,20 @@ a.element.reactiveNonMetals:hover {
     border-width: 2px;
 }
 
+a.element.lanthanum:hover {
+    background-color: #7A00FF;
+    color: #FFFFFF;
+}
+
 .actinide {
     background-color: #FBE7D6;
     border-color: #FF7500;
 }
 
+a.element.actinide:hover {
+    background-color: #FF7500;
+    color: #FFFFFF;
+}
 
 .actinium {
     background-color: #FBE7D6;
@@ -183,9 +217,19 @@ a.element.reactiveNonMetals:hover {
     border-width: 2px;
 }
 
+a.element.actinium:hover {
+    background-color: #FF7500;
+    color: #FFFFFF;
+}
+
 .metalloid {
     background-color: #FFFEC6;
-    border-color: #D2CF06;
+    border-color: #959339;
+}
+
+a.element.metalloid:hover {
+    background-color: #959339;
+    color: #FFFFFF;
 }
 
 .postTransitionMetal {
@@ -193,7 +237,17 @@ a.element.reactiveNonMetals:hover {
     border-color: #15D905;
 }
 
+a.element.postTransitionMetal:hover {
+    background-color: #15D905;
+    color: #FFFFFF;
+}
+
 .nobleGas {
     background-color: #FFFFFF;
     border-color: #CCCCCC;
+}
+
+a.element.nobleGas:hover {
+    background-color: #333333;
+    color: #FFFFFF;
 }
