@@ -1,0 +1,7 @@
+.timeline {
+  position: fixed;
+  /* Adjust the position as needed */
+  top: 20%;
+  left: 5%;
+  background-color: red;
+}
