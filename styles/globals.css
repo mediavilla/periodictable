@@ -14,18 +14,12 @@ body {
     height: 100%;
     margin: 0 auto;
     padding: 0;
+    padding-right: 100px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: #efefef;
 }
 
-main {
-    width: 100%;
-    height: 100%;
-    margin: 0px 100px 0px -100px;
-    padding: 0;
-    background-color: #efefef;
-}
 
 h1,
 h2,
@@ -112,10 +106,6 @@ li {
 ul {
     list-style-position: outside;
     list-style-type: none;
-}
-
-li {
-    margin-bottom: 10px;
 }
 
 footer {

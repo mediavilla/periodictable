@@ -1,9 +1,56 @@
 .timeline {
-  position: fixed;
+  background-color: #1E1E1E;
   height: 100%;
-  /* Adjust the position as needed */
+  position: fixed;
   top: 0;
   right: 0;
-  background-color: red;
-  ;
+  /* Adjust the container height as needed */
+}
+
+ul.timelineYears {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  /* Set the height of the timelineYears ul */
+  list-style-type: none;
+  /* Optional: remove bullet points */
+  padding: 0;
+  /* Optional: remove default padding */
+}
+
+ul.timelineYears li {
+  flex: 1;
+  /* Make each li take up all available space */
+  display: flex;
+  /* Set display: flex on the list items */
+  align-items: center;
+  /* Vertically center the content */
+}
+
+ul.timelineYears li a {
+  /* Add any desired styles for the individual items */
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  padding: 0.5vw;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ffffff;
+  /* Set display: flex for the a element */
+  align-items: center;
+  /* Vertically center the text */
+  justify-content: center;
+  /* Horizontally center the text */
+  width: 100%;
+  /* Make the a element take up the entire width of the li */
+  height: 100%;
+  /* Make the a element take up the entire height of the li */
+  transition: all 0.3s ease-in-out;
+
+}
+
+ul.timelineYears li a:hover {
+  /* Add any desired styles for the individual items */
+  color: #1E1E1E;
+  background-color: #ffffff;
 }

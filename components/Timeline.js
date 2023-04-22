@@ -11,7 +11,7 @@ export default function Timeline({ yearsData, onYearClick }) {
 
     return (
         <div className={styles.timeline}>
-            <ul>
+            <ul className={styles.timelineYears}>
                 {reversedYearsData.map(({ year }) => (
                     <li key={year}>
                         <a href="#" onClick={(event) => handleClick(year, event)}>
