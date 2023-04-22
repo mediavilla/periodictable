@@ -11,10 +11,19 @@ html {
 
 body {
     width: 80vw;
+    height: 100%;
     margin: 0 auto;
     padding: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: #efefef;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    margin: 0px 100px 0px -100px;
+    padding: 0;
     background-color: #efefef;
 }
 

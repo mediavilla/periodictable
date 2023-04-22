@@ -1,7 +1,9 @@
 .timeline {
   position: fixed;
+  height: 100%;
   /* Adjust the position as needed */
-  top: 20%;
-  right: 5%;
+  top: 0;
+  right: 0;
   background-color: red;
+  ;
 }
