@@ -1,0 +1,110 @@
+[
+    {
+        "year": 1669,
+        "description": "Hennig Brand discovers phosphorus, sparking interest in the study of elements."
+    },
+    {
+        "year": 1789,
+        "description": "Antoine Lavoisier publishes a list of 33 elements, grouped into gases, metals, nonmetals, and earths."
+    },
+    {
+        "year": 1803,
+        "description": "John Dalton proposes the atomic theory, stating that elements consist of indivisible atoms with characteristic atomic weights."
+    },
+    {
+        "year": 1817,
+        "description": "Johann Wolfgang Döbereiner observes the Law of Triads, the first attempt to group elements based on their properties."
+    },
+    {
+        "year": 1829,
+        "description": "Jöns Jacob Berzelius introduces the modern system of chemical notation with one- or two-letter symbols for elements."
+    },
+    {
+        "year": 1858,
+        "description": "August Kekulé proposes the valence theory, laying the foundation for understanding chemical bonding and the periodicity of elements."
+    },
+    {
+        "year": 1860,
+        "description": "Stanislao Cannizzaro's presentation on atomic weights at the Karlsruhe Congress leads to the acceptance of atomic weights as a basis for the classification of elements."
+    },
+    {
+        "year": 1864,
+        "description": "John Newlands proposes the Law of Octaves, which arranges elements in increasing atomic weight with similar properties appearing every eighth element."
+    },
+    {
+        "year": 1869,
+        "description": "Dmitri Mendeleev presents his first periodic table, arranging elements by atomic weight and leaving gaps for yet-to-be-discovered elements."
+    },
+    {
+        "year": 1871,
+        "description": "Mendeleev refines his periodic table, predicting the properties of undiscovered elements such as gallium, scandium, and germanium."
+    },
+    {
+        "year": 1894,
+        "description": "Lord Rayleigh and William Ramsay discover argon, leading to the identification of a new group of elements called noble gases."
+    },
+    {
+        "year": 1897,
+        "description": "J.J. Thomson discovers the electron, leading to the development of the first models of atomic structure."
+    },
+    {
+        "year": 1900,
+        "description": "Max Planck proposes the quantum theory, which eventually leads to the understanding of electron energy levels in atoms."
+    },
+    {
+        "year": 1911,
+        "description": "Ernest Rutherford discovers the atomic nucleus, refining the model of atomic structure."
+    },
+    {
+        "year": 1913,
+        "description": "Henry Moseley establishes the concept of atomic number, providing a more accurate basis for the arrangement of elements in the periodic table."
+    },
+    {
+        "year": 1922,
+        "description": "Niels Bohr develops the electron configuration model, which further explains the periodicity of elements."
+    },
+    {
+        "year": 1924,
+        "description": "Louis de Broglie proposes the wave-particle duality of electrons, a key concept in the development of quantum mechanics."
+    },
+    {
+        "year": 1926,
+        "description": "Erwin Schrödinger develops the wave equation, providing a mathematical description of electron behavior in atoms."
+    },
+    {
+        "year": 1928,
+        "description": "Friedrich Hund and Robert S. Mulliken develop the concept of electron"
+    },
+    {
+        "year": 1932,
+        "description": "James Chadwick discovers the neutron, leading to a better understanding of atomic structure and isotopes."
+    },
+    {
+        "year": 1940,
+        "description": "Glenn T. Seaborg and his team synthesize plutonium and later discover other transuranium elements, leading to the expansion of the periodic table with the actinide series."
+    },
+    {
+        "year": 1945,
+        "description": "Glenn T. Seaborg proposes the actinide concept, which distinguishes the actinide series as a separate group in the periodic table."
+    },
+    {
+        "year": 1950,
+        "description": "Discovery of more synthetic elements, filling in gaps in the periodic table."
+    },
+    {
+        "year": 1962,
+        "description": "Neil Bartlett synthesizes the first noble gas compound, xenon hexafluoroplatinate, challenging the assumption that noble gases are inert."
+    },
+    {
+        "year": 1969,
+        "description": "The International Union of Pure and Applied Chemistry (IUPAC) establishes a standardized periodic table, which forms the basis for the modern periodic table."
+    },
+    {
+        "year": 2000,
+        "description": "Ongoing research on superheavy elements and their stability, exploring the limits of the periodic table."
+    },
+    {
+        "year": 2016,
+        "description": "Discovery and naming of the last four elements of the seventh period (nihonium, moscovium, tennessine, and oganesson), completing the current periodic table."
+    }
+]

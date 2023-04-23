@@ -1,21 +1,12 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
 import elements from '../public/elements.json';
+import timeline from '../public/timeline.json';
 import ElementsGrid from '../components/ElementsGrid';
 import Timeline from '../components/Timeline';
 
 
 
-const yearsData = [
-  { year: 1960, description: 'Milestone description for 1800' },
-  { year: 1970, description: 'Milestone description for 1800' },
-  { year: 1980, description: 'Milestone description for 1800' },
-  { year: 1990, description: 'Milestone description for 1850' },
-  { year: 2000, description: 'Milestone description for 1900' },
-  { year: 2010, description: 'Milestone description for 1900' },
-  { year: 2020, description: 'Milestone description for 1900' },
-  // ... more years and milestone descriptions
-];
 
 function scrollToYear(year) {
   const section = document.getElementById(`${year}`);
@@ -70,7 +61,7 @@ export default function App() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Timeline yearsData={yearsData} onYearClick={scrollToYear}></Timeline>
+        <Timeline yearsData={timeline} onYearClick={scrollToYear}></Timeline>
 
         <ElementsGrid elements={elements} />
 

@@ -29,8 +29,11 @@ ul.timelineYears li {
 }
 
 ul.timelineYears li a {
+  color: #444;
+  background: #ffe604;
   /* Add any desired styles for the individual items */
-  color: #ffffff;
+  font-size: 0.5em;
+  font-weight: 700;
   text-decoration: none;
   display: flex;
   padding: 0.5vw;
