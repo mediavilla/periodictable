@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import elements from '../public/elements.json';
 import timeline from '../public/timeline.json';
@@ -16,42 +16,40 @@ function scrollToYear(year) {
   }
 }
 
-function updateSelectedYear(year) {
-  const buttons = document.querySelectorAll('.timeline button');
-  buttons.forEach((button) => {
-    if (button.textContent === year) {
-      button.classList.add('selected');
-    } else {
-      button.classList.remove('selected');
-    }
-  });
-}
-
 
 export default function App() {
+
+  const [selectedYear, setSelectedYear] = useState(null);
+
   useEffect(() => {
-    // Attach the scroll event listener
+
     const handleScroll = () => {
       // Your scroll handling logic here
       const sections = document.querySelectorAll(".milestone-section");
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const middleScreenPosition = scrollTop + (window.innerHeight / 2);
 
       for (const section of sections) {
-        if (scrollTop >= section.offsetTop && scrollTop < section.offsetTop + section.offsetHeight) {
-          // Update the selected year on the timeline
-          updateSelectedYear(section.id);
+        if (middleScreenPosition >= section.offsetTop && middleScreenPosition < section.offsetTop + section.offsetHeight) {
+          // Update the selected year
+          setSelectedYear(section.id);
           break;
         }
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
 
-    // Clean up the event listener on unmount
+
+
+
+
+    window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+
 
   return (
     <>
@@ -62,7 +60,7 @@ export default function App() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Timeline yearsData={sortedTimeline} onYearClick={scrollToYear}></Timeline>
+        <Timeline yearsData={sortedTimeline} onYearClick={scrollToYear} selectedYear={selectedYear}></Timeline>
 
         <ElementsGrid elements={elements} />
 
