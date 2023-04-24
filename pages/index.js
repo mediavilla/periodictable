@@ -4,9 +4,10 @@ import elements from '../public/elements.json';
 import timeline from '../public/timeline.json';
 import ElementsGrid from '../components/ElementsGrid';
 import Timeline from '../components/Timeline';
+import TimelineContent from '../components/TimelineContent';
 
-
-
+// Sort the timeline data in descending order based on the year
+const sortedTimeline = timeline.sort((a, b) => b.year - a.year);
 
 function scrollToYear(year) {
   const section = document.getElementById(`${year}`);
@@ -61,49 +62,11 @@ export default function App() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Timeline yearsData={timeline} onYearClick={scrollToYear}></Timeline>
+        <Timeline yearsData={sortedTimeline} onYearClick={scrollToYear}></Timeline>
 
         <ElementsGrid elements={elements} />
 
-        <section id="Today" className="milestone-section">
-          <h2>2023</h2>
-          <p>Here we go</p>
-        </section>
-
-        <section id="2020" className="milestone-section">
-          <h2>2020</h2>
-          <p>Here we go</p>
-        </section>
-
-        <section id="2010" className="milestone-section">
-          <h2>2010</h2>
-          <p>Here we go</p>
-        </section>
-
-        <section id="2000" className="milestone-section">
-          <h2>2000</h2>
-          <p>Here we go</p>
-        </section>
-
-        <section id="1990" className="milestone-section">
-          <h2>1990</h2>
-          <p>Here we go</p>
-        </section>
-
-        <section id="1980" className="milestone-section">
-          <h2>1980</h2>
-          <p>Here we go</p>
-        </section>
-
-        <section id="1970" className="milestone-section">
-          <h2>1970</h2>
-          <p>Here we go</p>
-        </section>
-
-        <section id="1960" className="milestone-section">
-          <h2>1960</h2>
-          <p>Here we go</p>
-        </section>
+        <TimelineContent yearsData={sortedTimeline} />
 
       </main>
     </>
