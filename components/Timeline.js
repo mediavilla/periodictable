@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../styles/timeline.module.css';
 
-export default function Timeline({ yearsData, onYearClick, selectedYear }) {
+export default function Timeline({ yearsData, onYearClick }) {
+    const [selectedYear, setSelectedYear] = useState(null);
+
     const handleClick = (year, event) => {
         event.preventDefault();
+        setSelectedYear(year);
         onYearClick(year);
     };
 

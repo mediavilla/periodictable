@@ -60,6 +60,6 @@ ul.timelineYears li a:hover {
 
 ul.timelineYears li a.selected {
   /* Add your desired styles for the selected year here */
-  color: red;
-  font-weight: bold;
+  color: #FFFFFF;
+  background-color: #1E1E1E;
 }
