@@ -21,6 +21,14 @@ export default function App() {
 
   const [selectedYear, setSelectedYear] = useState(null);
 
+  function scrollToYear(year) {
+    const section = document.getElementById(`${year}`);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+      setSelectedYear(year); // Update the selectedYear state
+    }
+  }
+
   useEffect(() => {
 
     const handleScroll = () => {
@@ -37,12 +45,6 @@ export default function App() {
         }
       }
     };
-
-
-
-
-
-
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -60,7 +62,11 @@ export default function App() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Timeline yearsData={sortedTimeline} onYearClick={scrollToYear} selectedYear={selectedYear}></Timeline>
+        <Timeline
+          yearsData={sortedTimeline}
+          onYearClick={scrollToYear}
+          selectedYear={selectedYear}
+        ></Timeline>
 
         <ElementsGrid elements={elements} />
 
