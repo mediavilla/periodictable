@@ -5,10 +5,13 @@ import timeline from '../public/timeline.json';
 import ElementsGrid from '../components/ElementsGrid';
 import Timeline from '../components/Timeline';
 import TimelineContent from '../components/TimelineContent';
+import styles from '../styles/timeline.module.css';
+
 
 const sortedTimeline = timeline.sort((a, b) => b.year - a.year);
 
 function App() {
+
   const [selectedYear, setSelectedYear] = useState(null);
 
   function scrollToYear(year) {
@@ -18,6 +21,7 @@ function App() {
       setSelectedYear(year);
     }
   }
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,10 +38,21 @@ function App() {
           scrollTop + window.innerHeight / 2 >= section.offsetTop &&
           scrollTop + window.innerHeight / 2 < section.offsetTop + section.offsetHeight
         ) {
-
           console.log('Setting selected year:', section.id);
-          setSelectedYear(section.id);
+          const links = document.querySelectorAll(`.${styles.timelineYears} li a`);
+          console.log('LINKS:', links);
+          const yearString = String(section.id); // Convert the year to a string
 
+          console.log('YEAR STRING', yearString);
+          links.forEach((link) => {
+            if (link.textContent === yearString) {
+              link.classList.add(styles.selected);
+              console.log(`Adding style to year ${section.id}`);
+            } else {
+              link.classList.remove(styles.selected);
+              console.log(`Removing style to year ${section.id}`);
+            }
+          });
           break;
         }
       }
@@ -66,11 +81,13 @@ function App() {
           yearsData={sortedTimeline}
           onYearClick={scrollToYear}
           selectedYear={selectedYear}
+          setSelectedYear={setSelectedYear}
         ></Timeline>
 
         <ElementsGrid elements={elements} />
 
         <TimelineContent yearsData={sortedTimeline} />
+        <div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></div>
       </main>
     </>
   );

@@ -10,7 +10,7 @@
 
 
 .element {
-    padding: 0.2vw;
+    padding: 0.1vw;
     border: 1px solid #ccc;
     display: flex;
     justify-content: center;
@@ -61,7 +61,7 @@ a.element {
 .name {
     grid-area: 3 / 1 / 4 / 2;
     text-align: center;
-    font-size: 0.6em;
+    font-size: 0.5em;
 }
 
 
