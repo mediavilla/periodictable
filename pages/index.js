@@ -39,6 +39,7 @@ function App() {
           scrollTop + window.innerHeight / 2 < section.offsetTop + section.offsetHeight
         ) {
           console.log('Setting selected year:', section.id);
+          console.log('YEAR:', selectedYear)
           const links = document.querySelectorAll(`.${styles.timelineYears} li a`);
           console.log('LINKS:', links);
           const yearString = String(section.id); // Convert the year to a string
