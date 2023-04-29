@@ -1,9 +1,9 @@
-.flex-container {
+.flexContainer {
     display: flex;
     flex-wrap: wrap;
 }
 
-.flex-item {
+.flexItem {
     flex: 1 1 25%;
     /* flex-grow, flex-shrink, and flex-basis */
     box-sizing: border-box;
@@ -65,6 +65,9 @@ a.element {
     grid-row-gap: 3px;
 }
 
+.rotate {
+    transform: rotate(-5deg);
+}
 
 /* grid-area: row-start / column-start / row-end / column-end; */
 .elementCardMedium .atomicNumber,
@@ -93,7 +96,7 @@ a.element {
 }
 
 .elementCardBig .symbol {
-    font-size: 8vw;
+    font-size: 5vw;
 }
 
 .elementCardMedium .name,
@@ -107,7 +110,7 @@ a.element {
 }
 
 .elementCardBig .name {
-    font-size: 2vw;
+    font-size: 1.6vw;
 }
 
 .econfig {
@@ -116,6 +119,9 @@ a.element {
     text-align: center;
 }
 
+.elementCardBig .econfig {
+    font-size: 0.8vw;
+}
 
 .atomicMass {
     grid-area: 1 / 2 / 2 / 3;

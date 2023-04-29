@@ -1,5 +1,6 @@
 import React from 'react';
-import elementStyles from '../../styles/periodicTable.module.css';
+import ElementCard from '../ElementCard';
+import elementStyles from '../../styles/periodicTable.module.css'
 
 export default function Section2016({ description, elements, getCategoryClassName }) {
 
@@ -13,52 +14,18 @@ export default function Section2016({ description, elements, getCategoryClassNam
             <h2>2016</h2>
             <p>{description}</p>
             {/* Additional content */}
-            <div class="flex-container">
-                <div class="flex-item">
-
-                    <div className={`${elementStyles.element} ${praseodymium.category} ${getCategoryClassName(praseodymium.category)} ${elementStyles.elementCardBigContainer}`}>
-                        <div className={`${elementStyles.elementCardBig} `}>
-                            <div className={elementStyles.atomicNumber}>{praseodymium.number}</div>
-                            <div className={elementStyles.symbol}>{praseodymium.symbol}</div>
-                            <div className={elementStyles.name}>{praseodymium.name}</div>
-                            <div className={elementStyles.econfig}>{praseodymium.econfig_shorthand}</div>
-                        </div>
-                    </div>
-
+            <div className={elementStyles.flexContainer}>
+                <div className={elementStyles.flexItem}>
+                    <ElementCard element={nihonium} getCategoryClassName={getCategoryClassName} />
                 </div>
-                <div class="flex-item">
-
-                    <div className={`${elementStyles.element} ${praseodymium.category} ${getCategoryClassName(praseodymium.category)} ${elementStyles.elementCardBigContainer}`}>
-                        <div className={`${elementStyles.elementCardBig} `}>
-                            <div className={elementStyles.atomicNumber}>{praseodymium.number}</div>
-                            <div className={elementStyles.symbol}>{praseodymium.symbol}</div>
-                            <div className={elementStyles.name}>{praseodymium.name}</div>
-                            <div className={elementStyles.econfig}>{praseodymium.econfig_shorthand}</div>
-                        </div>
-                    </div>
-
+                <div className={elementStyles.flexItem}>
+                    <ElementCard element={moscovium} getCategoryClassName={getCategoryClassName} />
                 </div>
-                <div class="flex-item">
-
-                    <div className={`${elementStyles.element} ${praseodymium.category} ${getCategoryClassName(praseodymium.category)} ${elementStyles.elementCardBigContainer}`}>
-                        <div className={`${elementStyles.elementCardBig} `}>
-                            <div className={elementStyles.atomicNumber}>{praseodymium.number}</div>
-                            <div className={elementStyles.symbol}>{praseodymium.symbol}</div>
-                            <div className={elementStyles.name}>{praseodymium.name}</div>
-                            <div className={elementStyles.econfig}>{praseodymium.econfig_shorthand}</div>
-                        </div>
-                    </div>
+                <div className={elementStyles.flexItem}>
+                    <ElementCard element={tennessine} getCategoryClassName={getCategoryClassName} />
                 </div>
-                <div class="flex-item">
-
-                    <div className={`${elementStyles.element} ${praseodymium.category} ${getCategoryClassName(praseodymium.category)} ${elementStyles.elementCardBigContainer}`}>
-                        <div className={`${elementStyles.elementCardBig} `}>
-                            <div className={elementStyles.atomicNumber}>{praseodymium.number}</div>
-                            <div className={elementStyles.symbol}>{praseodymium.symbol}</div>
-                            <div className={elementStyles.name}>{praseodymium.name}</div>
-                            <div className={elementStyles.econfig}>{praseodymium.econfig_shorthand}</div>
-                        </div>
-                    </div>
+                <div className={elementStyles.flexItem}>
+                    <ElementCard element={oganesson} getCategoryClassName={getCategoryClassName} />
                 </div>
             </div>
 

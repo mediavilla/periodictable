@@ -22,7 +22,7 @@ export default function ElementsGrid({ elements, getCategoryClassName }) {
           return (
             <Link href={`/element/${element.name}`}
               key={element.number}
-              className={`${elementStyles.element} ${element.category} ${getCategoryClassName(element.category)}`}
+              className={`${elementStyles.element} ${getCategoryClassName(element.category)}`}
               style={{
                 gridColumn: element.col18Xpos,
                 gridRow: element.col18Ypos,
