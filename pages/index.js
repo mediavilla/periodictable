@@ -35,9 +35,10 @@ function App() {
         console.log('ScrollTop:', scrollTop);
         console.log('Section offsetTop + section.offsetHeight:', section.offsetTop + section.offsetHeight);
         if (
-          scrollTop + window.innerHeight / 2 >= section.offsetTop &&
-          scrollTop + window.innerHeight / 2 < section.offsetTop + section.offsetHeight
+          scrollTop >= section.offsetTop &&
+          scrollTop < section.offsetTop + section.offsetHeight
         ) {
+
           console.log('Setting selected year:', section.id);
           console.log('YEAR:', selectedYear)
           const links = document.querySelectorAll(`.${styles.timelineYears} li a`);
