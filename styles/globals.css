@@ -30,7 +30,7 @@ h6,
 p,
 li,
 code {
-    color: #eaeaea;
+    color: #171717;
 }
 
 /* UPDATE THIS TO USE THE NEW COLOR SCHEME */
@@ -77,9 +77,9 @@ h1 {
 }
 
 h2 {
-    font-size: 64px;
-    line-height: 64px;
+    font-size: 4vw;
     font-weight: 700;
+    line-height: 0.1vw;
 }
 
 h3 {
@@ -92,9 +92,13 @@ h3 {
     font-size: 14px;
 }
 
+p {
+    margin: 0;
+}
+
 p,
 li {
-    font-size: 24px;
+    font-size: 2vw;
 }
 
 ul,

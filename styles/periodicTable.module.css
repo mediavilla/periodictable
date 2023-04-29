@@ -1,3 +1,17 @@
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex-item {
+    flex: 1 1 25%;
+    /* flex-grow, flex-shrink, and flex-basis */
+    box-sizing: border-box;
+    padding: 10px;
+    /* Add padding if necessary */
+}
+
+
 /* Make the table fit within the body */
 .periodicTable {
     display: grid;
@@ -25,14 +39,12 @@ a.element {
     color: #070707;
 }
 
-
-.elementCardBig {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+.elementCardBigContainer {
+    width: 175px;
+    height: 250px;
+    border-radius: 6px;
+    border-width: 4px;
+    padding: 8px;
 }
 
 .elementCardMedium {
@@ -43,32 +55,67 @@ a.element {
     grid-row-gap: 0px;
 }
 
-/* grid-area: row-start / column-start / row-end / column-end; */
+.elementCardBig {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr 1fr;
+    /* One more row than .elementCardMedium */
+    grid-column-gap: 3px;
+    grid-row-gap: 3px;
+}
 
-.atomicNumber {
+
+/* grid-area: row-start / column-start / row-end / column-end; */
+.elementCardMedium .atomicNumber,
+.elementCardBig .atomicNumber {
     grid-area: 1 / 1 / 2 / 2;
     text-align: left;
+}
+
+.elementCardMedium .atomicNumber {
     font-size: 0.6vw;
 }
 
-.symbol {
+.elementCardBig .atomicNumber {
+    font-size: 2vw;
+}
+
+.elementCardMedium .symbol,
+.elementCardBig .symbol {
     grid-area: 2 / 1 / 3 / 2;
-    font-size: 1.6vw;
     font-weight: 700;
     text-align: center;
 }
 
-.name {
+.elementCardMedium .symbol {
+    font-size: 1.6vw;
+}
+
+.elementCardBig .symbol {
+    font-size: 8vw;
+}
+
+.elementCardMedium .name,
+.elementCardBig .name {
     grid-area: 3 / 1 / 4 / 2;
     text-align: center;
+}
+
+.elementCardMedium .name {
     font-size: 0.5em;
 }
 
+.elementCardBig .name {
+    font-size: 2vw;
+}
 
 .econfig {
-    grid-area: 4 / 1 / 5 / 3;
+    grid-area: 4 / 1 / 5 / 2;
+    /* Change column-end to 2 */
     text-align: center;
 }
+
 
 .atomicMass {
     grid-area: 1 / 2 / 2 / 3;

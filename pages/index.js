@@ -6,11 +6,35 @@ import ElementsGrid from '../components/ElementsGrid';
 import Timeline from '../components/Timeline';
 import TimelineContent from '../components/TimelineContent';
 import styles from '../styles/timeline.module.css';
-
+import elementStyles from '../styles/periodicTable.module.css';
 
 const sortedTimeline = timeline.sort((a, b) => b.year - a.year);
 
 function App() {
+
+  function getCategoryClassName(category) {
+    const categoryClassMap = {
+      // Add other category mappings here
+      'diatomic nonmetal': elementStyles.reactiveNonMetals,
+      'polyatomic nonmetal': elementStyles.reactiveNonMetals,
+      'alkali metal': elementStyles.AlkaliMetals,
+      'alkaline earth metal': elementStyles.AlkalineEarthMetals,
+      'transition metal': elementStyles.TransitionMetals,
+      'lanthanide': elementStyles.lanthanide,
+      'lanthanide lanthanum': elementStyles.lanthanum,
+      'actinide': elementStyles.actinide,
+      'actinide actinium': elementStyles.actinium,
+      'post-transition metal': elementStyles.postTransitionMetal,
+      'metalloid': elementStyles.metalloid,
+      'noble gas': elementStyles.nobleGas,
+      'unknown probably transition metal': elementStyles.unknownProperties,
+      'unknown probably post-transition metal': elementStyles.unknownProperties,
+      'unknown probably metalloid': elementStyles.unknownProperties,
+      'unknown predicted to be noble gas': elementStyles.unknownProperties
+    };
+
+    return categoryClassMap[category] || '';
+  }
 
   const [selectedYear, setSelectedYear] = useState(null);
 
@@ -86,9 +110,9 @@ function App() {
           setSelectedYear={setSelectedYear}
         ></Timeline>
 
-        <ElementsGrid elements={elements} />
+        <ElementsGrid elements={elements} getCategoryClassName={getCategoryClassName} />
 
-        <TimelineContent yearsData={sortedTimeline} />
+        <TimelineContent yearsData={sortedTimeline} elements={elements} getCategoryClassName={getCategoryClassName} />
         <div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></div>
       </main>
     </>

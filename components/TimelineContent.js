@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const TimelineContent = ({ yearsData }) => {
+const TimelineContent = ({ yearsData, elements, getCategoryClassName }) => {
     const [sections, setSections] = useState([]);
 
     useEffect(() => {
@@ -10,7 +10,7 @@ const TimelineContent = ({ yearsData }) => {
                 try {
                     const { default: SectionComponent } = await import(`./TimelineYears/${year}`);
                     // console.log(`Loaded component for year ${year}`);
-                    loadedSections.push(<SectionComponent key={year} description={description} />);
+                    loadedSections.push(<SectionComponent key={year} description={description} elements={elements} getCategoryClassName={getCategoryClassName} />);
                 } catch (error) {
                     console.error(`Failed to load section component for year ${year}:`, error);
                 }

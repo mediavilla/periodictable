@@ -1,11 +1,11 @@
 import React from 'react'
-import styles from '../styles/periodicTable.module.css'
+import elementStyles from '../styles/periodicTable.module.css'
 import Link from 'next/link'
 
-export default function ElementsGrid({ elements }) {
+export default function ElementsGrid({ elements, getCategoryClassName }) {
   return (
     <section>
-      <div className={styles.periodicTable}>
+      <div className={elementStyles.periodicTable}>
         {elements.map((element) => {
           // console.log(element.col18Xpos, element.col18Ypos); // Log the properties
 
@@ -18,44 +18,21 @@ export default function ElementsGrid({ elements }) {
           // Limit the atomic mass to 5 digits in total and remove trailing zeros
           const atomicMass = Number(Number(element.atomic_mass).toFixed(digitsAfterDecimal));
 
-          function getCategoryClassName(category) {
-            const categoryClassMap = {
-              // Add other category mappings here
-              'diatomic nonmetal': styles.reactiveNonMetals,
-              'polyatomic nonmetal': styles.reactiveNonMetals,
-              'alkali metal': styles.AlkaliMetals,
-              'alkaline earth metal': styles.AlkalineEarthMetals,
-              'transition metal': styles.TransitionMetals,
-              'lanthanide': styles.lanthanide,
-              'lanthanide lanthanum': styles.lanthanum,
-              'actinide': styles.actinide,
-              'actinide actinium': styles.actinium,
-              'post-transition metal': styles.postTransitionMetal,
-              'metalloid': styles.metalloid,
-              'noble gas': styles.nobleGas,
-              'unknown probably transition metal': styles.unknownProperties,
-              'unknown probably post-transition metal': styles.unknownProperties,
-              'unknown probably metalloid': styles.unknownProperties,
-              'unknown predicted to be noble gas': styles.unknownProperties
-            };
-
-            return categoryClassMap[category] || '';
-          }
 
           return (
             <Link href={`/element/${element.name}`}
               key={element.number}
-              className={`${styles.element} ${element.category} ${getCategoryClassName(element.category)}`}
+              className={`${elementStyles.element} ${element.category} ${getCategoryClassName(element.category)}`}
               style={{
                 gridColumn: element.col18Xpos,
                 gridRow: element.col18Ypos,
               }}
 
             >
-              <div className={`${styles.elementCardMedium}`}>
-                <div className={styles.atomicNumber}>{element.number}</div>
-                <div className={styles.symbol}>{element.symbol}</div>
-                <div className={styles.name}>{element.name}</div>
+              <div className={`${elementStyles.elementCardMedium}`}>
+                <div className={elementStyles.atomicNumber}>{element.number}</div>
+                <div className={elementStyles.symbol}>{element.symbol}</div>
+                <div className={elementStyles.name}>{element.name}</div>
               </div>
 
             </Link>
