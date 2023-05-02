@@ -28,6 +28,9 @@ export default function Section2016({ description, elements, getCategoryClassNam
                     <ElementCard element={oganesson} getCategoryClassName={getCategoryClassName} />
                 </div>
             </div>
+            <div className={elementStyles.scale}>
+                <div className={elementStyles.movingDiv}></div>
+            </div>
 
 
         </section>

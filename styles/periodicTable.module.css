@@ -304,3 +304,31 @@ a.element.nobleGas:hover {
     background-color: #333333;
     color: #FFFFFF;
 }
+
+
+
+.scale {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 5px;
+    background-color: #ccc;
+}
+
+.movingDiv {
+    position: absolute;
+    width: 5px;
+    height: 10px;
+    background-color: #f00;
+    /* animation: moveDiv 73ms linear infinite; */
+}
+
+@keyframes moveDiv {
+    0% {
+        left: 0;
+    }
+
+    100% {
+        left: calc(100% - 5px);
+    }
+}
