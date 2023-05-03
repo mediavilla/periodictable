@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function Section1940() {
+export default function Section1940({ description, elements, getCategoryClassName }) {
     return (
         <section id="1940" className="milestone-section">
             <h2>1940</h2>
-            <p>Description from the JSON file goes here.</p>
+            <p>{description}</p>
             {/* Additional content */}
         </section>
     );
