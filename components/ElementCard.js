@@ -6,7 +6,7 @@ export default function ElementCard({ element, getCategoryClassName }) {
     console.log('Category:', element.category); // Add this line to log the element category
     console.log('Generated Class:', getCategoryClassName(element.category)); // Add this line to log the generated class name
     return (
-        <div className={`${elementStyles.element} ${getCategoryClassName(element.category)} ${elementStyles.elementCardBigContainer} ${elementStyles.rotate}`}>
+        <div className={`${elementStyles.element} ${getCategoryClassName(element.category)} ${elementStyles.elementCardBigContainer}`}>
             <div className={`${elementStyles.elementCardBig} `}>
                 <div className={elementStyles.atomicNumber}>{element.number}</div>
                 <div className={elementStyles.symbol}>{element.symbol}</div>
