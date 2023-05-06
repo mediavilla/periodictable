@@ -20,6 +20,10 @@ body {
     background-color: #efefef;
 }
 
+section {
+    padding-top: 0.2em;
+    margin-bottom: 2em;
+}
 
 h1,
 h2,
@@ -83,9 +87,10 @@ h2 {
 }
 
 h3 {
-    font-size: 36px;
-    color: #888;
-    font-weight: 700;
+    font-size: 3em;
+    color: #333;
+    font-weight: 400;
+    text-shadow: 0 -1px 0 #ccc;
 }
 
 .smallcopy {
