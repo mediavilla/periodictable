@@ -9,10 +9,6 @@ export default function Section2016({ description, elements, getCategoryClassNam
     const tennessine = elements.find((element) => element.symbol === 'Ts');
     const oganesson = elements.find((element) => element.symbol === 'Og');
 
-    useEffect(() => {
-        console.log('SELECTED YEAR IN CONTENT:', selectedYear); // Log the selectedYear value
-    }, [selectedYear]);
-
     return (
         <section id="2016" className="milestone-section">
             <h3><span className={`${selectedYear === 2016 ? 'selectedYear' : 'year'}`}>2016 /</span> {description}</h3>
