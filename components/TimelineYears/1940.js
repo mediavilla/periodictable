@@ -3,9 +3,8 @@ import React from 'react';
 export default function Section1940({ description, elements, getCategoryClassName }) {
     return (
         <section id="1940" className="milestone-section">
-            <h2>1940</h2>
-            <p>{description}</p>
+            <h3><span className="year">1940</span>: {description}</h3>
             {/* Additional content */}
-        </section>
+        </section >
     );
 }

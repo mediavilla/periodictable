@@ -49,34 +49,39 @@ function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      console.log('Scroll event detected');
+
+      // console.log('Scroll event detected');      
       const sections = document.querySelectorAll('.milestone-section');
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
       for (const section of sections) {
-        console.log('Section ID:', section.id);
-        console.log('Section offsetTop:', section.offsetTop);
-        console.log('ScrollTop:', scrollTop);
-        console.log('Section offsetTop + section.offsetHeight:', section.offsetTop + section.offsetHeight);
+        // console.log('Section ID:', section.id);
+        // console.log('Section offsetTop:', section.offsetTop);
+        // console.log('ScrollTop:', scrollTop);
+        // console.log('Section offsetTop + section.offsetHeight:', section.offsetTop + section.offsetHeight);
         if (
           scrollTop >= section.offsetTop &&
           scrollTop < section.offsetTop + section.offsetHeight
         ) {
 
-          console.log('Setting selected year:', section.id);
-          console.log('YEAR:', selectedYear)
           const links = document.querySelectorAll(`.${styles.timelineYears} li a`);
-          console.log('LINKS:', links);
           const yearString = String(section.id); // Convert the year to a string
 
-          console.log('YEAR STRING', yearString);
+          const year = parseInt(section.id, 10); // Convert the section ID to a number
+          setSelectedYear(year); // Update the selectedYear state
+
+          // console.log('Setting selected year:', section.id);
+          // console.log('LINKS:', links);
+          // console.log('YEAR STRING', yearString);
+          console.log('YEAR:', selectedYear)
+
           links.forEach((link) => {
             if (link.textContent === yearString) {
               link.classList.add(styles.selected);
-              console.log(`Adding style to year ${section.id}`);
+              // console.log(`Adding style to year ${section.id}`);
             } else {
               link.classList.remove(styles.selected);
-              console.log(`Removing style to year ${section.id}`);
+              // console.log(`Removing style to year ${section.id}`);
             }
           });
           break;
@@ -89,7 +94,7 @@ function App() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [selectedYear]);
 
   return (
     <>
@@ -112,7 +117,12 @@ function App() {
 
         <ElementsGrid elements={elements} getCategoryClassName={getCategoryClassName} />
 
-        <TimelineContent yearsData={sortedTimeline} elements={elements} getCategoryClassName={getCategoryClassName} />
+        <TimelineContent
+          yearsData={sortedTimeline}
+          elements={elements}
+          getCategoryClassName={getCategoryClassName}
+          selectedYear={selectedYear}
+        />
         <div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></div>
       </main>
     </>

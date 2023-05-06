@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-const TimelineContent = ({ yearsData, elements, getCategoryClassName }) => {
+const TimelineContent = ({ yearsData, elements, getCategoryClassName, selectedYear }) => {
     const [sections, setSections] = useState([]);
+    console.log('TimelineContent component rendered with selectedYear:', selectedYear);
+
 
     useEffect(() => {
         const loadSections = async () => {
@@ -10,7 +12,13 @@ const TimelineContent = ({ yearsData, elements, getCategoryClassName }) => {
                 try {
                     const { default: SectionComponent } = await import(`./TimelineYears/${year}`);
                     // console.log(`Loaded component for year ${year}`);
-                    loadedSections.push(<SectionComponent key={year} description={description} elements={elements} getCategoryClassName={getCategoryClassName} />);
+                    loadedSections.push(
+                        <SectionComponent key={year}
+                            description={description}
+                            elements={elements}
+                            getCategoryClassName={getCategoryClassName}
+                            selectedYear={selectedYear}
+                        />);
                 } catch (error) {
                     console.error(`Failed to load section component for year ${year}:`, error);
                 }
@@ -19,7 +27,8 @@ const TimelineContent = ({ yearsData, elements, getCategoryClassName }) => {
         };
 
         loadSections();
-    }, [yearsData]);
+    }, [yearsData, selectedYear]); // Add selectedYear to the dependency array
+
 
     return <>{sections}</>;
 };

@@ -93,6 +93,24 @@ h3 {
     text-shadow: 0 -1px 0 #ccc;
 }
 
+h3 span.year {
+    color: #333333;
+    font-weight: 700;
+    padding: 0 0.2em 0 0.2em;
+    background-color: #ffe604;
+    transition: color 0.5s ease;
+    /* adjust the duration and easing function as needed */
+}
+
+h3 span.selectedYear {
+    font-weight: 700;
+    padding: 0 0.2em 0 0.2em;
+    background-color: #000000;
+    color: #efefef;
+    transition: color 0.5s ease;
+}
+
+
 .smallcopy {
     font-size: 14px;
 }
