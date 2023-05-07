@@ -1,0 +1,91 @@
+  .timeText {
+      display: flex;
+      width: 100%;
+      height: 1vh;
+  }
+
+  .timeTextItem:nth-child(1) {
+      width: 10%;
+      text-align: left;
+  }
+
+  .timeTextItem:nth-child(2) {
+      width: 10%;
+      text-align: left;
+  }
+
+  .timeTextItem:nth-child(3) {
+      flex: 1;
+      text-align: center;
+  }
+
+  .timeTextItem:nth-child(4) {
+      width: 10%;
+  }
+
+  .timeTextItem:nth-child(5) {
+      width: 10%;
+      text-align: right;
+  }
+
+  .msText {
+      display: flex;
+      width: 100%;
+      height: 1vh;
+  }
+
+  .msTextItem {
+      flex: 1;
+      text-align: left;
+  }
+
+  .oneSecond {
+      display: flex;
+      width: 100%;
+      height: 1vh;
+  }
+
+  .oneHundredMiliseconds {
+      width: 10%;
+      background-color: rgb(173, 0, 0);
+      padding: 10px;
+      border-radius: 16px 0 0 16px;
+  }
+
+  .nineHundredMiliseconds {
+      width: 90%;
+      background-color: rgb(135, 135, 135);
+      padding: 10px;
+      border-radius: 0 16px 16px 0;
+  }
+
+  .scale {
+      border-radius: 16px;
+      width: 85%;
+      height: 1vh;
+      background-color: rgb(173, 0, 0);
+  }
+
+  .movingDiv {
+      border-radius: 16px;
+      height: 1vh;
+      width: 24px;
+      background-color: rgb(173, 0, 0);
+      /* animation: moveDiv 73ms linear infinite; */
+  }
+
+  @keyframes moveDiv {
+      0% {
+          left: 0;
+      }
+
+      100% {
+          left: calc(100% - 5px);
+      }
+  }
+
+  .blocky {
+      display: block;
+      height: 2vh;
+      padding: 10px 0px 0px 0px;
+  }

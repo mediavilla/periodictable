@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import ElementCard from '../ElementCard';
-import elementStyles from '../../styles/periodicTable.module.css'
+import elementStyles from '../../styles/periodicTable.module.css';
+import timeStyles from '../../styles/Section2016.module.css';
 
 export default function Section2016({ description, elements, getCategoryClassName, selectedYear }) {
 
@@ -32,11 +33,40 @@ export default function Section2016({ description, elements, getCategoryClassNam
                 </div>
 
             </div>
-            <div className={elementStyles.scale}>
-                <div className={elementStyles.movingDiv}></div>
-            </div>
 
+            <div id="decayTimeline">
+                <div className={timeStyles.blocky}>
+                    <div className={timeStyles.msText}>
+                        <div className={timeStyles.msTextItem}>0</div>
+                        <div className={timeStyles.msTextItem}>25ms</div>
+                        <div className={timeStyles.msTextItem}>50ms</div>
+                        <div className={timeStyles.msTextItem}>75ms</div>
+                        <div className={timeStyles.msTextItem}>100ms</div>
+                    </div>
+                </div>
+                <div className={timeStyles.blocky}>
+                    <div className={timeStyles.scale}>
+                        <div className={timeStyles.movingDiv}></div>
+                    </div>
+                </div>
+                <div className={timeStyles.blocky}></div>
+                <div className={timeStyles.blocky}>
+                    <div className={timeStyles.timeText}>
+                        <div className={timeStyles.timeTextItem}>0</div>
+                        <div className={timeStyles.timeTextItem}>100ms</div>
+                        <div className={timeStyles.timeTextItem}>500ms</div>
+                        <div className={timeStyles.timeTextItem}>&nbsp;</div>
+                        <div className={timeStyles.timeTextItem}>1 second</div>
+                    </div>
+                </div>
+                <div className={timeStyles.blocky}>
+                    <div className={timeStyles.oneSecond}>
+                        <div className={timeStyles.oneHundredMiliseconds}></div>
+                        <div className={timeStyles.nineHundredMiliseconds}></div>
+                    </div>
+                </div>
+            </div >
 
-        </section>
+        </section >
     );
 }

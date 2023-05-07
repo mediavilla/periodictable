@@ -37,6 +37,42 @@ code {
     color: #171717;
 }
 
+/* 
+############################################
+################   H3s  ####################
+##### FOR THE CONTENT TIMELINE CHANGES #####
+############################################
+*/
+
+h3 span.year {
+    display: inline-block;
+    color: #333333;
+    font-weight: 700;
+    padding: 0 0.2em 0 0.2em;
+    background-color: #ffe604;
+    transition: color 0.5s ease;
+    border-radius: 24px;
+    /* adjust the duration and easing function as needed
+    transform: skew(5deg, 0deg);
+    transition: transform 0.5s ease;  */
+    transition: border-radius 0.5s ease;
+}
+
+h3 span.selectedYear {
+    border-radius: 12px;
+    display: inline-block;
+    font-weight: 700;
+    padding: 0 0.2em 0 0.2em;
+    background-color: #000000;
+    color: #efefef;
+    transition: color 0.5s ease;
+    /* 
+    transform: skew(-10deg, 0deg);
+     */
+    transition: border-radius 0.5s ease;
+
+}
+
 /* UPDATE THIS TO USE THE NEW COLOR SCHEME */
 /*
 a {
@@ -91,35 +127,6 @@ h3 {
     color: #333;
     font-weight: 400;
     text-shadow: 0 -1px 0 #ccc;
-}
-
-h3 span.year {
-    display: inline-block;
-    color: #333333;
-    font-weight: 700;
-    padding: 0 0.2em 0 0.2em;
-    background-color: #ffe604;
-    transition: color 0.5s ease;
-    border-radius: 24px;
-    /* adjust the duration and easing function as needed
-    transform: skew(5deg, 0deg);
-    transition: transform 0.5s ease;  */
-    transition: border-radius 0.5s ease;
-}
-
-h3 span.selectedYear {
-    border-radius: 12px;
-    display: inline-block;
-    font-weight: 700;
-    padding: 0 0.2em 0 0.2em;
-    background-color: #000000;
-    color: #efefef;
-    transition: color 0.5s ease;
-    /* 
-    transform: skew(-10deg, 0deg);
-     */
-    transition: border-radius 0.5s ease;
-
 }
 
 
