@@ -46,7 +46,7 @@ export default function Section2016({ description, elements, getCategoryClassNam
                 </div>
                 <div className={timeStyles.blocky}>
                     <div className={timeStyles.scale}>
-                        <div className={timeStyles.movingDiv}></div>
+                        <div className={timeStyles.handlerTime}>&nbsp;</div>
                     </div>
                 </div>
                 <div className={timeStyles.blocky}></div>

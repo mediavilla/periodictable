@@ -42,7 +42,7 @@
   .oneSecond {
       display: flex;
       width: 100%;
-      height: 36px;
+      height: 24px;
   }
 
   .oneHundredMiliseconds {
@@ -62,7 +62,7 @@
   .scale {
       border-radius: 16px;
       width: 85%;
-      height: 1vh;
+      height: 24px;
       background-color: rgb(173, 0, 0);
   }
 
@@ -94,6 +94,6 @@
       top: 2px;
       left: 1px;
       background-color: black;
-      width: 18px;
+      width: 16px;
       border-radius: 16px;
   }
