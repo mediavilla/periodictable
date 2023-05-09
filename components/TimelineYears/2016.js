@@ -45,7 +45,7 @@ export default function Section2016({ description, elements, getCategoryClassNam
                     </div>
                 </div>
                 <div className={timeStyles.blocky}>
-                    <div className={timeStyles.scale}>
+                    <div className={timeStyles.seventyFiveMiliseconds}>
                         <div className={timeStyles.handlerTime}>&nbsp;</div>
                     </div>
                 </div>

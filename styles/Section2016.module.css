@@ -46,6 +46,7 @@
   }
 
   .oneHundredMiliseconds {
+      position: relative;
       width: 10%;
       background-color: rgb(173, 0, 0);
       padding: 10px;
@@ -59,7 +60,8 @@
       border-radius: 0 16px 16px 0;
   }
 
-  .scale {
+  .seventyFiveMiliseconds {
+      position: relative;
       border-radius: 16px;
       width: 85%;
       height: 24px;
@@ -91,8 +93,10 @@
   }
 
   .handlerTime {
-      top: 2px;
-      left: 1px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       background-color: black;
       width: 16px;
       border-radius: 16px;
