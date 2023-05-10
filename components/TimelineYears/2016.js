@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import ElementCard from '../ElementCard';
 import elementStyles from '../../styles/periodicTable.module.css';
 import timeStyles from '../../styles/Section2016.module.css';
@@ -9,6 +9,9 @@ export default function Section2016({ description, elements, getCategoryClassNam
     const moscovium = elements.find((element) => element.symbol === 'Mc');
     const tennessine = elements.find((element) => element.symbol === 'Ts');
     const oganesson = elements.find((element) => element.symbol === 'Og');
+
+    // Animation State
+    const [animationProgress, setAnimationProgress] = useState(0);
 
     return (
         <section id="2016" className="milestone-section">
@@ -62,11 +65,16 @@ export default function Section2016({ description, elements, getCategoryClassNam
                 <div className={timeStyles.blocky}>
                     <div className={timeStyles.oneSecond}>
                         <div className={timeStyles.oneHundredMiliseconds}>
-                            <div className={timeStyles.handlerTime}>&nbsp;</div>
+                            <div className={timeStyles.handlerTime} style={{ left: `${animationProgress}%` }}>&nbsp;</div>
+
+
                         </div>
                         <div className={timeStyles.nineHundredMiliseconds}></div>
                     </div>
                 </div>
+
+                <button onClick={() => setAnimationProgress(73)}>Play</button>
+
             </div >
 
         </section >

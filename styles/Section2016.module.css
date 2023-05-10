@@ -95,9 +95,9 @@
   .handlerTime {
       position: absolute;
       top: 50%;
-      left: 50%;
+      left: 15px;
       transform: translate(-50%, -50%);
       background-color: black;
-      width: 16px;
+      width: 20px;
       border-radius: 16px;
   }
