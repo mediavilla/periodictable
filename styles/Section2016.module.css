@@ -100,4 +100,6 @@
       background-color: black;
       width: 20px;
       border-radius: 16px;
+      transition: left 0.073s linear;
+      /* 73ms animation */
   }
