@@ -72,8 +72,8 @@ export default function Section2016({ description, elements, getCategoryClassNam
                         <div className={timeStyles.nineHundredMiliseconds}></div>
                     </div>
                 </div>
+                <div className={timeStyles.ctaTime}><button onClick={() => setAnimationProgress(73)}>Play</button></div>
 
-                <button onClick={() => setAnimationProgress(73)}>Play</button>
 
             </div >
 
