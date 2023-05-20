@@ -104,6 +104,10 @@
       /* 73ms animation */
   }
 
+  .oneHundredMiliseconds .handlerTime {
+      left: 105px;
+  }
+
   .ctaTime {
       padding: 10px;
       border-radius: 4px;
