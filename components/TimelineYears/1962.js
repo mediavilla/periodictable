@@ -15,6 +15,16 @@ export default function Section1962({ description, elements, getCategoryClassNam
                 height={434}
                 alt="Platinum(VI) fluoride; Platinum hexafluoride"
             />
+
+
+            <Image
+                src="/images/Platinum-hexafluoride-3D-vdW.png"
+                width={439}
+                height={434}
+                alt="3D view Platinum hexafluoride"
+            />
+
+
         </section >
     );
 }
