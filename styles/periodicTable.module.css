@@ -305,6 +305,7 @@ a.element.nobleGas:hover {
     color: #FFFFFF;
 }
 
+/* add this for all the others */
 
 .unknownProperties.elementCardBigContainer {
     background-image: radial-gradient(circle at center top, rgb(221, 221, 221, 0.5) 50%, rgb(170, 170, 170, 0.5) 100%),
