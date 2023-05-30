@@ -77,11 +77,11 @@ a.element {
 }
 
 .elementCardMedium .atomicNumber {
-    font-size: 0.6vw;
+    font-size: 0.6rem;
 }
 
 .elementCardBig .atomicNumber {
-    font-size: 2vw;
+    font-size: 24px;
 }
 
 .elementCardMedium .symbol,
@@ -91,12 +91,12 @@ a.element {
     text-align: center;
 }
 
-.elementCardMedium .symbol {
-    font-size: 1.6vw;
+.elementCardMedium.symbol {
+    font-size: 1.6rem;
 }
 
 .elementCardBig .symbol {
-    font-size: 5vw;
+    font-size: 72px;
 }
 
 .elementCardMedium .name,
@@ -106,11 +106,11 @@ a.element {
 }
 
 .elementCardMedium .name {
-    font-size: 0.5em;
+    font-size: 0.5rem;
 }
 
 .elementCardBig .name {
-    font-size: 1.6vw;
+    font-size: 24px;
 }
 
 .econfig {
@@ -120,7 +120,7 @@ a.element {
 }
 
 .elementCardBig .econfig {
-    font-size: 0.8vw;
+    font-size: 14px;
 }
 
 .atomicMass {
@@ -152,8 +152,8 @@ a.element {
     }
 
     /* Add styles for tablets here */
-    .name {
-        font-size: 0.5vw;
+    .elementCardMedium .name {
+        font-size: 0.5rem;
     }
 }
 
@@ -161,7 +161,7 @@ a.element {
 @media (min-width: 576px) and (max-width: 767px) {
 
     /* Add styles for mobile landscape here */
-    .name {
+    .elementCardMedium .name {
         display: none;
     }
 }
@@ -170,7 +170,7 @@ a.element {
 @media (max-width: 575px) {
 
     /* Add styles for mobile portrait here */
-    .name {
+    .elementCardMedium .name {
         display: none;
     }
 }
