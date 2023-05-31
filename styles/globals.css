@@ -154,6 +154,28 @@ ul {
     list-style-type: none;
 }
 
+
+
+main {
+    display: flex;
+}
+
+.timeline {
+    flex: 0 0 3.75em;
+    /* This means the column does not grow or shrink and stays at 3.75em */
+    background-color: #ccc;
+}
+
+#content {
+    flex: 1;
+    /* This means the column will take the remaining space */
+    background-color: #ddd;
+}
+
+
+
+
+
 footer {
     text-align: center;
     padding: 100px 10px 100px 10px;

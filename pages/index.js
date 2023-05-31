@@ -108,22 +108,23 @@ function App() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <div id="content">
+          <ElementsGrid elements={elements} getCategoryClassName={getCategoryClassName} />
+
+          <TimelineContent
+            yearsData={sortedTimeline}
+            elements={elements}
+            getCategoryClassName={getCategoryClassName}
+            selectedYear={selectedYear}
+          />
+          <div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></div>
+        </div>
         <Timeline
           yearsData={sortedTimeline}
           onYearClick={scrollToYear}
           selectedYear={selectedYear}
           setSelectedYear={setSelectedYear}
         ></Timeline>
-
-        <ElementsGrid elements={elements} getCategoryClassName={getCategoryClassName} />
-
-        <TimelineContent
-          yearsData={sortedTimeline}
-          elements={elements}
-          getCategoryClassName={getCategoryClassName}
-          selectedYear={selectedYear}
-        />
-        <div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></div>
       </main>
     </>
   );
