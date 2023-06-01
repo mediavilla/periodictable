@@ -10,11 +10,9 @@ html {
 }
 
 body {
-    width: 80vw;
     height: 100%;
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
-    padding-right: 100px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: #efefef;
@@ -163,13 +161,14 @@ main {
 .timeline {
     flex: 0 0 3.75em;
     /* This means the column does not grow or shrink and stays at 3.75em */
-    background-color: #ccc;
 }
+
 
 #content {
     flex: 1;
     /* This means the column will take the remaining space */
     background-color: #ddd;
+    justify-content: center;
 }
 
 

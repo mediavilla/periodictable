@@ -1,0 +1,44 @@
+/* 
+###############################################
+########### M E D I A  Q U E R I E S ##########
+############################################### 
+*/
+
+/* Large Desktop */
+@media (min-width: 1200px) {
+
+    /* Add styles for large desktops here */
+    #content {
+        padding: 0 6em;
+    }
+}
+
+/* Laptop */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+    /* Add styles for laptops here */
+    #content {
+        padding: 0 5em;
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 991px) {
+    #content {
+        padding: 0 4em;
+    }
+}
+
+/* Mobile Landscape */
+@media (min-width: 576px) and (max-width: 767px) {
+    #content {
+        padding: 0 3em;
+    }
+}
+
+/* Mobile Portrait */
+@media (max-width: 575px) {
+    #content {
+        padding: 0 1em;
+    }
+}

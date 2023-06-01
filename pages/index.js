@@ -119,12 +119,14 @@ function App() {
           />
           <div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></div>
         </div>
+
         <Timeline
           yearsData={sortedTimeline}
           onYearClick={scrollToYear}
           selectedYear={selectedYear}
           setSelectedYear={setSelectedYear}
         ></Timeline>
+
       </main>
     </>
   );
