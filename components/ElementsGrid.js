@@ -1,8 +1,9 @@
 import React from 'react'
 import elementStyles from '../styles/periodicTable.module.css'
 import Link from 'next/link'
+import getCategoryClassName from '../utils/getCategoryClassName';
 
-export default function ElementsGrid({ elements, getCategoryClassName }) {
+export default function ElementsGrid({ elements }) {
   return (
     <section>
       <div className={elementStyles.periodicTable}>
