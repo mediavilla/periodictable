@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const TimelineContent = ({ yearsData, elements, getCategoryClassName, selectedYear }) => {
     const [sections, setSections] = useState([]);
-    console.log('TimelineContent component rendered with selectedYear:', selectedYear);
+    // console.log('TimelineContent component rendered with selectedYear:', selectedYear);
 
 
     useEffect(() => {

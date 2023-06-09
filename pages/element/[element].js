@@ -1,35 +1,33 @@
-import React from 'react';
-import ElementCard from '../../components/ElementCard';
+import { ElementCard } from '../../components/ElementCard';
+import * as elementComponents from './elementComponents';
+import DefaultElement from './Default';
 import getCategoryClassName from '../../utils/getCategoryClassName';
-import elements from '../../public/elements.json'; // adjust path to your actual JSON file
-import dynamic from 'next/dynamic'
 
-export default function Element({ elementData }) {
-    // Dynamically import the element component based on the element name
-    const ElementContent = dynamic(() =>
-        import(`./${elementData.name}.js`).catch(() => () => null)
-    );
+const withElementComponent = (Component) => {
+    return ({ elementSymbol, ...props }) => {
+        // Select the appropriate component or fallback to DefaultElement
+        const ElementComponent = elementComponents[elementSymbol] || DefaultElement;
+
+        // Render the selected component
+        return <ElementComponent {...props} />;
+    };
+};
+
+const ElementPage = ({ element, ...props }) => {
+    const ElementCardWithComponent = withElementComponent(ElementCard);
+
+    const elementData = elements.find(e => e.symbol === element.symbol);
 
     return (
         <>
-            <div>Element: {elementData.name}</div>
-            <ElementCard element={elementData} getCategoryClassName={getCategoryClassName} />
-            <ElementContent /> {/* Render the specific element component */}
+            <ElementCard element={moscovium} getCategoryClassName={getCategoryClassName} />
+            <ElementCardWithComponent elementSymbol={element.symbol} {...elementData} />
         </>
-    )
+    );
+};
+
+export async function getServerSideProps({ params }) {
+    return { props: { element: params.element } };
 }
 
-export async function getStaticProps({ params }) {
-    const elementData = elements.find(el => el.name.toLowerCase() === params.element.toLowerCase());
-
-    return { props: { elementData } }
-}
-
-export async function getStaticPaths() {
-    return {
-        paths: elements.map((element) => ({
-            params: { element: element.name },
-        })),
-        fallback: false,
-    };
-}
+export default ElementPage;

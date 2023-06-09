@@ -1,5 +1,5 @@
 
-export default function hydrogen() {
+export default function Hydrogen() {
     return (
         <div>
             1. Discovery:
