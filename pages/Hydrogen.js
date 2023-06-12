@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import elementsData from '../public/elements.json'; // import your elements data
 import ElementCard from '../components/ElementCard';
 import getCategoryClassName from '../utils/getCategoryClassName';
