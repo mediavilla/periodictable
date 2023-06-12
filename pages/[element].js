@@ -1,4 +1,3 @@
-import { elementsData } from '../data/elementsData';
 import elements from '../public/elements.json';
 
 export default function Element({ elements }) {
