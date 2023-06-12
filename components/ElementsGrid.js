@@ -21,7 +21,7 @@ export default function ElementsGrid({ elements }) {
 
 
           return (
-            <Link href={`/element/${element.name}`}
+            <Link href={`/${element.name}`}
               key={element.number}
               className={`${elementStyles.element} ${getCategoryClassName(element.category)}`}
               style={{
