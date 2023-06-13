@@ -1,4 +1,4 @@
-import fetchElement from '../utils/fetchElement';
+import elementsData from '../public/elements.json'; // import your elements data
 import ElementCard from '../components/ElementCard';
 import getCategoryClassName from '../utils/getCategoryClassName';
 
@@ -11,9 +11,8 @@ export default function Hydrogen({ element }) {
     );
 }
 
-
 export async function getServerSideProps() {
-    const elementData = fetchElement('hydrogen');
+    const elementData = elementsData.find(el => el.name.toLowerCase() === 'hydrogen');
 
     return {
         props: {
@@ -21,3 +20,4 @@ export async function getServerSideProps() {
         },
     };
 }
+
