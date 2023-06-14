@@ -1,5 +1,3 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
 
 const NavMiniTable = ({ elementSelected, elements }) => {
     const activeElement = (elementSelected.name + "-" + elementSelected.ypos + "-" + elementSelected.xpos)

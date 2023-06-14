@@ -1,0 +1,50 @@
+.navButtonsContainer {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    /* viewport height */
+    width: 100%;
+    /* full width */
+    pointer-events: none;
+    /* allow clicking 'through' the container, so underlying content can be interacted with */
+    z-index: 100;
+    /* may need to adjust if you have other layered elements */
+    flex-direction: column;
+    /* stack the children vertically */
+}
+
+.navButton {
+    position: absolute;
+    background-color: #f0f0f0;
+    padding: 10px;
+    cursor: pointer;
+    pointer-events: all;
+    /* re-enable pointer events for the buttons themselves */
+    /* Add other styles as needed (like border, border-radius, etc.) */
+}
+
+.buttonNavTop {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.buttonNavRight {
+    top: 50%;
+    right: 0;
+    transform: translate(0, -50%);
+}
+
+.buttonNavBottom {
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.buttonNavLeft {
+    top: 50%;
+    left: 0;
+    transform: translate(0, -50%);
+}
