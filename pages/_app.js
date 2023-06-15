@@ -8,18 +8,23 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
   const { currentElement, setCurrentElement } = useContext(TableContext);
 
+
   useEffect(() => {
-    if (router.isReady) {
-      // Get the path (which should be the element name in your case) from the router object
-      const elementName = router.pathname.split('/')[1];
-
-      // Fetch the element data
-      const currentElementData = fetchElement(elementName);
-
-      // Update the currentElement state
-      setCurrentElement(currentElementData);
-    }
+    const fetchData = async () => {
+      if (router.isReady) {
+        const elementName = router.pathname.split('/')[1];
+        const currentElementData = await fetchElement(elementName);
+        setCurrentElement(currentElementData);
+        console.log("CURRENT ELEMENT DATA: ", currentElementData);
+      }
+    };
+    fetchData();
   }, [router.pathname]);
+
+  useEffect(() => {
+    console.log("Updated currentElement: ", currentElement);
+  }, [currentElement]);
+
 
   return (
     <TableProvider>
