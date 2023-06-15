@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { TableContext } from '../utils/TableProvider';
 import navElementStyles from '../styles/navElement.module.css';
 
 export default function NavElement() {
+    const { currentElement, setCurrentElement, tableType, setTableType } = useContext(TableContext);
     return (
         <div className={navElementStyles.navButtonsContainer}>
             <button className={`${navElementStyles.navButton} ${navElementStyles.buttonNavTop}`}>Top</button >

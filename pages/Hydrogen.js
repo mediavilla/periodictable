@@ -9,17 +9,12 @@ export default function Hydrogen({ element }) {
     return (
         <div>
             <NavElement />
-            <NavMiniTable />
+            <NavMiniTable element={element} />
             <ElementCard element={element} getCategoryClassName={getCategoryClassName} />
             <p>Custom hydrogen content here</p>
         </div>
     );
 }
-
-
-
-
-
 
 
 
