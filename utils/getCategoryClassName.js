@@ -1,10 +1,9 @@
 const elementStyles = require('../styles/periodicTable.module.css');
 
-function getCategoryClassName(category) {
+function getCategoryClassName(category, isSelected) {
   const categoryClassMap = {
     // Add other category mappings here
-    'diatomic nonmetal': elementStyles.reactiveNonMetals,
-    'polyatomic nonmetal': elementStyles.reactiveNonMetals,
+    'diatomic nonmetal': isSelected ? `${elementStyles.reactiveNonMetals} ${elementStyles.selected}` : elementStyles.reactiveNonMetals,
     'alkali metal': elementStyles.AlkaliMetals,
     'alkaline earth metal': elementStyles.AlkalineEarthMetals,
     'transition metal': elementStyles.TransitionMetals,

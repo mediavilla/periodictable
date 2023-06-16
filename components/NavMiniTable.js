@@ -21,15 +21,17 @@ export default function NavMiniTable(element) {
   return (
     <div className={elementStyles.periodicTable}>
       {elementsData.map((element) => {
+        const isSelected = currentElement?.name === element.name;
+
         return (
           <Link href={`/${element.name}`}
             key={element.number}
 
             className={`
-                ${elementStyles.element} 
-                ${getCategoryClassName(element.category)} 
-                ${currentElement && currentElement.name === element.name ? 'selected' : ''}
+            ${elementStyles.element} 
+            ${getCategoryClassName(element.category, isSelected)}
             `}
+
 
             style={{
               gridColumn: element.col18Xpos,
