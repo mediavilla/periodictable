@@ -4,7 +4,6 @@ function getCategoryClassName(category, isSelected) {
   const categoryClassMap = {
     // Add other category mappings here
     'diatomic nonmetal': isSelected ? `${elementStyles.reactiveNonMetals} ${elementStyles.selected}` : elementStyles.reactiveNonMetals,
-
     'alkali metal': isSelected ? `${elementStyles.AlkaliMetals} ${elementStyles.selected}` : elementStyles.AlkaliMetals,
     'alkaline earth metal': isSelected ? `${elementStyles.AlkalineEarthMetals} ${elementStyles.selected}` : elementStyles.AlkalineEarthMetals,
     'transition metal': isSelected ? `${elementStyles.TransitionMetals} ${elementStyles.selected}` : elementStyles.TransitionMetals,

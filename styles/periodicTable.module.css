@@ -200,7 +200,8 @@ a.element.reactiveNonMetals.selected {
     border-color: #05B6BB;
 }
 
-a.element.AlkaliMetals:hover {
+a.element.AlkaliMetals:hover,
+a.element.AlkaliMetals.selected {
     background-color: #05B6BB;
     color: #FFFFFF;
 }
@@ -210,7 +211,8 @@ a.element.AlkaliMetals:hover {
     border-color: #DD201C;
 }
 
-a.element.AlkalineEarthMetals:hover {
+a.element.AlkalineEarthMetals:hover,
+a.element.AlkalineEarthMetals.selected {
     background-color: #DD201C;
     color: #FFFFFF;
 }
@@ -220,7 +222,8 @@ a.element.AlkalineEarthMetals:hover {
     border-color: #0070FF;
 }
 
-a.element.TransitionMetals:hover {
+a.element.TransitionMetals:hover,
+a.element.TransitionMetals.selected {
     background-color: #0070FF;
     color: #FFFFFF;
 }
@@ -230,7 +233,8 @@ a.element.TransitionMetals:hover {
     border-color: #454545;
 }
 
-a.element.unknownProperties:hover {
+a.element.unknownProperties:hover,
+a.element.unknownProperties.selected {
     background-color: #454545;
     color: #FFFFFF;
 }
@@ -240,7 +244,8 @@ a.element.unknownProperties:hover {
     border-color: #7A00FF;
 }
 
-a.element.lanthanide:hover {
+a.element.lanthanide:hover,
+a.element.lanthanide.selected {
     background-color: #7A00FF;
     color: #FFFFFF;
 }
@@ -251,7 +256,8 @@ a.element.lanthanide:hover {
     border-width: 2px;
 }
 
-a.element.lanthanum:hover {
+a.element.lanthanum:hover,
+a.element.lanthanum.selected {
     background-color: #7A00FF;
     color: #FFFFFF;
 }
@@ -261,7 +267,8 @@ a.element.lanthanum:hover {
     border-color: #FF7500;
 }
 
-a.element.actinide:hover {
+a.element.actinide:hover,
+a.element.actinide.selected {
     background-color: #FF7500;
     color: #FFFFFF;
 }
@@ -272,7 +279,8 @@ a.element.actinide:hover {
     border-width: 2px;
 }
 
-a.element.actinium:hover {
+a.element.actinium:hover,
+a.element.actinium.selected {
     background-color: #FF7500;
     color: #FFFFFF;
 }
@@ -282,7 +290,8 @@ a.element.actinium:hover {
     border-color: #959339;
 }
 
-a.element.metalloid:hover {
+a.element.metalloid:hover,
+a.element.metalloid.selected {
     background-color: #959339;
     color: #FFFFFF;
 }
@@ -292,7 +301,8 @@ a.element.metalloid:hover {
     border-color: #15D905;
 }
 
-a.element.postTransitionMetal:hover {
+a.element.postTransitionMetal:hover,
+a.element.postTransitionMetal.selected {
     background-color: #15D905;
     color: #FFFFFF;
 }
@@ -303,7 +313,7 @@ a.element.postTransitionMetal:hover {
 }
 
 a.element.nobleGas:hover,
-a.element.nobleGas:active {
+a.element.nobleGas.selected {
     background-color: #333333;
     color: #FFFFFF;
 }
