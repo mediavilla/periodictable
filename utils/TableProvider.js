@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import fetchElement from './fetchElement';
+
 
 export const TableContext = React.createContext({
     currentElement: null,
@@ -10,13 +13,24 @@ export const TableContext = React.createContext({
 });
 
 export function TableProvider({ children }) {
+    const router = useRouter();
     const [currentElement, setCurrentElement] = useState(null);
     const [tableType, setTableType] = useState('18 columns'); // Default value set here
+    const [loading, setLoading] = useState(true);
 
-    // add additional state variables as needed...
+    useEffect(() => {
+        if (router.isReady) {
+            const elementName = router.pathname.split('/')[1];
+            const currentElementData = fetchElement(elementName);
+            setCurrentElement(currentElementData);
+            setLoading(false);
+        }
+    }, [router.pathname]);
 
     return (
-        <TableContext.Provider value={{ currentElement, setCurrentElement, tableType, setTableType }}>
+
+        <TableContext.Provider value={{ currentElement, setCurrentElement, tableType, setTableType, loading }}>
+
             {children}
         </TableContext.Provider>
     );

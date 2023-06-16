@@ -188,7 +188,8 @@ a.element {
     border-color: #FF00FF;
 }
 
-a.element.reactiveNonMetals:hover {
+a.element.reactiveNonMetals:hover,
+a.element.reactiveNonMetals.selected {
     background-color: #FF00FF;
     color: #FFFFFF;
 }
@@ -300,7 +301,8 @@ a.element.postTransitionMetal:hover {
     border-color: #CCCCCC;
 }
 
-a.element.nobleGas:hover {
+a.element.nobleGas:hover,
+a.element.nobleGas:active {
     background-color: #333333;
     color: #FFFFFF;
 }
