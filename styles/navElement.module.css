@@ -17,12 +17,13 @@
 
 .navButton {
     position: absolute;
-    background-color: #f0f0f0;
     padding: 10px;
     cursor: pointer;
     pointer-events: all;
     /* re-enable pointer events for the buttons themselves */
     /* Add other styles as needed (like border, border-radius, etc.) */
+    font-size: 0.6em;
+    font-weight: 700;
 }
 
 .buttonNavTop {

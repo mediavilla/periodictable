@@ -71,31 +71,9 @@ h3 span.selectedYear {
 
 }
 
-/* UPDATE THIS TO USE THE NEW COLOR SCHEME */
-/*
-a {
-    color: #ffe604;
-    background-image: linear-gradient(to top, #ffe604 50%, #222 50%);
-    background-size: 100% 200%;
-    padding: 0 5px 0 5px;
-    -webkit-transition: background-position 0.1s;
-    -moz-transition: background-position 0.1s;
-    transition: background-position 0.1s;
+button {
+    border: none;
 }
-
-
-a:visited {
-    color: #ffe604;
-}
-
-a:hover,
-a:visited:hover {
-    color: #000;
-    text-decoration: none;
-    text-shadow: none;
-    background-position: 0 100%;
-}
-*/
 
 ::selection {
     color: #444;

@@ -6,7 +6,7 @@ import NavMiniTable from '../components/NavMiniTable';
 import NavElement from '../components/NavElement';
 import getCategoryClassName from '../utils/getCategoryClassName';
 
-export default function Hydrogen({ element }) {
+export default function Element({ element }) {
 
     console.log("Table Context: ", TableContext);
 
