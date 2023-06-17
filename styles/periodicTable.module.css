@@ -11,6 +11,9 @@
     /* Add padding if necessary */
 }
 
+.NavMiniTable {
+    margin-top: 4em;
+}
 
 /* Make the table fit within the body */
 .periodicTable {

@@ -18,31 +18,33 @@ export default function NavMiniTable(element) {
   console.log("MINI TABLE  ELEMENT", element)
 
   return (
-    <div className={elementStyles.periodicTableMini}>
-      {elementsData.map((element) => {
-        const isSelected = currentElement?.name === element.name;
+    <section class={elementStyles.NavMiniTable}>
+      <div className={elementStyles.periodicTableMini}>
+        {elementsData.map((element) => {
+          const isSelected = currentElement?.name === element.name;
 
-        return (
-          <Link href={`/${element.name}`}
-            key={element.number}
+          return (
+            <Link href={`/${element.name}`}
+              key={element.number}
 
-            className={`
+              className={`
             ${elementStyles.element} 
             ${getCategoryClassName(element.category, isSelected)}
             `}
 
 
-            style={{
-              gridColumn: element.col18Xpos,
-              gridRow: element.col18Ypos,
-            }}
+              style={{
+                gridColumn: element.col18Xpos,
+                gridRow: element.col18Ypos,
+              }}
 
-          >
+            >
 
-          </Link>
+            </Link>
 
-        );
-      })}
-    </div>
+          );
+        })}
+      </div >
+    </section>
   );
 }
