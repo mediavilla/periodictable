@@ -1,5 +1,5 @@
-import { useContext } from 'react'
-import { TableContext } from '../utils/TableProvider';
+import React, { useContext, useEffect } from 'react';
+import { TableContext } from '../utils/TableProvider'; // adjust the path accordingly
 import elementsData from '../public/elements.json'; // import your elements data
 import ElementCard from '../components/ElementCard';
 import NavMiniTable from '../components/NavMiniTable';
@@ -8,7 +8,13 @@ import getCategoryClassName from '../utils/getCategoryClassName';
 
 export default function Hydrogen({ element }) {
 
-    const { currentElement } = useContext(TableContext);
+    console.log("Table Context: ", TableContext);
+
+    const { setCurrentElement } = useContext(TableContext);
+
+    useEffect(() => {
+        setCurrentElement(element);
+    }, [element]);
 
     return (
         <main>
@@ -22,9 +28,14 @@ export default function Hydrogen({ element }) {
     );
 }
 
+export async function getServerSideProps({ params }) {
+    const elementData = elementsData.find(el => el.name.toLowerCase() === params.element.toLowerCase());
 
-export async function getServerSideProps() {
-    const elementData = elementsData.find(el => el.name.toLowerCase() === 'hydrogen');
+    if (!elementData) {
+        return {
+            notFound: true,
+        };
+    }
 
     return {
         props: {
@@ -32,4 +43,3 @@ export async function getServerSideProps() {
         },
     };
 }
-

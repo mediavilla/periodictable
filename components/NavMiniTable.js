@@ -5,7 +5,7 @@ import elementsData from '../public/elements.json'; // import your elements data
 import elementStyles from '../styles/periodicTable.module.css'
 import getCategoryClassName from '../utils/getCategoryClassName';
 
-export default function NavMiniTable(element) {
+export default function NavMiniTable({ element }) {
 
   const { currentElement, loading } = useContext(TableContext);
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import fetchElement from './fetchElement';
 
-
 export const TableContext = React.createContext({
     currentElement: null,
     tableType: null,
@@ -21,11 +20,15 @@ export function TableProvider({ children }) {
     useEffect(() => {
         if (router.isReady) {
             const elementName = router.pathname.split('/')[1];
-            const currentElementData = fetchElement(elementName);
-            setCurrentElement(currentElementData);
-            setLoading(false);
+            const fetchAndSetElement = async () => {
+                const currentElementData = await fetchElement(elementName);
+                setCurrentElement(currentElementData);
+                setLoading(false);
+            };
+            fetchAndSetElement();
         }
     }, [router.pathname]);
+
 
     return (
 
@@ -35,3 +38,4 @@ export function TableProvider({ children }) {
         </TableContext.Provider>
     );
 }
+
