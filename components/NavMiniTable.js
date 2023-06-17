@@ -7,7 +7,6 @@ import getCategoryClassName from '../utils/getCategoryClassName';
 
 export default function NavMiniTable(element) {
 
-
   const { currentElement, loading } = useContext(TableContext);
 
   if (loading) {
@@ -15,11 +14,11 @@ export default function NavMiniTable(element) {
   }
 
   // Rest of your component
-  console.log("H CURRENT ELEMENT", currentElement)
-  console.log("H  ELEMENT", element)
+  console.log("MINI TABLE CURRENT ELEMENT", currentElement)
+  console.log("MINI TABLE  ELEMENT", element)
 
   return (
-    <div className={elementStyles.periodicTable}>
+    <div className={elementStyles.periodicTableMini}>
       {elementsData.map((element) => {
         const isSelected = currentElement?.name === element.name;
 

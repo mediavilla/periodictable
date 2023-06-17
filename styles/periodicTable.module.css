@@ -22,6 +22,14 @@
     /* Ensure padding and border are included in the width calculations */
 }
 
+.periodicTableMini {
+    display: grid;
+    grid-template-columns: repeat(18, 20px);
+    grid-template-rows: repeat(auto-fill, 20px);
+    grid-auto-flow: row;
+    gap: 1px;
+}
+
 
 .element {
     padding: 0.1vw;
@@ -32,6 +40,11 @@
     box-sizing: border-box;
     height: 100%;
     width: 100%;
+}
+
+.periodicTableMini .element {
+    width: 20px;
+    height: 20px;
 }
 
 a.element {
