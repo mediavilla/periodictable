@@ -58,28 +58,28 @@ export default function NavElement() {
         <div className={navElementStyles.navButtonsContainer}>
             {nextRightElement &&
                 <Link href={`/${nextRightElement ? nextRightElement.name : ''}`}>
-                    <button className={`${navElementStyles.navButton} ${navElementStyles.buttonNavRight}`}>
+                    <button className={`${navElementStyles.navButton} ${navElementStyles.buttonNavRight} ${getCategoryClassName(nextRightElement.category)}`}>
                         {nextRightElement ? nextRightElement.name : 'No element'}
                     </button >
                 </Link>
             }
             {nextLeftElement &&
                 <Link href={`/${nextLeftElement ? nextLeftElement.name : ''}`}>
-                    <button className={`${navElementStyles.navButton} ${navElementStyles.buttonNavLeft}`}>
+                    <button className={`${navElementStyles.navButton} ${navElementStyles.buttonNavLeft} ${getCategoryClassName(nextLeftElement.category)}`}>
                         {nextLeftElement ? nextLeftElement.name : 'No element'}
                     </button >
                 </Link>
             }
             {nextTopElement &&
                 <Link href={`/${nextTopElement ? nextTopElement.name : ''}`}>
-                    <button className={`${navElementStyles.navButton} ${navElementStyles.buttonNavTop}`}>
+                    <button className={`${navElementStyles.navButton} ${navElementStyles.buttonNavTop} ${getCategoryClassName(nextTopElement.category)}`}>
                         {nextTopElement ? nextTopElement.name : 'No element'}
                     </button >
                 </Link>
             }
             {nextBottomElement &&
                 <Link href={`/${nextBottomElement ? nextBottomElement.name : ''}`}>
-                    <button className={`${navElementStyles.navButton} ${navElementStyles.buttonNavBottom}`}>
+                    <button className={`${navElementStyles.navButton} ${navElementStyles.buttonNavBottom} ${getCategoryClassName(nextBottomElement.category)}`}>
                         {nextBottomElement ? nextBottomElement.name : 'No element'}
                     </button >
                 </Link>
