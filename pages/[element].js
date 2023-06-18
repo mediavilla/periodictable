@@ -1,12 +1,13 @@
 import React, { useContext, useEffect } from 'react';
-import { TableContext } from '../utils/TableProvider'; // adjust the path accordingly
-import elementsData from '../public/elements.json'; // import your elements data
+import { TableContext } from '../utils/TableProvider';
+import elementsData from '../public/elements.json';
 import ElementCard from '../components/ElementCard';
 import NavMiniTable from '../components/NavMiniTable';
 import NavElement from '../components/NavElement';
 import getCategoryClassName from '../utils/getCategoryClassName';
+import CustomElementContent from '../components/CustomElementContent';
 
-export default function Element({ element }) {
+export default function Element({ element, elementName }) {
 
     console.log("Table Context: ", TableContext);
 
@@ -22,7 +23,7 @@ export default function Element({ element }) {
             <div id="content">
                 <NavMiniTable element={element} />
                 <ElementCard element={element} getCategoryClassName={getCategoryClassName} />
-                <p>Custom hydrogen content here</p>
+                <CustomElementContent element={elementName} />
             </div>
         </main>
     );
