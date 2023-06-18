@@ -1,11 +1,14 @@
 import elementsData from '../public/elements.json';
 
-export default function fetchElement(elementName) {
-    console.log("Requested Element Name: ", elementName); // Added line
-    console.log("First Element in Data: ", elementsData[0]); // Added line
 
+export default function fetchElement(elementName) {
     const elementData = elementsData.find(el => el.name.toLowerCase() === elementName.toLowerCase());
+
+    if (!elementData) {
+        console.warn(`No element found for name: ${elementName}`);
+    }
 
     console.log("Element Data: ", elementData);
     return elementData;
 }
+

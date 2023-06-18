@@ -7,21 +7,23 @@ import elementsData from '../public/elements.json';
 import getCategoryClassName from '../utils/getCategoryClassName'; // Import the getCategoryClassName function
 
 export default function NavElement() {
-    const { currentElement } = useContext(TableContext);
-    const router = useRouter();
 
-    // Return early if currentElement is not yet defined
-    if (!currentElement) {
-        return null;
+    const { currentElement, loading } = useContext(TableContext);
+
+    if (loading) {
+        return <p>Loading...</p>; // or any other placeholder component
     }
 
-    // Determine the next elements in each direction
-    const nextRightElement = elementsData.find(el => el.number === currentElement.number + 1);
-    const nextLeftElement = elementsData.find(el => el.number === currentElement.number - 1);
-    const nextTopElement = elementsData.find(el => el.col18Xpos === currentElement.col18Xpos && el.col18Ypos === currentElement.col18Ypos - 1);
-    const nextBottomElement = elementsData.find(el => el.col18Xpos === currentElement.col18Xpos && el.col18Ypos === currentElement.col18Ypos + 1);
 
-    console.log("NAV ELEMENT: ", currentElement)
+    console.log("### Current Element in NavElement", currentElement)
+
+    const router = useRouter();
+
+    // Determine the next elements in each direction
+    const nextRightElement = currentElement ? elementsData.find(el => el.number === currentElement.number + 1) : null;
+    const nextLeftElement = currentElement ? elementsData.find(el => el.number === currentElement.number - 1) : null;
+    const nextTopElement = currentElement ? elementsData.find(el => el.col18Xpos === currentElement.col18Xpos && el.col18Ypos === currentElement.col18Ypos - 1) : null;
+    const nextBottomElement = currentElement ? elementsData.find(el => el.col18Xpos === currentElement.col18Xpos && el.col18Ypos === currentElement.col18Ypos + 1) : null;
 
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -52,6 +54,10 @@ export default function NavElement() {
             window.removeEventListener('keydown', handleKeyDown);
         }
     }, [currentElement, nextLeftElement, nextRightElement, nextTopElement, nextBottomElement, router]);
+
+    if (!currentElement) {
+        return null; // Return early if currentElement is not yet defined
+    }
 
 
     return (

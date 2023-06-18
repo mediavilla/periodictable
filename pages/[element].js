@@ -3,13 +3,11 @@ import { TableContext } from '../utils/TableProvider';
 import elementsData from '../public/elements.json';
 import ElementCard from '../components/ElementCard';
 import NavMiniTable from '../components/NavMiniTable';
-import NavElement from '../components/NavElement';
+// import NavElement from '../components/NavElement';
 import getCategoryClassName from '../utils/getCategoryClassName';
 import CustomElementContent from '../components/CustomElementContent';
 
-export default function Element({ element, elementName }) {
-
-    console.log("Table Context: ", TableContext);
+export default function Element({ element }) {
 
     const { setCurrentElement } = useContext(TableContext);
 
@@ -19,11 +17,11 @@ export default function Element({ element, elementName }) {
 
     return (
         <main>
-            <NavElement />
+            {/* <NavElement /> */}
             <div id="content">
                 <NavMiniTable element={element} />
                 <ElementCard element={element} getCategoryClassName={getCategoryClassName} />
-                <CustomElementContent element={elementName} />
+                <CustomElementContent element={element.name} />
             </div>
         </main>
     );

@@ -5,9 +5,14 @@ export default function CustomElementContent({ element }) {
 
     useEffect(() => {
         const importElementComponent = async () => {
-            const component = await import(`./Elements/${element}`);
-            setElementComponent(component.default);
+            try {
+                const { default: component } = await import(`./Elements/${element}`);
+                setElementComponent(component);
+            } catch (error) {
+                console.error(`Failed to load component for ${element}:`, error);
+            }
         };
+
         importElementComponent();
     }, [element]);
 
@@ -16,5 +21,9 @@ export default function CustomElementContent({ element }) {
         return <p>Loading...</p>;
     }
 
-    return <ElementComponent />;
+    return <ElementWrapper>{ElementComponent}</ElementWrapper>;
+}
+
+function ElementWrapper({ children }) {
+    return <>{children}</>;
 }

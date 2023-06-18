@@ -18,16 +18,33 @@ export function TableProvider({ children }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        console.log('### New currentElement:', currentElement);
+    }, [currentElement]);
+
+    useEffect(() => {
         if (router.isReady) {
-            const elementName = router.pathname.split('/')[1];
-            const fetchAndSetElement = async () => {
-                const currentElementData = await fetchElement(elementName);
-                setCurrentElement(currentElementData);
-                setLoading(false);
-            };
-            fetchAndSetElement();
+            console.log("### Router Pathname", router.pathname)
+
+            const elementName = router.query.element;
+
+            console.log("### Router query", router.query);
+
+            console.log("### Element Name", elementName)
+
+            if (!elementName || elementName === "[element]") {
+                console.log('No element name found or placeholder value used')
+            } else {
+                const fetchAndSetElement = async () => {
+                    const currentElementData = await fetchElement(elementName);
+                    setCurrentElement(currentElementData);
+                    setLoading(false);
+                };
+
+                fetchAndSetElement();
+            }
         }
-    }, [router.pathname]);
+    }, [router.isReady, router.pathname]);
+
 
 
     return (
