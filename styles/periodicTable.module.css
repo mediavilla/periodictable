@@ -70,6 +70,7 @@
 }
 
 .elementCardMedium {
+    padding: 0.1vw;
     width: 100%;
     display: grid;
     grid-template-rows: 1fr 2fr 1fr;

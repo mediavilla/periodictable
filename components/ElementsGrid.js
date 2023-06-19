@@ -21,22 +21,27 @@ export default function ElementsGrid({ elements }) {
 
 
           return (
-            <Link href={`/${element.name}`}
-              key={element.number}
-              className={`${elementStyles.element} ${getCategoryClassName(element.category)}`}
+            <div className={`
+            ${elementStyles.element} 
+            ${getCategoryClassName(element.category)}
+            `}
+
               style={{
                 gridColumn: element.col18Xpos,
                 gridRow: element.col18Ypos,
               }}
 
             >
-              <div className={`${elementStyles.elementCardMedium}`}>
-                <div className={elementStyles.atomicNumber}>{element.number}</div>
-                <div className={elementStyles.symbol}>{element.symbol}</div>
-                <div className={elementStyles.name}>{element.name}</div>
-              </div>
+              <Link href={`/${element.name}`} key={element.number}>
 
-            </Link>
+                <div className={`${elementStyles.elementCardMedium}`}>
+                  <div className={elementStyles.atomicNumber}>{element.number}</div>
+                  <div className={elementStyles.symbol}>{element.symbol}</div>
+                  <div className={elementStyles.name}>{element.name}</div>
+                </div>
+
+              </Link>
+            </div>
 
           );
         })}
