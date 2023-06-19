@@ -13,6 +13,7 @@
 
 .NavMiniTable {
     margin-top: 4em;
+
 }
 
 /* Make the table fit within the body */
@@ -33,9 +34,8 @@
     gap: 1px;
 }
 
-
 .element {
-    padding: 0.1vw;
+    padding: 0;
     border: 1px solid #ccc;
     display: flex;
     justify-content: center;
@@ -45,12 +45,18 @@
     width: 100%;
 }
 
+.element a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
 .periodicTableMini .element {
     width: 20px;
     height: 20px;
 }
 
-a.element {
+.element a {
     text-decoration: none;
     color: #070707;
 }
@@ -204,8 +210,8 @@ a.element {
     border-color: #FF00FF;
 }
 
-a.element.reactiveNonMetals:hover,
-a.element.reactiveNonMetals.selected {
+.reactiveNonMetals a:hover,
+.reactiveNonMetals.selected a {
     background-color: #FF00FF;
     color: #FFFFFF;
 }
@@ -216,8 +222,8 @@ a.element.reactiveNonMetals.selected {
     border-color: #05B6BB;
 }
 
-a.element.AlkaliMetals:hover,
-a.element.AlkaliMetals.selected {
+.element.AlkaliMetals a:hover,
+.element.AlkaliMetals.selected a {
     background-color: #05B6BB;
     color: #FFFFFF;
 }
@@ -227,8 +233,8 @@ a.element.AlkaliMetals.selected {
     border-color: #DD201C;
 }
 
-a.element.AlkalineEarthMetals:hover,
-a.element.AlkalineEarthMetals.selected {
+.element.AlkalineEarthMetals a:hover,
+.element.AlkalineEarthMetals.selected a {
     background-color: #DD201C;
     color: #FFFFFF;
 }
@@ -238,8 +244,8 @@ a.element.AlkalineEarthMetals.selected {
     border-color: #0070FF;
 }
 
-a.element.TransitionMetals:hover,
-a.element.TransitionMetals.selected {
+.element.TransitionMetals a:hover,
+.element.TransitionMetals.selected a {
     background-color: #0070FF;
     color: #FFFFFF;
 }
@@ -249,8 +255,8 @@ a.element.TransitionMetals.selected {
     border-color: #454545;
 }
 
-a.element.unknownProperties:hover,
-a.element.unknownProperties.selected {
+.element.unknownProperties a:hover,
+.element.unknownProperties.selected a {
     background-color: #454545;
     color: #FFFFFF;
 }
@@ -260,8 +266,8 @@ a.element.unknownProperties.selected {
     border-color: #7A00FF;
 }
 
-a.element.lanthanide:hover,
-a.element.lanthanide.selected {
+.element.lanthanide a:hover,
+.element.lanthanide.selected a {
     background-color: #7A00FF;
     color: #FFFFFF;
 }
@@ -272,8 +278,8 @@ a.element.lanthanide.selected {
     border-width: 2px;
 }
 
-a.element.lanthanum:hover,
-a.element.lanthanum.selected {
+.element.lanthanum a:hover,
+.element.lanthanum.selected a {
     background-color: #7A00FF;
     color: #FFFFFF;
 }
@@ -283,8 +289,8 @@ a.element.lanthanum.selected {
     border-color: #FF7500;
 }
 
-a.element.actinide:hover,
-a.element.actinide.selected {
+.element.actinide a:hover,
+.element.actinide.selected a {
     background-color: #FF7500;
     color: #FFFFFF;
 }
@@ -295,8 +301,8 @@ a.element.actinide.selected {
     border-width: 2px;
 }
 
-a.element.actinium:hover,
-a.element.actinium.selected {
+.element.actinium a:hover,
+.element.actinium.selected a {
     background-color: #FF7500;
     color: #FFFFFF;
 }
@@ -306,8 +312,8 @@ a.element.actinium.selected {
     border-color: #959339;
 }
 
-a.element.metalloid:hover,
-a.element.metalloid.selected {
+.element.metalloid:hover a,
+.element.metalloid.selected a {
     background-color: #959339;
     color: #FFFFFF;
 }
@@ -317,8 +323,8 @@ a.element.metalloid.selected {
     border-color: #15D905;
 }
 
-a.element.postTransitionMetal:hover,
-a.element.postTransitionMetal.selected {
+.element.postTransitionMetal a:hover,
+.element.postTransitionMetal.selected a {
     background-color: #15D905;
     color: #FFFFFF;
 }
@@ -328,8 +334,8 @@ a.element.postTransitionMetal.selected {
     border-color: #CCCCCC;
 }
 
-a.element.nobleGas:hover,
-a.element.nobleGas.selected {
+.element.nobleGas a:hover,
+.element.nobleGas.selected a {
     background-color: #333333;
     color: #FFFFFF;
 }

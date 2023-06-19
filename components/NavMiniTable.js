@@ -31,14 +31,11 @@ export default function NavMiniTable() {
           const isSelected = currentElement?.name === element.name;
 
           return (
-            <Link href={`/${element.name}`}
-              key={element.number}
 
-              className={`
+            <div className={`
             ${elementStyles.element} 
             ${getCategoryClassName(element.category, isSelected)}
             `}
-
 
               style={{
                 gridColumn: element.col18Xpos,
@@ -46,9 +43,8 @@ export default function NavMiniTable() {
               }}
 
             >
-
-            </Link>
-
+              <Link href={`/${element.name}`} key={element.number}> </Link>
+            </div>
           );
         })}
       </div >
