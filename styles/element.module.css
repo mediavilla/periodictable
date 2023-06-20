@@ -1,0 +1,45 @@
+.cardBorhOrbitals {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+
+/* 
+###############################################
+########### M E D I A  Q U E R I E S ##########
+############################################### 
+*/
+
+/* Large Desktop */
+@media (min-width: 1200px) {
+    /* Add styles for large desktops here */
+}
+
+/* Laptop */
+@media (min-width: 992px) and (max-width: 1199px) {
+    /* Add styles for laptops here */
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 991px) {
+    /* Add styles for tablets here */
+}
+
+/* Mobile Landscape */
+@media (min-width: 576px) and (max-width: 767px) {
+
+    /* Add styles for mobile landscape here */
+    .cardBorhOrbitals {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mobile Portrait */
+@media (max-width: 575px) {
+
+    /* Add styles for mobile portrait here */
+    .cardBorhOrbitals {
+        grid-template-columns: 1fr;
+    }
+}

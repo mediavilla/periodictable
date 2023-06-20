@@ -1,11 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import { TableContext } from '../utils/TableProvider';
 import elementsData from '../public/elements.json';
+import getCategoryClassName from '../utils/getCategoryClassName';
+import CustomElementContent from '../components/CustomElementContent';
+import elementStyles from '../styles/element.module.css';
 import ElementCard from '../components/ElementCard';
 import NavMiniTable from '../components/NavMiniTable';
 import NavElement from '../components/NavElement';
-import getCategoryClassName from '../utils/getCategoryClassName';
-import CustomElementContent from '../components/CustomElementContent';
+import Borh from '../components/Bohr';
+import Orbitals from '../components/Orbitals';
 
 export default function Element({ element }) {
 
@@ -20,7 +23,11 @@ export default function Element({ element }) {
             <NavElement />
             <div id="content">
                 <NavMiniTable element={element} />
-                <ElementCard element={element} getCategoryClassName={getCategoryClassName} />
+                <section className={elementStyles.cardBorhOrbitals}>
+                    <ElementCard element={element} getCategoryClassName={getCategoryClassName} />
+                    <Borh element={element} />
+                    <Orbitals element={element} />
+                </section>
                 <CustomElementContent element={element.name} />
             </div>
         </main>
