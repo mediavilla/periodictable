@@ -25,7 +25,7 @@ export default function Element({ element }) {
                 <NavMiniTable element={element} />
                 <section className={elementStyles.cardBorhOrbitals}>
                     <ElementCard element={element} getCategoryClassName={getCategoryClassName} />
-                    <Borh element={element} />
+                    <Borh element={element} getCategoryClassName={getCategoryClassName} />
                     <Orbitals element={element} />
                 </section>
                 <CustomElementContent element={element.name} />

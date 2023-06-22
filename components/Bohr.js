@@ -1,4 +1,5 @@
 import React from 'react';
+import getCategoryHexColor from '../utils/getCategoryHexColor';
 
 export default function Bohr({ element }) {
 
@@ -19,7 +20,7 @@ export default function Bohr({ element }) {
                 cx={((svgSize / 2) - radius) + x}
                 cy={((svgSize / 2) - radius) + y}
                 r="6"
-                fill="#000000"
+                fill={getCategoryHexColor(element.category)}
             />
         )
     }
@@ -30,7 +31,7 @@ export default function Bohr({ element }) {
                 cx={svgSize / 2}
                 cy={svgSize / 2}
                 r={radius}
-                stroke="white"
+                stroke="#333333"
                 strokeWidth="1"
                 fill="none"
             />

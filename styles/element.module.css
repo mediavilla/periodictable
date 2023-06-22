@@ -1,6 +1,80 @@
 .cardBorhOrbitals {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    /* aligns items vertically in the center */
+    justify-items: center;
+    /* aligns items horizontally in the center */
+}
+
+
+
+
+
+.reactiveNonMetals .bohrOrbital {
+    background-color: #F8D6EB;
+    border-color: #FF00FF;
+}
+
+.AlkaliMetals {
+    background-color: #D4F5F6;
+    border-color: #05B6BB;
+}
+
+.AlkalineEarthMetals {
+    background-color: #FFD9D8;
+    border-color: #DD201C;
+}
+
+.TransitionMetals {
+    background-color: #E4EEFD;
+    border-color: #0070FF;
+}
+
+
+.unknownProperties {
+    background-color: #DDDDDD;
+    border-color: #454545;
+}
+
+.lanthanide {
+    background-color: #EBDFF8;
+    border-color: #7A00FF;
+}
+
+.lanthanum {
+    background-color: #EBDFF8;
+    border-color: #7A00FF;
+    border-width: 2px;
+}
+
+.actinide {
+    background-color: #FBE7D6;
+    border-color: #FF7500;
+}
+
+.actinium {
+    background-color: #FBE7D6;
+    border-color: #FF7500;
+    border-width: 2px;
+}
+
+.metalloid {
+    background-color: #FFFEC6;
+    border-color: #959339;
+}
+
+.postTransitionMetal.bohrOrbital {
+    fill: #15D905;
+}
+
+.postTransitionMetal .bohrElectron {
+    fill: #15D905;
+}
+
+.nobleGas {
+    background-color: #FFFFFF;
+    border-color: #CCCCCC;
 }
 
 
