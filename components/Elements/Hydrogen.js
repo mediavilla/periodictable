@@ -4,8 +4,7 @@ export default function Hydrogen() {
     return (
         <div>
             <h1>Hydrogen</h1>
-            <p>Custom content for Hydrogen</p>
-            <h4>Discovery:</h4>
+            <h4>Discovery</h4>
             <p>Hydrogen was officially recognized as a distinct substance by Henry Cavendish in 1766, although earlier scientists such as Robert Boyle had produced and identified gases that were likely composed of hydrogen.</p>
             <h4>Name Origin:**</h4>
             <p>The name Hydrogen comes from the Greek words "hydro" meaning "water", and "genes" meaning "creator".This is because when Hydrogen burns in the air, it creates water.</p>
