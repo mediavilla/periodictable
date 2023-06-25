@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import elements from '../public/elements.json';
 import timeline from '../public/timeline.json';
-import ElementsGrid from '../components/ElementsGrid';
+import TableLoader from '../components/TableLoader';
 import Timeline from '../components/Timeline';
 import TimelineContent from '../components/TimelineContent';
 import styles from '../styles/timeline.module.css';
@@ -88,7 +88,7 @@ function App() {
       </Head>
       <main>
         <div id="content">
-          <ElementsGrid elements={elements} getCategoryClassName={getCategoryClassName} />
+          <TableLoader elements={elements} />
 
           <TimelineContent
             yearsData={sortedTimeline}

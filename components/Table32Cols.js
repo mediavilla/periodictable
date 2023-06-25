@@ -1,11 +1,14 @@
-import React from 'react'
-import elementStyles from '../styles/periodicTable.module.css'
-import Link from 'next/link'
+import React from "react";
+import Link from 'next/link';
 import getCategoryClassName from '../utils/getCategoryClassName';
+import elementStyles from '../styles/periodicTable.module.css'
+
 
 export default function ElementsGrid({ elements }) {
+
   return (
     <section>
+
       <div className={elementStyles.periodicTable}>
         {elements.map((element) => {
           // console.log(element.col18Xpos, element.col18Ypos); // Log the properties
@@ -21,14 +24,15 @@ export default function ElementsGrid({ elements }) {
 
 
           return (
+
             <div className={`
             ${elementStyles.element} 
             ${getCategoryClassName(element.category)}
             `}
 
               style={{
-                gridColumn: element.col18Xpos,
-                gridRow: element.col18Ypos,
+                gridColumn: element.col32Xpos,
+                gridRow: element.col32Ypos,
               }}
 
             >
@@ -46,6 +50,9 @@ export default function ElementsGrid({ elements }) {
           );
         })}
       </div>
+
+
+
     </section>
   );
 }
