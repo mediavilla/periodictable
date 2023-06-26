@@ -9,7 +9,7 @@ export default function ElementsGrid({ elements }) {
   return (
     <section>
 
-      <div className={elementStyles.periodicTable}>
+      <div className={elementStyles.periodicTable18}>
         {elements.map((element) => {
           // console.log(element.col18Xpos, element.col18Ypos); // Log the properties
 
