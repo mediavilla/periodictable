@@ -5,11 +5,9 @@ import elementsData from '../public/elements.json'; // import your elements data
 import elementStyles from '../styles/periodicTable.module.css'
 import getCategoryClassName from '../utils/getCategoryClassName';
 
-export default function NavMiniTable() {
+export default function NavMiniTable32() {
 
   const { currentElement, loading } = useContext(TableContext);
-
-  console.log("### Current Element in NavMiniTable", currentElement)
 
   if (loading) {
     return <p>Loading...</p>; // or any other placeholder component
@@ -26,7 +24,7 @@ export default function NavMiniTable() {
 
   return (
     <section className={elementStyles.NavMiniTable}>
-      <div className={elementStyles.periodicTableMini}>
+      <div className={elementStyles.periodicTableMini32}>
         {elementsData.map((element) => {
           const isSelected = currentElement?.name === element.name;
 
@@ -38,8 +36,8 @@ export default function NavMiniTable() {
             `}
 
               style={{
-                gridColumn: element.col18Xpos,
-                gridRow: element.col18Ypos,
+                gridColumn: element.col32Xpos,
+                gridRow: element.col32Ypos,
               }}
 
             >
