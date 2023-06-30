@@ -5,11 +5,10 @@ import getCategoryClassName from '../utils/getCategoryClassName';
 import CustomElementContent from '../components/CustomElementContent';
 import elementStyles from '../styles/element.module.css';
 import ElementCard from '../components/ElementCard';
-import NavMiniTable18 from '../components/NavMiniTable18';
-import NavMiniTable32 from '../components/NavMiniTable32';
 import NavElement from '../components/NavElement';
 import Borh from '../components/Bohr';
 import Orbitals from '../components/Orbitals';
+import TableSwitcher from '../components/TableSwitcher';
 
 export default function Element({ element }) {
 
@@ -20,23 +19,12 @@ export default function Element({ element }) {
         setCurrentElement(element);
     }, [element]);
 
-    function renderNavTable() {
-        switch (tableType) {
-            case "table18":
-                return <NavMiniTable18 element={element} />;
-            case "table32":
-                return <NavMiniTable32 element={element} />;
-            // Add more case statements as you add more tables
-            default:
-                return <NavMiniTable18 element={element} />; // Default to NavMiniTable if tableType doesn't match any case
-        }
-    }
 
     return (
         <main>
             <NavElement />
             <div id="content">
-                {renderNavTable()}
+                <TableSwitcher elements={elementsData} />
                 <section className={elementStyles.cardBorhOrbitals}>
                     <ElementCard element={element} getCategoryClassName={getCategoryClassName} />
                     <Borh element={element} getCategoryClassName={getCategoryClassName} />
@@ -47,7 +35,6 @@ export default function Element({ element }) {
         </main>
     );
 }
-
 
 
 export async function getServerSideProps({ params }) {
@@ -62,6 +49,7 @@ export async function getServerSideProps({ params }) {
     return {
         props: {
             element: elementData,
+            elements: elementsData // pass the entire elementsData array as the elements prop
         },
     };
 }
