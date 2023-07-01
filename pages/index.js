@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import elements from '../public/elements.json';
 import timeline from '../public/timeline.json';
-import TableLoader from '../components/TableLoader';
+import TableSwitcher from '../components/TableSwitcher';
 import Timeline from '../components/Timeline';
 import TimelineContent from '../components/TimelineContent';
 import styles from '../styles/timeline.module.css';
 import getCategoryClassName from '../utils/getCategoryClassName';
+import Table18 from '../components/Table18Cols'
+import Table32 from '../components/Table32Cols'
 
 
 const sortedTimeline = timeline.sort((a, b) => b.year - a.year);
@@ -88,7 +90,12 @@ function App() {
       </Head>
       <main>
         <div id="content">
-          <TableLoader elements={elements} />
+          <TableSwitcher
+            elements={elements}
+            TableComponent18={Table18}
+            TableComponent32={Table32}
+          />
+
 
           <TimelineContent
             yearsData={sortedTimeline}

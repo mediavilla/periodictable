@@ -4,7 +4,7 @@ import getCategoryClassName from '../utils/getCategoryClassName';
 import elementStyles from '../styles/periodicTable.module.css'
 
 
-export default function ElementsGrid({ elements }) {
+export default function Table18({ elements }) {
 
   return (
     <section>

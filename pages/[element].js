@@ -9,6 +9,8 @@ import NavElement from '../components/NavElement';
 import Borh from '../components/Bohr';
 import Orbitals from '../components/Orbitals';
 import TableSwitcher from '../components/TableSwitcher';
+import NavMiniTable18 from '@/components/NavMiniTable18';
+import NavMiniTable32 from '@/components/NavMiniTable32';
 
 export default function Element({ element }) {
 
@@ -24,7 +26,12 @@ export default function Element({ element }) {
         <main>
             <NavElement />
             <div id="content">
-                <TableSwitcher elements={elementsData} />
+                <TableSwitcher
+                    elements={elementsData}
+                    TableComponent18={NavMiniTable18}
+                    TableComponent32={NavMiniTable32}
+                />
+
                 <section className={elementStyles.cardBorhOrbitals}>
                     <ElementCard element={element} getCategoryClassName={getCategoryClassName} />
                     <Borh element={element} getCategoryClassName={getCategoryClassName} />
