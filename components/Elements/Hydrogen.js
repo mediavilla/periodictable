@@ -6,7 +6,7 @@ export default function Hydrogen() {
             <h1>Hydrogen</h1>
             <h4>Discovery</h4>
             <p>Hydrogen was officially recognized as a distinct substance by Henry Cavendish in 1766, although earlier scientists such as Robert Boyle had produced and identified gases that were likely composed of hydrogen.</p>
-            <h4>Name Origin:**</h4>
+            <h4>Name Origin:</h4>
             <p>The name Hydrogen comes from the Greek words "hydro" meaning "water", and "genes" meaning "creator".This is because when Hydrogen burns in the air, it creates water.</p>
             <h4>Natural Occurrence</h4>
             <p>Hydrogen is the most abundant element in the universe! In its pure form on Earth, it is a gas that's rarely found because it is so light that Earth's gravity can't hold it down. However, you can find it combined with other elements in substances like water (H2O), where each water molecule includes two hydrogen atoms.</p>
