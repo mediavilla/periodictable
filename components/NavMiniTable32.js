@@ -40,6 +40,8 @@ export default function NavMiniTable32() {
                 gridRow: element.col32Ypos,
               }}
 
+              key={element.number} // Add the key prop here
+
             >
               <Link href={`/${element.name}`} key={element.number}> </Link>
             </div>

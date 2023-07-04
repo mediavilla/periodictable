@@ -35,6 +35,8 @@ export default function Table18({ elements }) {
                 gridRow: element.col18Ypos,
               }}
 
+              key={element.number} // Add the key prop here
+
             >
               <Link href={`/${element.name}`} key={element.number}>
 
