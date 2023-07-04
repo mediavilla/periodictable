@@ -11,6 +11,13 @@ export default function NavElement() {
     const { currentElement, loading } = useContext(TableContext);
     const router = useRouter();
 
+    // Determine the next elements in each direction
+    const nextRightElement = currentElement ? elementsData.find(el => el.number === currentElement.number + 1) : null;
+    const nextLeftElement = currentElement ? elementsData.find(el => el.number === currentElement.number - 1) : null;
+    const nextTopElement = currentElement ? elementsData.find(el => el.col18Xpos === currentElement.col18Xpos && el.col18Ypos === currentElement.col18Ypos - 1) : null;
+    const nextBottomElement = currentElement ? elementsData.find(el => el.col18Xpos === currentElement.col18Xpos && el.col18Ypos === currentElement.col18Ypos + 1) : null;
+
+
     useEffect(() => {
         const handleKeyDown = (event) => {
             if (!currentElement) return;
@@ -45,11 +52,6 @@ export default function NavElement() {
         return <p>Loading...</p>; // or any other placeholder component
     }
 
-    // Determine the next elements in each direction
-    const nextRightElement = currentElement ? elementsData.find(el => el.number === currentElement.number + 1) : null;
-    const nextLeftElement = currentElement ? elementsData.find(el => el.number === currentElement.number - 1) : null;
-    const nextTopElement = currentElement ? elementsData.find(el => el.col18Xpos === currentElement.col18Xpos && el.col18Ypos === currentElement.col18Ypos - 1) : null;
-    const nextBottomElement = currentElement ? elementsData.find(el => el.col18Xpos === currentElement.col18Xpos && el.col18Ypos === currentElement.col18Ypos + 1) : null;
 
     if (!currentElement) {
         return null; // Return early if currentElement is not yet defined
