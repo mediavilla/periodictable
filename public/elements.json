@@ -1373,7 +1373,7 @@
       2
     ],
     "electron_configuration": "1s2 2s2 2p6 3s2 3p6 3d8 4s2",
-    "econfig_shorthand": "[Ar] 3d8 4s2 or [Ar] 3d9 4s1 disputed check article",
+    "econfig_shorthand": "[Ar] 3d8 4s2",
     "electron_affinity": 111.65,
     "electronegativity_pauling": 1.91,
     "ionization_energies": [
