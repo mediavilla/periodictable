@@ -4,7 +4,6 @@ export default function Hassium() {
     return (
         <div>
             <h1>Hassium</h1>
-            ```html
             <h4>Discovery</h4>
 
             <p>Hassium was first synthesized in 1984 by a team of researchers at the Institute for Heavy Ion Research (Gesellschaft für Schwerionenforschung) in Darmstadt, Germany. The team, led by Peter Armbruster and Gottfried Münzenberg, produced the element by bombarding lead-208 with iron-58 ions. The International Union of Pure and Applied Chemistry (IUPAC) officially recognized the discovery in 1992.</p>
