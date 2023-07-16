@@ -239,6 +239,9 @@
     fill: #FF00FF !important;
 }
 
+a:hover .reactiveNonMetals {
+    fill: #FF00FF !important;
+}
 
 .AlkaliMetals {
     background-color: #D4F5F6;
