@@ -11,6 +11,7 @@ import Orbitals from '../components/Orbitals';
 import TableSwitcher from '../components/TableSwitcher';
 import NavMiniTable18 from '@/components/NavMiniTable18';
 import NavMiniTable32 from '@/components/NavMiniTable32';
+import NavMiniTableRaceTrack from '@/components/NavMiniTableRaceTrack';
 
 export default function Element({ element }) {
 
@@ -30,6 +31,7 @@ export default function Element({ element }) {
                     elements={elementsData}
                     TableComponent18={NavMiniTable18}
                     TableComponent32={NavMiniTable32}
+                    TableComponentRaceTrack={NavMiniTableRaceTrack}
                 />
 
                 <section className={elementStyles.cardBorhOrbitals}>

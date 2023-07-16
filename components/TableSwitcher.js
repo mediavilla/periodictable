@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { TableContext } from '../utils/TableProvider';
 
-export default function TableSwitcher({ elements, TableComponent18, TableComponent32 }) {
+export default function TableSwitcher({ elements, TableComponent18, TableComponent32, TableComponentRaceTrack }) {
     const { tableType, setTableType } = useContext(TableContext);
 
     function renderTable() {
@@ -10,6 +10,8 @@ export default function TableSwitcher({ elements, TableComponent18, TableCompone
                 return <TableComponent18 elements={elements} />;
             case "table32":
                 return <TableComponent32 elements={elements} />;
+            case "tableRaceTrack":
+                return <TableComponentRaceTrack elements={elements} />;
             default:
                 return <TableComponent18 elements={elements} />;
         }
@@ -19,6 +21,7 @@ export default function TableSwitcher({ elements, TableComponent18, TableCompone
         <div>
             <button onClick={() => setTableType("table18")}>Table 18 columns</button>
             <button onClick={() => setTableType("table32")}>Table 32 columns</button>
+            <button onClick={() => setTableType("tableRaceTrack")}>Race Track</button>
             {renderTable()}
         </div>
     );
