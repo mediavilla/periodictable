@@ -13,7 +13,7 @@ export default function Flerovium() {
             <h4>Properties and Characteristics</h4>
             <p>As a synthetic element, Flerovium doesn't have many known properties, as it's only been produced in small amounts and is highly unstable. Its most stable isotope, Flerovium-289, has a half-life of only about 2.6 seconds.</p>
             <h4>Applications</h4>
-            <p>As of 2021, Flerovium has no known applications outside of basic scientific research, largely due to its extreme rarity and instability.</p>
+            <p>Flerovium has no known applications outside of basic scientific research, largely due to its extreme rarity and instability.</p>
             <h4>Interaction with Other Elements</h4>
             <p>Due to its extreme instability and short half-life, there's limited information about Flerovium's interactions with other elements. Its position in the periodic table suggests it might behave similarly to the other elements in Group 14, but these properties have yet to be thoroughly investigated.</p>
         </div>
