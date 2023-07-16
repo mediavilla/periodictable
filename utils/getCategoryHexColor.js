@@ -19,7 +19,6 @@ function getCategoryHexColor(category) {
         'unknown probably post-transition metal': "#454545",
         'unknown probably metalloid': "#454545",
         'unknown predicted to be noble gas': "#454545"
-
     };
 
     return categoryClassMap[category] || '';

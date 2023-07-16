@@ -229,18 +229,21 @@
 .reactiveNonMetals {
     background-color: #F8D6EB;
     border-color: #FF00FF;
+    fill: #F8D6EB !important;
 }
 
 .reactiveNonMetals a:hover,
 .reactiveNonMetals.selected a {
     background-color: #FF00FF;
     color: #FFFFFF;
+    fill: #FF00FF !important;
 }
 
 
 .AlkaliMetals {
     background-color: #D4F5F6;
     border-color: #05B6BB;
+    fill: #D4F5F6 !important;
 }
 
 .element.AlkaliMetals a:hover,

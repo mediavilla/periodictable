@@ -19,8 +19,6 @@ function getCategoryClassName(category, isSelected) {
     'unknown probably post-transition metal': isSelected ? `${elementStyles.unknownProperties} ${elementStyles.selected}` : elementStyles.unknownProperties,
     'unknown probably metalloid': isSelected ? `${elementStyles.unknownProperties} ${elementStyles.selected}` : elementStyles.unknownProperties,
     'unknown predicted to be noble gas': isSelected ? `${elementStyles.unknownProperties} ${elementStyles.selected}` : elementStyles.unknownProperties,
-
-
   };
 
   return categoryClassMap[category] || '';
