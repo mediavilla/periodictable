@@ -1,36 +1,6 @@
-import { useContext } from 'react'
-import Link from 'next/link'
-import { TableContext } from '../utils/TableProvider';
-import raceTrackStyle from '../styles/raceTrack.module.scss'
-import elementStyles from '../styles/periodicTable.module.css'
 
-export default function NavMiniTableRaceTrack() {
-
-    const { currentElement, loading } = useContext(TableContext);
-
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-
-    // Return a default or fallback element when currentElement is null
-    if (!currentElement) {
-        return (
-            <div className={elementStyles.element}>
-                <span>No element selected</span>
-            </div>
-        );
-    }
-
-
-    return (
-        <section className={elementStyles.NavMiniTable}>
-            <div>
-
-                <svg width="400px" height="auto" viewBox="0 0 2084 1250" version="1.1" space="preserve">
-                    <g>
-                        <Link href="/hydrogen"><path id="1" d="M410.778,689.816c20.972,39.086 57.524,68.587 101.328,80.175c-0,0 24.2,-70.357 24.088,-70.373c-25.326,-3.513 -46.488,-19.599 -58.837,-41.53l-66.579,31.728" className={`${raceTrackStyle.e1} ${currentElement.name === 'Hydrogen' ? raceTrackStyle.selected : ''}`} /></Link>
-                        <Link href="/helium"><path id="2" d="M475.056,573.844l-66.836,-31.85l-0.049,0.098c-10.588,21.525 -16.537,45.736 -16.537,71.326c0,27.62 6.93,53.634 19.144,76.398c-0,-0 66.579,-31.728 66.579,-31.728c-7.46,-13.251 -11.703,-28.635 -11.703,-44.67c-0,-14.192 3.37,-27.603 9.352,-39.476" className={`${raceTrackStyle.e2} ${currentElement.name === 'Helium' ? raceTrackStyle.selected : ''}`} /></Link>
-                        <Link href="/lithium"><path id="3" d="M475.003,573.943c10.19,-20.224 27.96,-35.985 49.569,-43.542l-31.266,-67.32c-37.179,14.935 -67.556,43.269 -85.138,79.012l0.048,-0.098l66.836,31.85" className={`${raceTrackStyle.e3} ${currentElement.name === 'Lithium' ? raceTrackStyle.selected : ''}`} /></Link>
+                    <Link href="/hydrogen"><path id="1" d="M410.778,689.816c20.972,39.086 57.524,68.587 101.328,80.175c-0,0 24.2,-70.357 24.088,-70.373c-25.326,-3.513 -46.488,-19.599 -58.837,-41.53l-66.579,31.728" className={`${raceTrackStyle.e1} ${currentElement.name === 'Hydrogen' ? raceTrackStyle.selected : ''}`} /></Link>
+                    <Link href="/lithium"><path id="3" d="M475.003,573.943c10.19,-20.224 27.96,-35.985 49.569,-43.542l-31.266,-67.32c-37.179,14.935 -67.556,43.269 -85.138,79.012l0.048,-0.098l66.836,31.85" className={`${raceTrackStyle.e3} ${currentElement.name === 'Lithium' ? raceTrackStyle.selected : ''}`} /></Link>
                         <Link href="/beryllium"><path id="4" d="M602.306,535.375l31.194,-67.165c-24.467,-10.759 -51.506,-16.732 -79.929,-16.732c-21.294,0 -41.634,4.119 -60.265,11.603l31.265,67.319c9.082,-3.176 18.841,-4.902 29,-4.902c17.286,-0 33.757,3.518 48.735,9.877" className={`${raceTrackStyle.e4} ${currentElement.name === 'Beryllium' ? raceTrackStyle.selected : ''}`} /></Link>
                         <Link href="/boron"><path id="5" d="M602.306,535.375c20.062,8.518 37.446,22.132 50.522,39.214l67.739,-32.28c-21.062,-32.445 -51.319,-58.38 -87.067,-74.099l-31.194,67.165" className={`${raceTrackStyle.e5} ${currentElement.name === 'Boron' ? raceTrackStyle.selected : ''}`} /></Link>
                         <Link href="/carbon"><path id="6" d="M652.83,574.587c0.016,0.022 0.033,0.044 0.05,0.066c16.072,21.024 25.623,47.292 25.623,75.773c0,6.681 -0.525,13.239 -1.537,19.636l68.593,32.687c4.54,-16.674 6.964,-34.218 6.964,-52.323c-0,-39.852 -11.743,-76.983 -31.955,-108.119c0,-0 -53.701,25.591 -67.67,32.247" className={`${raceTrackStyle.e6} ${currentElement.name === 'Carbon' ? raceTrackStyle.selected : ''}`} /></Link>
@@ -132,9 +102,3 @@ export default function NavMiniTableRaceTrack() {
                         <Link href="/nobelium"><path id="102" d="M814.552,19.804 h64.681 v37.074 h-64.681 Z" className={`${raceTrackStyle.e102} ${currentElement.name === 'Nobelium' ? raceTrackStyle.selected : ''}`} /></Link>
                         <Link href="/lawrencium"><path id="103" d="M879.234,19.804 h61.24 v37.074 h-61.24 Z" className={`${raceTrackStyle.e103} ${currentElement.name === 'Lawrencium' ? raceTrackStyle.selected : ''}`} /></Link>
                         <Link href="/rutherfordium"><path id="104" d="M940.474,19.804 h68.28 v74.148 h-68.28 Z" className={`${raceTrackStyle.e104} ${currentElement.name === 'Rutherfordium' ? raceTrackStyle.selected : ''}`} /></Link>
-                    </g>
-                </svg>
-            </div>
-        </section >
-    )
-}
