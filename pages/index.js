@@ -9,6 +9,8 @@ import styles from '../styles/timeline.module.css';
 import getCategoryClassName from '../utils/getCategoryClassName';
 import Table18 from '../components/Table18Cols'
 import Table32 from '../components/Table32Cols'
+import TableRaceTrack from '../components/TableRaceTrack'
+
 
 
 const sortedTimeline = timeline.sort((a, b) => b.year - a.year);
@@ -94,8 +96,8 @@ function App() {
             elements={elements}
             TableComponent18={Table18}
             TableComponent32={Table32}
+            TableComponentRaceTrack={TableRaceTrack}
           />
-
 
           <TimelineContent
             yearsData={sortedTimeline}

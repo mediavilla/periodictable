@@ -11,7 +11,7 @@ export default function TableSwitcher({ elements, TableComponent18, TableCompone
             case "table32":
                 return <TableComponent32 elements={elements} />;
             case "tableRaceTrack":
-                return <TableComponentRaceTrack elements={elements} />;
+                return <TableComponentRaceTrack />;
             default:
                 return <TableComponent18 elements={elements} />;
         }

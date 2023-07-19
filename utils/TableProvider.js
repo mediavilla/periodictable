@@ -23,16 +23,11 @@ export function TableProvider({ children }) {
 
     useEffect(() => {
         if (router.isReady) {
-            console.log("### Router Pathname", router.pathname)
 
             const elementName = router.query.element;
 
-            console.log("### Router query", router.query);
-
-            console.log("### Element Name", elementName)
-
             if (!elementName || elementName === "[element]") {
-                console.log('No element name found or placeholder value used')
+
             } else {
                 const fetchAndSetElement = async () => {
                     const currentElementData = await fetchElement(elementName);
@@ -50,7 +45,6 @@ export function TableProvider({ children }) {
     return (
 
         <TableContext.Provider value={{ currentElement, setCurrentElement, tableType, setTableType, loading }}>
-
             {children}
         </TableContext.Provider>
     );
