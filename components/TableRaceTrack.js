@@ -10,17 +10,18 @@ export default function TableRaceTrack() {
         <section className="">
             <div>
 
-                <svg width="90%" height="auto" viewBox="0 0 2084 1250" version="1.1" space="preserve">
+                <svg width="100%" height="auto" viewBox="0 0 2084 1250" version="1.1" space="preserve">
                     <g>
                         <Link href="/hydrogen" className={raceTrackStyle.e1}>
-                            <defs>
-                                <path id="1" d="M410.778,689.816c20.972,39.086 57.524,68.587 101.328,80.175c-0,0 24.2,-70.357 24.088,-70.373c-25.326,-3.513 -46.488,-19.599 -58.837,-41.53l-66.579,31.728" />
-                            </defs>
-                            <text>
-                                <textPath href="#1">
-                                    Hydrogen
-                                </textPath>
-                            </text>
+
+                            <path id="1" d="M410.778,689.816c20.972,39.086 57.524,68.587 101.328,80.175c-0,0 24.2,-70.357 24.088,-70.373c-25.326,-3.513 -46.488,-19.599 -58.837,-41.53l-66.579,31.728" />
+
+                            <path id="hydrogen" className={raceTrackStyle.pathcolor} d="M451.72,674.589c15.209,26.852 41.056,46.9 71.796,54.403" />
+                            <text><textPath href="#hydrogen" x="435" y="660" fill="black">HYDROGEN</textPath></text>
+                            <text x="425" y="680" fill="black" transform="rotate(45 420 700)">1</text>
+                            <text x="465" y="680" fill="black" transform="rotate(45 420 700)">H</text>
+                            <text x="500" y="680" fill="black" transform="rotate(45 420 700)">1.0</text>
+
                         </Link>
                         <Link href="/helium"><path id="2" d="M475.056,573.844l-66.836,-31.85l-0.049,0.098c-10.588,21.525 -16.537,45.736 -16.537,71.326c0,27.62 6.93,53.634 19.144,76.398c-0,-0 66.579,-31.728 66.579,-31.728c-7.46,-13.251 -11.703,-28.635 -11.703,-44.67c-0,-14.192 3.37,-27.603 9.352,-39.476" className={raceTrackStyle.e2} /></Link>
                         <Link href="/lithium"><path id="3" d="M475.003,573.943c10.19,-20.224 27.96,-35.985 49.569,-43.542l-31.266,-67.32c-37.179,14.935 -67.556,43.269 -85.138,79.012l0.048,-0.098l66.836,31.85" className={raceTrackStyle.e3} /></Link>
