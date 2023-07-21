@@ -10,6 +10,7 @@ import getCategoryClassName from '../utils/getCategoryClassName';
 import Table18 from '../components/Table18Cols'
 import Table32 from '../components/Table32Cols'
 import TableRaceTrack from '../components/TableRaceTrack'
+import Footer from '../components/Footer'
 
 
 
@@ -116,6 +117,7 @@ function App() {
         ></Timeline>
 
       </main>
+      <Footer />
     </>
   );
 }
