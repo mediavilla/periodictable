@@ -1,6 +1,5 @@
 import elements from '../public/elements.json';
 
-
 export default function fetchElement(elementName) {
     const elementData = elements.find(el => el.name.toLowerCase() === elementName.toLowerCase());
 

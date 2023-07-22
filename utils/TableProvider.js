@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import fetchElement from './fetchElement';
+import elements from '../public/elements.json';
 
 export const TableContext = React.createContext({
     currentElement: null,
@@ -20,6 +21,15 @@ export function TableProvider({ children }) {
     useEffect(() => {
         console.log('### New currentElement:', currentElement);
     }, [currentElement]);
+
+    // Default element
+    const defaultElement = elements[0]; // Assuming elements is an array of element objects
+
+    useEffect(() => {
+        if (!currentElement) setCurrentElement(defaultElement);
+    }, []);
+
+
 
     useEffect(() => {
         if (router.isReady) {

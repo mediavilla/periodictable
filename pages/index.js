@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Head from 'next/head';
 import elements from '../public/elements.json';
 import timeline from '../public/timeline.json';
+import { TableContext } from '../utils/TableProvider';
 import TableSwitcher from '../components/TableSwitcher';
 import Timeline from '../components/Timeline';
 import TimelineContent from '../components/TimelineContent';
@@ -10,15 +11,15 @@ import getCategoryClassName from '../utils/getCategoryClassName';
 import Table18 from '../components/Table18Cols'
 import Table32 from '../components/Table32Cols'
 import TableRaceTrack from '../components/TableRaceTrack'
+import BackgroundDisplay from '../components/BackgroundDisplay'
 import Footer from '../components/Footer'
-
 
 
 const sortedTimeline = timeline.sort((a, b) => b.year - a.year);
 
 function App() {
 
-
+  const { currentElement, setCurrentElement } = useContext(TableContext);
 
   const [selectedYear, setSelectedYear] = useState(null);
 
@@ -91,7 +92,11 @@ function App() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <BackgroundDisplay element={currentElement} />
+
       <main>
+
         <div id="content">
           <TableSwitcher
             elements={elements}
@@ -106,7 +111,7 @@ function App() {
             getCategoryClassName={getCategoryClassName}
             selectedYear={selectedYear}
           />
-          <div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></div>
+
         </div>
 
         <Timeline
@@ -118,6 +123,7 @@ function App() {
 
       </main>
       <Footer />
+
     </>
   );
 }

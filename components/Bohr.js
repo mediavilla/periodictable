@@ -1,13 +1,17 @@
 import React from 'react';
 import getCategoryHexColor from '../utils/getCategoryHexColor';
 
-export default function Bohr({ element }) {
+export default function Bohr({ element, svgSize }) {
 
     const atomicMass = element.atomic_mass.toFixed(0)
     const numberOfShells = element.shells.length
     const numberOfNeutrons = atomicMass - element.number
-    const svgSize = 100 + (numberOfShells * 35)
+    const calculatedSize = 100 + (numberOfShells * 35)
 
+    // Use svgSize prop if provided, otherwise use calculatedSize
+    svgSize = svgSize || calculatedSize;
+
+    console.log('svgSize: ', svgSize)
 
     function electrons(electron, orbit, diameter, radius, numberElectronsInShell) {
         const angle = (electron / (numberElectronsInShell / 2)) * Math.PI // Calculate the angle at which the element will be placed.
