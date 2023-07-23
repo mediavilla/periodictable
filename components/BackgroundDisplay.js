@@ -1,5 +1,5 @@
 import React from 'react';
-import Bohr from './Bohr'; // This is your existing Bohr model component
+import BohrBackground from './BohrBackground'; // This is your existing Bohr model component
 
 // This component receives the currently selected element as a prop
 function BackgroundDisplay({ element }) {
@@ -9,12 +9,9 @@ function BackgroundDisplay({ element }) {
     // Return the Bohr model for the selected element
     // Adjust the styling as needed to fit your layout
     return (
-        <div style={{ position: 'absolute', width: '100%', height: '100%', zIndex: -1 }}>
-
-            <Bohr element={element} svgSize={800} />
-
-
-        </div>
+        <>
+            <BohrBackground element={element} />
+        </>
     );
 }
 

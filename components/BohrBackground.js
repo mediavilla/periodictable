@@ -3,11 +3,8 @@ import getCategoryHexColor from '../utils/getCategoryHexColor';
 
 export default function Bohr({ element }) {
 
-    const atomicMass = element.atomic_mass.toFixed(0)
     const numberOfShells = element.shells.length
-    const numberOfNeutrons = atomicMass - element.number
-    const svgSize = 100 + (numberOfShells * 35)
-
+    const svgSize = 2000 + (numberOfShells * 35)
 
     function electrons(electron, orbit, diameter, radius, numberElectronsInShell) {
         const angle = (electron / (numberElectronsInShell / 2)) * Math.PI // Calculate the angle at which the element will be placed.
@@ -32,7 +29,7 @@ export default function Bohr({ element }) {
                 cy={svgSize / 2}
                 r={radius}
                 stroke="#333333"
-                strokeWidth="1"
+                strokeWidth="10"
                 fill="none"
             />
         )
@@ -47,10 +44,10 @@ export default function Bohr({ element }) {
             let radius, diameter
 
             if (i === 0) { // Just one orbit, like Hydrogen
-                radius = 40
+                radius = svgSize * 0.2 // 20% of svgSize
                 diameter = radius * 2
             } else {
-                radius = (i * 20) + 40
+                radius = (i * svgSize * 0.1) + svgSize * 0.2 // Increment each orbit by 10% of svgSize
                 diameter = radius * 2
             }
 
@@ -66,33 +63,11 @@ export default function Bohr({ element }) {
         return children
     }
 
+
     return (
 
-        <div id="electronConfiguration" >
-            <svg width={svgSize} height={svgSize}>
-                <text x="50%"
-                    y="44%"
-                    textAnchor="middle"
-                    fill="#000000"
-                    fontSize="14px"
-                    fontFamily="Arial"
-                    dy=".3em">
-                    p
-                    <tspan baselineShift="super" fontSize="10px">+</tspan>
-                    {element.number}
-                </text>
-                <text x="50%"
-                    y="55%"
-                    textAnchor="middle"
-                    fill="#000000"
-                    fontSize="14px"
-                    fontFamily="Arial"
-                    dy=".3em">
-                    n
-                    <tspan baselineShift="super" fontSize="10px">o</tspan>
-                    {numberOfNeutrons}
-                </text>
-
+        <div id="bohrModelBackground" style={{ position: 'absolute' }}>
+            <svg width={svgSize} height={svgSize} viewBox={`0 0 ${svgSize} ${svgSize}`}>
                 {shellsOrbits()}
             </svg>
 

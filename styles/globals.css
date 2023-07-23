@@ -135,7 +135,12 @@ ul {
 
 
 main {
-    display: flex;
+    position: relative;
+    z-index: 1;
+}
+
+.bohrModelBackground {
+    position: absolute;
 }
 
 .timeline {
