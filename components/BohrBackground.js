@@ -1,10 +1,15 @@
 import React from 'react';
 import getCategoryHexColor from '../utils/getCategoryHexColor';
+import bohrStyles from '../styles/bohrBackground.module.css'
 
 export default function Bohr({ element }) {
 
+    console.log('BOHR ELEMENT: ', element)
+
+    if (!element) return null;
+
     const numberOfShells = element.shells.length
-    const svgSize = 2000 + (numberOfShells * 35)
+    const svgSize = 400 + (numberOfShells * 35)
 
     function electrons(electron, orbit, diameter, radius, numberElectronsInShell) {
         const angle = (electron / (numberElectronsInShell / 2)) * Math.PI // Calculate the angle at which the element will be placed.
@@ -13,6 +18,7 @@ export default function Bohr({ element }) {
 
         return (
             <circle
+                className={bohrStyles.electron}
                 key={"" + electron + orbit}
                 cx={((svgSize / 2) - radius) + x}
                 cy={((svgSize / 2) - radius) + y}
@@ -24,7 +30,7 @@ export default function Bohr({ element }) {
 
     function orbits(radius, orbit) {
         return (
-            <circle key={orbit}
+            <circle className={bohrStyles.orbit} key={orbit}
                 cx={svgSize / 2}
                 cy={svgSize / 2}
                 r={radius}
@@ -66,7 +72,7 @@ export default function Bohr({ element }) {
 
     return (
 
-        <div id="bohrModelBackground" style={{ position: 'absolute' }}>
+        <div id="bohrModelBackground" style={{ position: 'absolute', zIndex: '-1' }}>
             <svg width={svgSize} height={svgSize} viewBox={`0 0 ${svgSize} ${svgSize}`}>
                 {shellsOrbits()}
             </svg>

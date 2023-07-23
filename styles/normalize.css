@@ -28,6 +28,12 @@ body {
 
 /**
  * Render the `main` element consistently in IE.
+ * IE really needs this if my main element is a flex?
+
+main {
+  display: block;
+}
+
  */
 
 /**

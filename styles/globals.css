@@ -135,12 +135,7 @@ ul {
 
 
 main {
-    position: relative;
-    z-index: 1;
-}
-
-.bohrModelBackground {
-    position: absolute;
+    display: flex;
 }
 
 .timeline {
@@ -152,7 +147,6 @@ main {
 #content {
     flex: 1;
     /* This means the column will take the remaining space */
-    background-color: #ddd;
     justify-content: center;
 }
 

@@ -23,7 +23,7 @@ export function TableProvider({ children }) {
     }, [currentElement]);
 
     // Default element
-    const defaultElement = elements[0]; // Assuming elements is an array of element objects
+    const defaultElement = elements[102]; // Assuming elements is an array of element objects
 
     useEffect(() => {
         if (!currentElement) setCurrentElement(defaultElement);

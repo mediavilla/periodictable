@@ -11,7 +11,7 @@ import getCategoryClassName from '../utils/getCategoryClassName';
 import Table18 from '../components/Table18Cols'
 import Table32 from '../components/Table32Cols'
 import TableRaceTrack from '../components/TableRaceTrack'
-import BackgroundDisplay from '../components/BackgroundDisplay'
+import BohrBackground from '../components/BohrBackground'
 import Footer from '../components/Footer'
 
 
@@ -93,7 +93,7 @@ function App() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <BackgroundDisplay element={currentElement} />
+      <BohrBackground element={currentElement} />
 
       <main>
 
