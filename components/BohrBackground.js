@@ -24,7 +24,11 @@ export default function Bohr({ element }) {
                 cy={((svgSize / 2) - radius) + y}
                 r="6"
                 fill={getCategoryHexColor(element.category)}
-                style={{ animationDuration: `${218.9 / (orbit + 1)}s` }} // Here's the inline style
+                // Electron velovity formula: v = Z * α * c / n
+                // v = (1 * (1/137) * 300000) / 1
+                // v = 2189.78
+                // Obviously applied the wrong here because instead of being speed, it's been added as seconds it takes an electron in the first oribital to complete a lap
+                style={{ animationDuration: `${2189.7 / (orbit + 1)}s` }} // Here's the inline style
             />
 
         )
