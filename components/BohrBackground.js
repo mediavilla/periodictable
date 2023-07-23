@@ -79,7 +79,7 @@ export default function Bohr({ element }) {
     return (
 
         <div className={bohrStyles.bohrSvgBackground}>
-            <svg width="100%" height="100%" viewBox={`0 0 ${svgSize} ${svgSize}`}>
+            <svg className={bohrStyles.svgBohr} viewBox={`0 0 ${svgSize} ${svgSize}`}>
                 {shellsOrbits()}
             </svg>
 
