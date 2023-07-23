@@ -24,7 +24,9 @@ export default function Bohr({ element }) {
                 cy={((svgSize / 2) - radius) + y}
                 r="6"
                 fill={getCategoryHexColor(element.category)}
+                style={{ animationDuration: `${218.9 / (orbit + 1)}s` }} // Here's the inline style
             />
+
         )
     }
 
@@ -34,8 +36,8 @@ export default function Bohr({ element }) {
                 cx={svgSize / 2}
                 cy={svgSize / 2}
                 r={radius}
-                stroke="#333333"
-                strokeWidth="10"
+                stroke={getCategoryHexColor(element.category)}
+                strokeWidth="3"
                 fill="none"
             />
         )
@@ -72,8 +74,8 @@ export default function Bohr({ element }) {
 
     return (
 
-        <div id="bohrModelBackground" style={{ position: 'absolute', zIndex: '-1' }}>
-            <svg width={svgSize} height={svgSize} viewBox={`0 0 ${svgSize} ${svgSize}`}>
+        <div className={bohrStyles.bohrSvgBackground}>
+            <svg width="100%" height="100%" viewBox={`0 0 ${svgSize} ${svgSize}`}>
                 {shellsOrbits()}
             </svg>
 
