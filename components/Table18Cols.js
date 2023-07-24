@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import Link from 'next/link';
+import { TableContext } from '../utils/TableProvider';
 import getCategoryClassName from '../utils/getCategoryClassName';
 import elementStyles from '../styles/periodicTable.module.css'
 
 
 export default function Table18({ elements }) {
+
+  const { setCurrentElement } = useContext(TableContext);
 
   return (
     <section>
@@ -40,7 +43,7 @@ export default function Table18({ elements }) {
             >
               <Link href={`/${element.name}`} key={element.number}>
 
-                <div className={`${elementStyles.elementCardMedium}`}>
+                <div className={`${elementStyles.elementCardMedium}`} onMouseEnter={() => setCurrentElement(element)}>
                   <div className={elementStyles.atomicNumber}>{element.number}</div>
                   <div className={elementStyles.symbol}>{element.symbol}</div>
                   <div className={elementStyles.name}>{element.name}</div>

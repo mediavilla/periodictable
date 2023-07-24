@@ -8,6 +8,7 @@ export default function Bohr({ element }) {
 
     if (!element) return null;
 
+
     const numberOfShells = element.shells.length
     const svgSize = 400 + (numberOfShells * 35)
 
