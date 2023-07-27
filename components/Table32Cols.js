@@ -7,7 +7,18 @@ import elementStyles from '../styles/periodicTable.module.css'
 
 export default function Table32({ elements }) {
 
-  const { setCurrentElement } = useContext(TableContext);
+  const { currentElement, loading } = useContext(TableContext);
+
+
+  // Return a default or fallback element when currentElement is null
+  if (!currentElement) {
+    return (
+      <div className={elementStyles.element}>
+        <span>No element selected</span>
+      </div>
+    );
+  }
+
 
   return (
     <section>
@@ -30,7 +41,7 @@ export default function Table32({ elements }) {
 
             <div className={`
             ${elementStyles.element} 
-            ${getCategoryClassName(element.category)}
+            ${getCategoryClassName(element.category, isSelected)}
             `}
 
               style={{

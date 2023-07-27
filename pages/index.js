@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
+import KeyboardArrowsNav from '../utils/KeyboardArrowsNav.js'
 import elements from '../public/elements.json';
 import timeline from '../public/timeline.json';
 import { TableContext } from '../utils/TableProvider';
@@ -19,6 +21,7 @@ const sortedTimeline = timeline.sort((a, b) => b.year - a.year);
 
 function App() {
 
+  const router = useRouter();
   const { currentElement, setCurrentElement } = useContext(TableContext);
 
   const [selectedYear, setSelectedYear] = useState(null);
@@ -30,6 +33,15 @@ function App() {
       setSelectedYear(year);
     }
   }
+
+  useEffect(() => {
+    // invoke the function and save the returned function to a variable
+    const cleanup = KeyboardArrowsNav(elements, currentElement, setCurrentElement, router);
+
+    // call the returned function in the cleanup of the useEffect
+    return cleanup;
+  }, [elements, currentElement, setCurrentElement, router]);
+
 
 
   useEffect(() => {

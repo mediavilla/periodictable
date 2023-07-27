@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { TableContext } from '../utils/TableProvider';
 
 export default function TableSwitcher({ elements, TableComponent18, TableComponent32, TableComponentRaceTrack }) {
+
     const { tableType, setTableType } = useContext(TableContext);
 
     function renderTable() {

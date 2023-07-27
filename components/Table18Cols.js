@@ -7,13 +7,25 @@ import elementStyles from '../styles/periodicTable.module.css'
 
 export default function Table18({ elements }) {
 
-  const { setCurrentElement } = useContext(TableContext);
+  const { currentElement, loading } = useContext(TableContext);
+
+
+  // Return a default or fallback element when currentElement is null
+  if (!currentElement) {
+    return (
+      <div className={elementStyles.element}>
+        <span>No element selected</span>
+      </div>
+    );
+  }
 
   return (
     <section>
 
       <div className={elementStyles.periodicTable18}>
         {elements.map((element) => {
+
+          const isSelected = currentElement?.name === element.name;
           // console.log(element.col18Xpos, element.col18Ypos); // Log the properties
 
           // Calculate the number of digits before the decimal point
@@ -30,7 +42,7 @@ export default function Table18({ elements }) {
 
             <div className={`
             ${elementStyles.element} 
-            ${getCategoryClassName(element.category)}
+            ${getCategoryClassName(element.category, isSelected)}
             `}
 
               style={{
