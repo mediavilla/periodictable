@@ -7,7 +7,7 @@ import elementStyles from '../styles/periodicTable.module.css'
 
 export default function Table32({ elements }) {
 
-  const { currentElement, loading } = useContext(TableContext);
+  const { currentElement, setCurrentElement } = useContext(TableContext);
 
 
   // Return a default or fallback element when currentElement is null
@@ -19,12 +19,13 @@ export default function Table32({ elements }) {
     );
   }
 
-
   return (
     <section>
 
       <div className={elementStyles.periodicTable32}>
         {elements.map((element) => {
+
+          const isSelected = currentElement?.name === element.name;
           // console.log(element.col18Xpos, element.col18Ypos); // Log the properties
 
           // Calculate the number of digits before the decimal point

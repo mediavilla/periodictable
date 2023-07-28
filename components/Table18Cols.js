@@ -25,8 +25,6 @@ export default function Table18({ elements }) {
       <div className={elementStyles.periodicTable18}>
         {elements.map((element) => {
 
-
-
           const isSelected = currentElement?.name === element.name;
           // console.log(element.col18Xpos, element.col18Ypos); // Log the properties
 
