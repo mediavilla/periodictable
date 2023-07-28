@@ -115,6 +115,7 @@ function App() {
             TableComponent18={Table18}
             TableComponent32={Table32}
             TableComponentRaceTrack={TableRaceTrack}
+            setCurrentElement={setCurrentElement} // Pass setCurrentElement to TableSwitcher
           />
 
           <TimelineContent

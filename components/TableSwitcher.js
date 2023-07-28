@@ -1,20 +1,20 @@
 import React, { useContext } from 'react';
 import { TableContext } from '../utils/TableProvider';
 
-export default function TableSwitcher({ elements, TableComponent18, TableComponent32, TableComponentRaceTrack }) {
+export default function TableSwitcher({ elements, currentElement, setCurrentElement, TableComponent18, TableComponent32, TableComponentRaceTrack }) {
 
     const { tableType, setTableType } = useContext(TableContext);
 
     function renderTable() {
         switch (tableType) {
             case "table18":
-                return <TableComponent18 elements={elements} />;
+                return <TableComponent18 elements={elements} currentElement={currentElement} setCurrentElement={setCurrentElement} />;
             case "table32":
-                return <TableComponent32 elements={elements} />;
+                return <TableComponent32 elements={elements} currentElement={currentElement} setCurrentElement={setCurrentElement} />;
             case "tableRaceTrack":
-                return <TableComponentRaceTrack elements={elements} />;
+                return <TableComponentRaceTrack elements={elements} currentElement={currentElement} setCurrentElement={setCurrentElement} />;
             default:
-                return <TableComponent18 elements={elements} />;
+                return <TableComponent18 elements={elements} currentElement={currentElement} setCurrentElement={setCurrentElement} />;
         }
     }
 

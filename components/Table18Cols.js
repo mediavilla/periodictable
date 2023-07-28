@@ -7,7 +7,7 @@ import elementStyles from '../styles/periodicTable.module.css'
 
 export default function Table18({ elements }) {
 
-  const { currentElement, loading } = useContext(TableContext);
+  const { currentElement, setCurrentElement } = useContext(TableContext);
 
 
   // Return a default or fallback element when currentElement is null
@@ -24,6 +24,8 @@ export default function Table18({ elements }) {
 
       <div className={elementStyles.periodicTable18}>
         {elements.map((element) => {
+
+
 
           const isSelected = currentElement?.name === element.name;
           // console.log(element.col18Xpos, element.col18Ypos); // Log the properties
