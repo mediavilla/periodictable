@@ -1,14 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { TableContext } from '../utils/TableProvider';
 import { useRouter } from 'next/router';
-import navElementStyles from '../styles/navElement.module.css';
 import Link from 'next/link';
+import navElementStyles from '../styles/navElement.module.css';
 import elementsData from '../public/elements.json';
+import KeyboardArrowsNav from '../utils/KeyboardArrowsNav.js'
 import getCategoryClassName from '../utils/getCategoryClassName'; // Import the getCategoryClassName function
 
 export default function NavElement() {
 
-    const { currentElement, loading } = useContext(TableContext);
+    const { currentElement, setCurrentElement } = useContext(TableContext);
     const router = useRouter();
 
     // Determine the next elements in each direction
@@ -18,39 +19,30 @@ export default function NavElement() {
     const nextBottomElement = currentElement ? elementsData.find(el => el.col18Xpos === currentElement.col18Xpos && el.col18Ypos === currentElement.col18Ypos + 1) : null;
 
 
-    useEffect(() => {
-        const handleKeyDown = (event) => {
-            if (!currentElement) return;
+    KeyboardArrowsNav(currentElement, (key) => {
+        let nextElement;
 
-            switch (event.key) {
-                case 'ArrowLeft':
-                    nextLeftElement && router.push(`/${nextLeftElement.name}`);
-                    break;
-                case 'ArrowRight':
-                    nextRightElement && router.push(`/${nextRightElement.name}`);
-                    break;
-                case 'ArrowUp':
-                    nextTopElement && router.push(`/${nextTopElement.name}`);
-                    break;
-                case 'ArrowDown':
-                    nextBottomElement && router.push(`/${nextBottomElement.name}`);
-                    break;
-                default:
-                    break;
-            }
+        switch (key) {
+            case 'ArrowLeft':
+                nextElement = elementsData.find(el => el.number === currentElement.number - 1);
+                break;
+            case 'ArrowRight':
+                nextElement = elementsData.find(el => el.number === currentElement.number + 1);
+                break;
+            case 'ArrowUp':
+                nextElement = elementsData.find(el => el.col18Xpos === currentElement.col18Xpos && el.col18Ypos === currentElement.col18Ypos - 1);
+                break;
+            case 'ArrowDown':
+                event.preventDefault(); // prevent the default scroll action
+                nextElement = elementsData.find(el => el.col18Xpos === currentElement.col18Xpos && el.col18Ypos === currentElement.col18Ypos + 1);
+                break;
+            default:
+                break;
         }
 
-        window.addEventListener('keydown', handleKeyDown);
+        nextElement && setCurrentElement(nextElement);
+    });
 
-        // Cleanup: remove the event listener when the component unmounts
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        }
-    }, [currentElement, nextLeftElement, nextRightElement, nextTopElement, nextBottomElement, router]);
-
-    if (loading) {
-        return <p>Loading...</p>; // or any other placeholder component
-    }
 
 
     if (!currentElement) {
