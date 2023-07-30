@@ -17,15 +17,29 @@ function App() {
   const router = useRouter();
   const { currentElement, setCurrentElement } = useContext(TableContext);
 
-  useEffect(() => {
-    // invoke the function and save the returned function to a variable
-    const cleanup = KeyboardArrowsNav(elements, currentElement, setCurrentElement, router);
+  KeyboardArrowsNav(currentElement, (key) => {
+    let nextElement;
 
-    // call the returned function in the cleanup of the useEffect
-    return cleanup;
-  }, [elements, currentElement, setCurrentElement, router]);
+    switch (key) {
+      case 'ArrowLeft':
+        nextElement = elements.find(el => el.number === currentElement.number - 1);
+        break;
+      case 'ArrowRight':
+        nextElement = elements.find(el => el.number === currentElement.number + 1);
+        break;
+      case 'ArrowUp':
+        nextElement = elements.find(el => el.col18Xpos === currentElement.col18Xpos && el.col18Ypos === currentElement.col18Ypos - 1);
+        break;
+      case 'ArrowDown':
+        event.preventDefault(); // prevent the default scroll action
+        nextElement = elements.find(el => el.col18Xpos === currentElement.col18Xpos && el.col18Ypos === currentElement.col18Ypos + 1);
+        break;
+      default:
+        break;
+    }
 
-
+    nextElement && setCurrentElement(nextElement);
+  });
 
 
   return (
