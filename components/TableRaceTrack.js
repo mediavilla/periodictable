@@ -1,11 +1,21 @@
-import { useContext } from 'react'
+import React, { useContext } from "react";
 import Link from 'next/link'
 import { TableContext } from '../utils/TableProvider';
 import raceTrackStyle from '../styles/raceTrack.module.scss'
 
 export default function TableRaceTrack({ elements }) {
 
-    const { setCurrentElement } = useContext(TableContext);
+    const { currentElement, setCurrentElement } = useContext(TableContext);
+
+
+    // Return a default or fallback element when currentElement is null
+    if (!currentElement) {
+        return (
+            <div className={elementStyles.element}>
+                <span>No element selected</span>
+            </div>
+        );
+    }
 
     // Helper function to find the element object by name
     const findElementByName = (name) => {
