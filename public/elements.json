@@ -32,7 +32,9 @@
     "col32Xpos": 1,
     "col18Xpos": 1,
     "col32Ypos": 1,
-    "col18Ypos": 1
+    "col18Ypos": 1,
+    "colRTXpos1": 1,
+    "colRTYpos1": 1
   },
   {
     "name": "Helium",
@@ -68,7 +70,9 @@
     "col32Xpos": 32,
     "col18Xpos": 18,
     "col32Ypos": 1,
-    "col18Ypos": 1
+    "col18Ypos": 1,
+    "colRTXpos1": 2,
+    "colRTYpos1": 1
   },
   {
     "name": "Lithium",
@@ -106,7 +110,9 @@
     "col32Xpos": 1,
     "col18Xpos": 1,
     "col32Ypos": 2,
-    "col18Ypos": 2
+    "col18Ypos": 2,
+    "colRTXpos1": 3,
+    "colRTYpos1": 1
   },
   {
     "name": "Beryllium",
@@ -145,7 +151,9 @@
     "col32Xpos": 2,
     "col18Xpos": 2,
     "col32Ypos": 2,
-    "col18Ypos": 2
+    "col18Ypos": 2,
+    "colRTXpos1": 4,
+    "colRTYpos1": 1
   },
   {
     "name": "Boron",
@@ -185,7 +193,9 @@
     "col32Xpos": 27,
     "col18Xpos": 13,
     "col32Ypos": 2,
-    "col18Ypos": 2
+    "col18Ypos": 2,
+    "colRTXpos1": 5,
+    "colRTYpos1": 1
   },
   {
     "name": "Carbon",
@@ -226,7 +236,9 @@
     "col32Xpos": 28,
     "col18Xpos": 14,
     "col32Ypos": 2,
-    "col18Ypos": 2
+    "col18Ypos": 2,
+    "colRTXpos1": 6,
+    "colRTYpos1": 1
   },
   {
     "name": "Nitrogen",
@@ -268,7 +280,9 @@
     "col32Xpos": 29,
     "col18Xpos": 15,
     "col32Ypos": 2,
-    "col18Ypos": 2
+    "col18Ypos": 2,
+    "colRTXpos1": 7,
+    "colRTYpos1": 1
   },
   {
     "name": "Oxygen",
@@ -311,7 +325,9 @@
     "col32Xpos": 30,
     "col18Xpos": 16,
     "col32Ypos": 2,
-    "col18Ypos": 2
+    "col18Ypos": 2,
+    "colRTXpos1": 8,
+    "colRTYpos1": 1
   },
   {
     "name": "Fluorine",
@@ -355,7 +371,9 @@
     "col32Xpos": 31,
     "col18Xpos": 17,
     "col32Ypos": 2,
-    "col18Ypos": 2
+    "col18Ypos": 2,
+    "colRTXpos1": 9,
+    "colRTYpos1": 2
   },
   {
     "name": "Neon",
@@ -400,7 +418,9 @@
     "col32Xpos": 32,
     "col18Xpos": 18,
     "col32Ypos": 2,
-    "col18Ypos": 2
+    "col18Ypos": 2,
+    "colRTXpos1": 9,
+    "colRTYpos1": 2
   },
   {
     "name": "Sodium",
