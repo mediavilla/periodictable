@@ -1,3 +1,69 @@
 .footer {
     margin: 15em 0 10em 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    /* For mobile view or smaller screens */
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.footerLinks {
+    flex: 1;
+    padding: 15px;
+    box-sizing: border-box;
+
+    /* For mobile view or smaller screens */
+    @media (max-width: 768px) {
+        min-width: 100%;
+    }
+}
+
+/* 
+###############################################
+########### M E D I A  Q U E R I E S ##########
+############################################### 
+*/
+
+/* Large Desktop */
+@media (min-width: 1200px) {
+
+    /* Add styles for large desktops here */
+    .footer {
+        padding: 0 6em;
+    }
+}
+
+/* Laptop */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+    /* Add styles for laptops here */
+    .footer {
+        padding: 0 5em;
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 991px) {
+    .footer {
+        padding: 0 4em;
+    }
+}
+
+/* Mobile Landscape */
+@media (min-width: 576px) and (max-width: 767px) {
+    .footer {
+        padding: 0 3em;
+    }
+}
+
+/* Mobile Portrait */
+@media (max-width: 575px) {
+    .footer {
+        padding: 0 1em;
+    }
 }
