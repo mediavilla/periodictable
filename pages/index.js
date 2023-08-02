@@ -59,6 +59,7 @@ function App() {
       <main>
 
         <div id="content">
+
           <TableSwitcher
             elements={elements}
             TableComponent18={Table18}

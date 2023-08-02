@@ -149,12 +149,3 @@ main {
     /* This means the column will take the remaining space */
     justify-content: center;
 }
-
-
-
-
-
-footer {
-    text-align: center;
-    padding: 100px 10px 100px 10px;
-}
