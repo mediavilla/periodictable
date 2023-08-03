@@ -5,6 +5,7 @@ import KeyboardArrowsNav from '../utils/KeyboardArrowsNav.js'
 import elements from '../public/elements.json';
 import { TableContext } from '../utils/TableProvider';
 import TableSwitcher from '../components/TableSwitcher';
+import NavTop from '../components/NavTop';
 import Table18 from '../components/Table18Cols'
 import Table32 from '../components/Table32Cols'
 import TableRaceTrack from '../components/TableRaceTrack'
@@ -58,7 +59,9 @@ function App() {
 
       <main>
 
+
         <div id="content">
+          <NavTop />
 
           <TableSwitcher
             elements={elements}

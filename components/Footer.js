@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link'
 import footerStyles from '../styles/footer.module.css';
 
@@ -9,7 +9,7 @@ export default function Footer() {
             <div className={footerStyles.footerLinks}>
                 <ul className={footerStyles.footerList}>
                     <li><Link href="#">About</Link></li>
-                    <li><Link href="#">Nerds</Link></li>
+                    <li><Link href="#">Nerd stuff</Link></li>
                     <li><Link href="#">Download app</Link></li>
                     <li><Link href="#">Shop</Link></li>
                     <li><Link href="#">Lab</Link></li>
