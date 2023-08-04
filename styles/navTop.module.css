@@ -1,0 +1,15 @@
+.navTop ul {
+    list-style: none;
+    /* Removes the default bullets */
+    padding: 0;
+    /* Removes padding */
+    margin: 0;
+    /* Removes margin */
+}
+
+.navTop ul li {
+    display: inline-block;
+    /* Makes the list items display inline */
+    margin-right: 10px;
+    /* Optional spacing between items */
+}
