@@ -8,11 +8,9 @@ export default function Footer() {
         <footer className={footerStyles.footer}>
             <div className={footerStyles.footerLinks}>
                 <ul className={footerStyles.footerList}>
-                    <li><Link href="#">Topologies</Link></li>
+                    <li><Link href="#">Designs</Link></li>
                     <li><Link href="#">Timeline</Link></li>
                     <li><Link href="#">Elements</Link></li>
-                    <li><Link href="#">Particles</Link></li>
-                    <li><Link href="#">Scientists</Link></li>
                 </ul>
             </div>
             <div className={footerStyles.footerLinks}>
