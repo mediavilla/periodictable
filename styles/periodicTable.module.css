@@ -19,7 +19,7 @@
 /* Make the table fit within the body */
 .periodicTable18 {
     display: grid;
-    grid-template-columns: repeat(18, minmax(4vw, 1fr));
+    grid-template-columns: repeat(18, minmax(4vw, 50px));
     /* Updated to use percentage instead of fixed pixels */
     grid-gap: 2px;
     box-sizing: border-box;
@@ -87,10 +87,9 @@
     padding: 8px;
 }
 
-.elementCardMedium {
+a.elementCardMedium {
     aspect-ratio: 1 / 1;
     padding: 0;
-    width: 100%;
     display: grid;
     grid-template-rows: 1fr 2fr 1fr;
     grid-column-gap: 0px;

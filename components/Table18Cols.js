@@ -53,13 +53,13 @@ export default function Table18({ elements }) {
               key={element.number} // Add the key prop here
 
             >
-              <Link href={`/${element.name}`} key={element.number}>
+              <Link href={`/${element.name}`} key={element.number} className={`${elementStyles.elementCardMedium}`} onMouseEnter={() => setCurrentElement(element)}>
 
-                <div className={`${elementStyles.elementCardMedium}`} onMouseEnter={() => setCurrentElement(element)}>
-                  <div className={elementStyles.atomicNumber}>{element.number}</div>
-                  <div className={elementStyles.symbol}>{element.symbol}</div>
-                  <div className={elementStyles.name}>{element.name}</div>
-                </div>
+
+                <div className={elementStyles.atomicNumber}>{element.number}</div>
+                <div className={elementStyles.symbol}>{element.symbol}</div>
+                <div className={elementStyles.name}>{element.name}</div>
+
 
               </Link>
             </div>
