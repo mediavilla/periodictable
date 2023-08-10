@@ -3,7 +3,6 @@ import Link from 'next/link'
 import navTopStyles from '../styles/navTop.module.css';
 
 export default function NavTop() {
-
     return (
         <nav className={navTopStyles.navTop}>
             <ul>
