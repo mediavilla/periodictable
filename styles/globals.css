@@ -2,16 +2,14 @@
 @import 'mediaqueries.css';
 @import url(https://use.typekit.net/ycy7yga.css);
 
-html {
+html,
+body {
+    height: 100%;
+    margin: 0;
     font-family: neue-haas-grotesk-display, sans-serif;
     font-weight: 600;
     font-style: normal;
     font-size: calc(11px + 4 * (100vw - 320px) / 1046);
-}
-
-body {
-    height: 100%;
-    margin: 0;
     padding: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -136,6 +134,9 @@ ul {
 
 main {
     display: flex;
+    flex-direction: column;
+    /* At least the full height of the viewport */
+    min-height: 100vh;
 }
 
 .timeline {
@@ -145,7 +146,8 @@ main {
 
 
 #content {
-    flex: 1;
+    flex: 1 0 auto;
+    /* This will allow #content to grow and shrink, but not below its content size */
     /* This means the column will take the remaining space */
     justify-content: center;
 }
