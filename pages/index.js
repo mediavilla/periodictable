@@ -55,14 +55,11 @@ function App() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-
-      <BohrBackground element={currentElement} />
-
-
       <main>
 
 
         <div id="content">
+          <BohrBackground element={currentElement} />
           <NavTop />
 
           <TableSwitcher
