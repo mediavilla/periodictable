@@ -4,13 +4,11 @@ import bohrStyles from '../styles/bohrBackground.module.css'
 
 export default function Bohr({ element }) {
 
-    console.log('BOHR ELEMENT: ', element)
-
     if (!element) return null;
 
 
     const numberOfShells = element.shells.length
-    const svgSize = 400 + (numberOfShells * 35)
+    const svgSize = 500 + (numberOfShells * 40);
 
     function electrons(electron, orbit, diameter, radius, numberElectronsInShell) {
         const angle = (electron / (numberElectronsInShell / 2)) * Math.PI // Calculate the angle at which the element will be placed.
