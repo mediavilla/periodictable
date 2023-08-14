@@ -3,6 +3,10 @@
 @import url(https://use.typekit.net/ycy7yga.css);
 
 /* Need to fix this */
+html {
+    background-color: #efefef;
+}
+
 html,
 body {
     height: 100%;
