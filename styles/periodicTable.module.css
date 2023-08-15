@@ -23,7 +23,9 @@
     /* Updated to use percentage instead of fixed pixels */
     grid-gap: 2px;
     box-sizing: border-box;
+    justify-content: center;
     /* Ensure padding and border are included in the width calculations */
+
 }
 
 .periodicTable32 {
