@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { TableContext } from '../utils/TableProvider';
+import switcherStyles from '../styles/switcher.module.css';
 
 export default function TableSwitcher({ elements, currentElement, setCurrentElement, TableComponent18, TableComponent32, TableComponentRaceTrack }) {
 
@@ -20,9 +21,11 @@ export default function TableSwitcher({ elements, currentElement, setCurrentElem
 
     return (
         <div>
-            <button onClick={() => setTableType("table18")}>Table 18 columns</button>
-            <button onClick={() => setTableType("table32")}>Table 32 columns</button>
-            <button onClick={() => setTableType("tableRaceTrack")}>Race Track</button>
+            <div className={switcherStyles.pager}>
+                <button onClick={() => setTableType("table18")}>Table 18 columns</button>
+                <button onClick={() => setTableType("table32")}>Table 32 columns</button>
+                <button onClick={() => setTableType("tableRaceTrack")}>Race Track</button>
+            </div>
             {renderTable()}
         </div>
     );

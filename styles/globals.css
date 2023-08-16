@@ -156,3 +156,13 @@ main {
     /* This means the column will take the remaining space */
     justify-content: center;
 }
+
+/* 
+############################################
+################   NAV  ####################
+############################################
+*/
+
+nav {
+    text-align: center;
+}
