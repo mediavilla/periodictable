@@ -1,9 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import { TableContext } from '../utils/TableProvider';
 import elementsData from '../public/elements.json';
+import elementStyles from '../styles/element.module.css';
 import getCategoryClassName from '../utils/getCategoryClassName';
 import CustomElementContent from '../components/CustomElementContent';
-import elementStyles from '../styles/element.module.css';
+import NavTop from '../components/NavTop';
 import ElementCard from '../components/ElementCard';
 import NavElement from '../components/NavElement';
 import Borh from '../components/Bohr';
@@ -26,6 +27,7 @@ export default function Element({ element }) {
     return (
         <main>
             <NavElement />
+            <NavTop />
             <div id="content">
                 <TableSwitcher
                     elements={elementsData}
