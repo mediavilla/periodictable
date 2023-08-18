@@ -30,7 +30,9 @@ const TimelineContent = ({ yearsData, elements, getCategoryClassName, selectedYe
     }, [yearsData, selectedYear]); // Add selectedYear to the dependency array
 
 
-    return <>{sections}</>;
+    return <>
+        {sections}
+    </>;
 };
 
 export default TimelineContent;

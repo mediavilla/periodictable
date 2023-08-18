@@ -3,6 +3,7 @@ import elements from '../public/elements.json';
 import timelineData from '../public/timeline.json';
 import styles from '../styles/timeline.module.css';
 import getCategoryClassName from '../utils/getCategoryClassName';
+import NavTop from '../components/NavTop';
 import TimelineSidebar from '../components/TimelineSidebar';
 import TimelineContent from '../components/TimelineContent';
 import Footer from '../components/Footer'
@@ -74,9 +75,12 @@ export default function timeline() {
 
     return (
         <>
+
+
             <main>
 
                 <div id="content">
+                    <NavTop />
 
                     <TimelineContent
                         yearsData={sortedTimeline}

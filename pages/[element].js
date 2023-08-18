@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { TableContext } from '../utils/TableProvider';
 import elementsData from '../public/elements.json';
 import elementStyles from '../styles/element.module.css';
@@ -15,7 +16,8 @@ import NavMiniTable32 from '@/components/NavMiniTable32';
 import NavMiniTableRaceTrack from '@/components/NavMiniTableRaceTrack';
 
 export default function Element({ element }) {
-
+    const router = useRouter();
+    const { element } = router.query;
     const { setCurrentElement, tableType } = useContext(TableContext);
 
 
@@ -23,29 +25,32 @@ export default function Element({ element }) {
         setCurrentElement(element);
     }, [element]);
 
+    if (!element) {
+        return <div>Please select an element!</div>;
+    }
 
-    return (
-        <main>
-            <NavElement />
-            <NavTop />
-            <div id="content">
-                <TableSwitcher
-                    elements={elementsData}
-                    TableComponent18={NavMiniTable18}
-                    TableComponent32={NavMiniTable32}
-                    TableComponentRaceTrack={NavMiniTableRaceTrack}
-                />
 
-                <section className={elementStyles.cardBorhOrbitals}>
-                    <ElementCard element={element} getCategoryClassName={getCategoryClassName} />
-                    <Borh element={element} getCategoryClassName={getCategoryClassName} />
-                    <Orbitals element={element} />
-                </section>
-                <CustomElementContent element={element.name} />
-            </div>
-        </main>
-    );
-}
+} return (
+    <main>
+        <NavElement />
+        <NavTop />
+        <div id="content">
+            <TableSwitcher
+                elements={elementsData}
+                TableComponent18={NavMiniTable18}
+                TableComponent32={NavMiniTable32}
+                TableComponentRaceTrack={NavMiniTableRaceTrack}
+            />
+
+            <section className={elementStyles.cardBorhOrbitals}>
+                <ElementCard element={element} getCategoryClassName={getCategoryClassName} />
+                <Borh element={element} getCategoryClassName={getCategoryClassName} />
+                <Orbitals element={element} />
+            </section>
+            <CustomElementContent element={element.name} />
+        </div>
+    </main>
+);
 
 
 export async function getServerSideProps({ params }) {
