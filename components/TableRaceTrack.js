@@ -28,7 +28,16 @@ export default function TableRaceTrack({ elements }) {
 
                 <svg width="100%" height="auto" viewBox="0 0 2084 1250" version="1.1" space="preserve">
                     <g>
-                        <Link href="/hydrogen"><path id="1" d="M410.778,689.816c20.972,39.086 57.524,68.587 101.328,80.175c-0,0 24.2,-70.357 24.088,-70.373c-25.326,-3.513 -46.488,-19.599 -58.837,-41.53l-66.579,31.728" className={`${raceTrackStyle.e1} ${currentElement.name === 'Hydrogen' ? raceTrackStyle.selected : ''}`} /></Link>
+                        <Link href="/hydrogen">
+                            <path id="1" d="M410.778,689.816c20.972,39.086 57.524,68.587 101.328,80.175c-0,0 24.2,-70.357 24.088,-70.373c-25.326,-3.513 -46.488,-19.599 -58.837,-41.53l-66.579,31.728" className={`${raceTrackStyle.e1} ${currentElement.name === 'Hydrogen' ? raceTrackStyle.selected : ''}`} />
+
+                            <path id="hydrogen" className={raceTrackStyle.pathcolor} d="M451.72,674.589c15.209,26.852 41.056,46.9 71.796,54.403" />
+                            <text><textPath href="#hydrogen" x="440" y="660" fill="black" className={raceTrackStyle.textPath} startOffset="50%" text-anchor="middle">Hydrogen</textPath></text>
+                            <text x="425" y="680" fill="black" transform="rotate(45 420 700)">1</text>
+                            <text x="465" y="680" fill="black" transform="rotate(45 420 700)">H</text>
+                            <text x="500" y="680" fill="black" transform="rotate(45 420 700)">1.0</text>
+
+                        </Link>
                         <Link href="/helium"><path id="2" d="M475.056,573.844l-66.836,-31.85l-0.049,0.098c-10.588,21.525 -16.537,45.736 -16.537,71.326c0,27.62 6.93,53.634 19.144,76.398c-0,-0 66.579,-31.728 66.579,-31.728c-7.46,-13.251 -11.703,-28.635 -11.703,-44.67c-0,-14.192 3.37,-27.603 9.352,-39.476" className={`${raceTrackStyle.e2} ${currentElement.name === 'Helium' ? raceTrackStyle.selected : ''}`} /></Link>
                         <Link href="/lithium"><path id="3" d="M475.003,573.943c10.19,-20.224 27.96,-35.985 49.569,-43.542l-31.266,-67.32c-37.179,14.935 -67.556,43.269 -85.138,79.012l0.048,-0.098l66.836,31.85" className={`${raceTrackStyle.e3} ${currentElement.name === 'Lithium' ? raceTrackStyle.selected : ''}`} /></Link>
                         <Link href="/beryllium"><path id="4" d="M602.306,535.375l31.194,-67.165c-24.467,-10.759 -51.506,-16.732 -79.929,-16.732c-21.294,0 -41.634,4.119 -60.265,11.603l31.265,67.319c9.082,-3.176 18.841,-4.902 29,-4.902c17.286,-0 33.757,3.518 48.735,9.877" className={`${raceTrackStyle.e4} ${currentElement.name === 'Beryllium' ? raceTrackStyle.selected : ''}`} /></Link>

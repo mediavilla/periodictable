@@ -32,8 +32,8 @@ export default function TableRaceTrack({ elements }) {
 
                             <path id="1" d="M410.778,689.816c20.972,39.086 57.524,68.587 101.328,80.175c-0,0 24.2,-70.357 24.088,-70.373c-25.326,-3.513 -46.488,-19.599 -58.837,-41.53l-66.579,31.728" className={`${raceTrackStyle.e2}`} onMouseEnter={() => setCurrentElement(findElementByName("hydrogen"))} />
 
-                            <path id="hydrogen" className={raceTrackStyle.pathcolor} d="M451.72,674.589c15.209,26.852 41.056,46.9 71.796,54.403" />
-                            <text><textPath href="#hydrogen" x="440" y="660" fill="black" className={raceTrackStyle.textPath} startOffset="50%" text-anchor="middle">HYDROGEN</textPath></text>
+                            <path id="hydrogen" className={raceTrackStyle.pathcolor} d="M451.72,674.589c15.209,26.852 41.056,46.9 71.796,54.403" style="display:hidden" />
+                            <text><textPath href="#hydrogen" x="440" y="660" fill="black" className={raceTrackStyle.textPath} startOffset="50%" text-anchor="middle">Hydrogen</textPath></text>
                             <text x="425" y="680" fill="black" transform="rotate(45 420 700)">1</text>
                             <text x="465" y="680" fill="black" transform="rotate(45 420 700)">H</text>
                             <text x="500" y="680" fill="black" transform="rotate(45 420 700)">1.0</text>
