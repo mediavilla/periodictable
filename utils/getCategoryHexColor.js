@@ -3,7 +3,7 @@ const elementStyles = require('../styles/element.module.css');
 function getCategoryHexColor(category) {
     const categoryClassMap = {
         // Add other category mappings here
-        'diatomic nonmetal': "#15D905",
+        'diatomic nonmetal': "#FF00FF",
         'polyatomic nonmetal': "#15D905",
         'alkali metal': "#05B6BB",
         'alkaline earth metal': "#DD201C",
