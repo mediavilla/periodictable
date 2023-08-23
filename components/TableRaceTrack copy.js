@@ -7,7 +7,6 @@ export default function TableRaceTrack({ elements }) {
 
     const { currentElement, setCurrentElement } = useContext(TableContext);
 
-
     // Return a default or fallback element when currentElement is null
     if (!currentElement) {
         return (

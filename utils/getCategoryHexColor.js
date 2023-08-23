@@ -4,7 +4,7 @@ function getCategoryHexColor(category) {
     const categoryClassMap = {
         // Add other category mappings here
         'diatomic nonmetal': "#FF00FF",
-        'polyatomic nonmetal': "#15D905",
+        'polyatomic nonmetal': "#FF00FF",
         'alkali metal': "#05B6BB",
         'alkaline earth metal': "#DD201C",
         'transition metal': "#0070FF",
