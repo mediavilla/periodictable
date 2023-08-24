@@ -4,7 +4,16 @@
 
 /* Need to fix this */
 html {
-    background-image: conic-gradient(from 1.5708rad at 50% 50%, #FFD9D8 9%, #D4F5F6 41%, #F8D6EB 51%, #FFFFFF 100%);
+    background-image: conic-gradient(from 1.5708rad at 50% 50%,
+            /* Peach */
+            rgba(255, 217, 216, 1) 9%,
+            /* Cyan */
+            rgba(212, 245, 246, 1) 41%,
+            /* Pink */
+            rgba(248, 214, 235, 1) 51%,
+            /* White */
+            rgba(255, 255, 255, 1) 92%);
+
 }
 
 html,
