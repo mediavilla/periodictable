@@ -2,20 +2,6 @@
 @import 'mediaqueries.css';
 @import url(https://use.typekit.net/ycy7yga.css);
 
-/* Need to fix this */
-html {
-    background-image: conic-gradient(from 1.5708rad at 50% 50%,
-            /* Peach */
-            rgba(255, 217, 216, 1) 9%,
-            /* Cyan */
-            rgba(212, 245, 246, 1) 41%,
-            /* Pink */
-            rgba(248, 214, 235, 1) 51%,
-            /* White */
-            rgba(255, 255, 255, 1) 92%);
-
-}
-
 html,
 body {
     height: 100%;
@@ -174,4 +160,34 @@ main {
 
 nav {
     text-align: center;
+}
+
+
+
+/* 
+############################################
+########## B A C K G R O U N D S ###########
+############################################
+*/
+
+.designsConicGradient {
+    background-image: conic-gradient(from 1.5708rad at 50% 50%,
+            /* Peach */
+            rgba(255, 217, 216, 1) 9%,
+            /* Cyan */
+            rgba(212, 245, 246, 1) 41%,
+            /* Pink */
+            rgba(248, 214, 235, 1) 51%,
+            /* White */
+            rgba(255, 255, 255, 1) 92%);
+
+}
+
+.elementsSolid {
+    background-color: #efefef;
+}
+
+
+.timelineSolid {
+    background-color: #c6e0ff;
 }

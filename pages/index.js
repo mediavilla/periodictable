@@ -18,6 +18,14 @@ function App() {
   const router = useRouter();
   const { currentElement, setCurrentElement } = useContext(TableContext);
 
+  useEffect(() => {
+    document.documentElement.classList.add('designsConicGradient');
+
+    return () => {
+      document.documentElement.classList.remove('designsConicGradient');
+    };
+  }, []);
+
   KeyboardArrowsNav(currentElement, (key) => {
     let nextElement;
 
