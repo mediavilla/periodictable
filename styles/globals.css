@@ -181,6 +181,8 @@ nav {
             /* White */
             rgba(255, 255, 255, 1) 92%);
 
+    transition: background-image 0.5s ease-in-out;
+
 }
 
 .elementsSolid {
@@ -190,4 +192,8 @@ nav {
 
 .timelineSolid {
     background-color: #81a7d6;
+}
+
+.test {
+    background-image: conic-gradient(from 1.5708rad at 50% 50%, rgb(255, 0, 255) 9%, rgb(239, 239, 239) 41%, rgb(221, 32, 28) 51%, rgb(5, 182, 187) 92%);
 }
