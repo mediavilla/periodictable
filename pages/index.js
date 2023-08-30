@@ -6,10 +6,11 @@ import elements from '../public/elements.json';
 import { TableContext } from '../utils/TableProvider';
 import TableSwitcher from '../components/TableSwitcher';
 import NavTop from '../components/NavTop';
+import CanvasBackground from '../components/CanvasBackground';
+import BohrBackground from '../components/BohrBackground'
 import Table18 from '../components/Table18Cols'
 import Table32 from '../components/Table32Cols'
 import TableRaceTrack from '../components/TableRaceTrack'
-import BohrBackground from '../components/BohrBackground'
 import Footer from '../components/Footer'
 
 
@@ -64,6 +65,7 @@ function App() {
       </Head>
       <main>
 
+        <CanvasBackground />
 
         <div id="content">
 
