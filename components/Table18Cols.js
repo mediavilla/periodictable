@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Link from 'next/link';
 import { TableContext } from '../utils/TableProvider';
 import getCategoryClassName from '../utils/getCategoryClassName';
-import getQuadrantColors, { getAdjacentElements } from '../utils/getQuadrantColors';
+import getQuadrantColors, { getAdjacentElements, updateBackgroundGradient } from '../utils/getQuadrantColors';
 import elementStyles from '../styles/periodicTable.module.css'
 
 
@@ -20,8 +20,6 @@ export default function Table18({ elements }) {
     );
   }
 
-  // Inside your component:
-  const { topLeftColor, bottomLeftColor, topRightColor, bottomRightColor } = getQuadrantColors(currentElement, elements);
 
   return (
     <section>
