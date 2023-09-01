@@ -30,14 +30,6 @@ export function updateBackgroundGradient(adjacentElements) {
 
     const gradient = `conic-gradient(from 1.5708rad at 50% 50%, ${bottomRightColor} 9%, ${bottomLeftColor} 41%, ${topLeftColor} 51%, ${topRightColor} 92%)`;
 
-    // Select the element with the class "designsConicGradient"
-    const element = document.querySelector('.designsConicGradient');
-
-    // Apply the gradient to the selected element
-    if (element) {
-        element.style.backgroundImage = gradient;
-    }
-
 }
 
 

@@ -22,14 +22,6 @@ function App() {
 
   const CanvasColorsObject = getQuadrantColors(currentElement, elements);
 
-  useEffect(() => {
-    document.documentElement.classList.add('designsConicGradient');
-
-    return () => {
-      document.documentElement.classList.remove('designsConicGradient');
-    };
-  }, []);
-
   KeyboardArrowsNav(currentElement, (key) => {
     let nextElement;
 

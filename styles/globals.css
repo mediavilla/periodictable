@@ -170,37 +170,6 @@ nav {
 ############################################
 */
 
-.designsConicGradient {
-
-    position: relative;
-
-    background-image: conic-gradient(from 1.5708rad at 50% 50%,
-            /* Peach */
-            rgba(255, 217, 216, 1) 9%,
-            /* Cyan */
-            rgba(212, 245, 246, 1) 41%,
-            /* Pink */
-            rgba(248, 214, 235, 1) 51%,
-            /* White */
-            rgba(255, 255, 255, 1) 92%);
-
-}
-
-.designsConicGradient::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-image: inherit;
-    /* This will be overridden by JavaScript */
-    opacity: 0;
-    transition: opacity 3s ease-in-out;
-    pointer-events: none;
-    /* So it doesn't interfere with any interactions */
-}
-
 .elementsSolid {
     background-color: #efefef;
 }
