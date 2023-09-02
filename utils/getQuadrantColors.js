@@ -21,17 +21,7 @@ function hexToRgba(hex, alpha) {
 }
 
 const opacity = 0.2; // 20% opacity
-
-export function updateBackgroundGradient(adjacentElements) {
-    const topLeftColor = hexToRgba(getCategoryHexColor(adjacentElements.topLeftElement.category), opacity);
-    const bottomLeftColor = adjacentElements.bottomLeftElement ? hexToRgba(getCategoryHexColor(adjacentElements.bottomLeftElement.category), opacity) : '#efefef';
-    const topRightColor = adjacentElements.topRightElement ? hexToRgba(getCategoryHexColor(adjacentElements.topRightElement.category), opacity) : '#efefef';
-    const bottomRightColor = adjacentElements.bottomRightElement ? hexToRgba(getCategoryHexColor(adjacentElements.bottomRightElement.category), opacity) : '#efefef';
-
-    const gradient = `conic-gradient(from 1.5708rad at 50% 50%, ${bottomRightColor} 9%, ${bottomLeftColor} 41%, ${topLeftColor} 51%, ${topRightColor} 92%)`;
-
-}
-
+const opacityCurrent = 0.4; // 20% opacity
 
 const getQuadrantColors = (currentElement, elements) => {
     if (!currentElement) return {};
@@ -41,12 +31,11 @@ const getQuadrantColors = (currentElement, elements) => {
     const xPos = currentElement.col18Xpos;
     const yPos = currentElement.col18Ypos;
 
-
     return {
-        topLeftColor: topLeftElement ? getCategoryHexColor(topLeftElement.category) : '#efefef',
-        bottomLeftColor: bottomLeftElement ? getCategoryHexColor(bottomLeftElement.category) : '#efefef',
-        topRightColor: topRightElement ? getCategoryHexColor(topRightElement.category) : '#efefef',
-        bottomRightColor: bottomRightElement ? getCategoryHexColor(bottomRightElement.category) : '#efefef'
+        topLeftColor: topLeftElement ? hexToRgba(getCategoryHexColor(topLeftElement.category), opacityCurrent) : '#efefef',
+        bottomLeftColor: bottomLeftElement ? hexToRgba(getCategoryHexColor(bottomLeftElement.category), opacity) : '#efefef',
+        topRightColor: topRightElement ? hexToRgba(getCategoryHexColor(topRightElement.category), opacity) : '#efefef',
+        bottomRightColor: bottomRightElement ? hexToRgba(getCategoryHexColor(bottomRightElement.category), opacity) : '#efefef'
     };
 };
 

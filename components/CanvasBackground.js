@@ -12,6 +12,9 @@ function CanvasBackground({ colors = {} }) {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
+        // Apply blur filter
+        ctx.filter = 'blur(150px)';
+
         // Clear the canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 

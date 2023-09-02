@@ -61,8 +61,6 @@ export default function Table18({ elements }) {
                 className={`${elementStyles.elementCardMedium}`}
                 onMouseEnter={() => {
                   setCurrentElement(element);
-                  const adjacentElements = getAdjacentElements(element, elements); // pass elements here
-                  updateBackgroundGradient(adjacentElements);
                 }}
 
               >
