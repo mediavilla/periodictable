@@ -5,8 +5,10 @@ export function getAdjacentElements(currentElement, elements) {
     const yPos = currentElement.col18Ypos;
 
     const topLeftElement = currentElement;
+    console.log("Current Element :", currentElement)
     const bottomLeftElement = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos + 1);
     const topRightElement = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos);
+    console.log("TopRight :", currentElement)
     const bottomRightElement = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos + 1);
 
     return { topLeftElement, bottomLeftElement, topRightElement, bottomRightElement };
@@ -20,8 +22,8 @@ function hexToRgba(hex, alpha) {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-const opacity = 0.2; // 20% opacity
-const opacityCurrent = 0.4; // 20% opacity
+const opacity = 0.1; // 20% opacity
+const opacityCurrent = 0.3; // 20% opacity
 
 const getQuadrantColors = (currentElement, elements) => {
     if (!currentElement) return {};

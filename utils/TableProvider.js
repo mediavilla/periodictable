@@ -18,18 +18,30 @@ export function TableProvider({ children }) {
     const [tableType, setTableType] = useState('18 columns'); // Default value set here
     const [loading, setLoading] = useState(true);
 
+    // Hover state variables
+    const [prevCol18Xpos, setPrevCol18Xpos] = useState(null);
+    const [prevCol18Ypos, setPrevCol18Ypos] = useState(null);
+
+    // useEffect for logging
     useEffect(() => {
         console.log('### New currentElement:', currentElement);
     }, [currentElement]);
 
-    // Default element
+
     const defaultElement = elements[0]; // Assuming elements is an array of element objects
 
+    // useEffect for setting default element
     useEffect(() => {
         if (!currentElement) setCurrentElement(defaultElement);
     }, []);
 
-
+    // useEffect for updating prevCol18Xpos and prevCol18Ypos
+    useEffect(() => {
+        if (currentElement) {
+            setPrevCol18Xpos(currentElement.col18Xpos);
+            setPrevCol18Ypos(currentElement.col18Ypos);
+        }
+    }, [currentElement]);
 
     useEffect(() => {
         if (router.isReady) {
