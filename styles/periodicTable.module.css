@@ -21,7 +21,7 @@
     display: grid;
     grid-template-columns: repeat(18, minmax(4vw, 50px));
     /* Updated to use percentage instead of fixed pixels */
-    grid-gap: 2px;
+    grid-gap: 0px;
     box-sizing: border-box;
     justify-content: center;
     /* Ensure padding and border are included in the width calculations */
@@ -31,7 +31,7 @@
 .periodicTable32 {
     display: grid;
     grid-template-columns: repeat(32, 1fr);
-    grid-gap: 2px;
+    grid-gap: 0px;
     width: 100%;
     box-sizing: border-box;
 }
