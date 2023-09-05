@@ -20,12 +20,9 @@
 .periodicTable18 {
     display: grid;
     grid-template-columns: repeat(18, minmax(4vw, 50px));
-    /* Updated to use percentage instead of fixed pixels */
-    grid-gap: 0px;
     box-sizing: border-box;
     justify-content: center;
     /* Ensure padding and border are included in the width calculations */
-
 }
 
 .periodicTable32 {
@@ -55,7 +52,6 @@
 
 .element {
     padding: 0;
-    border: 1px solid #ccc;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -96,6 +92,12 @@ a.elementCardMedium {
     grid-template-rows: 1fr 2fr 1fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
+    border-bottom: 1px solid black;
+    border-right: 1px solid rgb(118, 4, 4);
+}
+
+a.elementCardMedium:nth-child(18n) {
+    border-right: none;
 }
 
 .elementCardBig {
@@ -229,7 +231,7 @@ a.elementCardMedium {
 
 .reactiveNonMetals {
     background-color: #F8D6EB;
-    border-color: #FF00FF;
+    /* border-color: #FF00FF; */
 }
 
 .reactiveNonMetals a:hover,
@@ -240,7 +242,7 @@ a.elementCardMedium {
 
 .AlkaliMetals {
     background-color: #D4F5F6;
-    border-color: #05B6BB;
+    /* border-color: #05B6BB; */
 
 }
 
@@ -253,7 +255,7 @@ a.elementCardMedium {
 
 .AlkalineEarthMetals {
     background-color: #FFD9D8;
-    border-color: #DD201C;
+    /* border-color: #DD201C; */
 }
 
 .element.AlkalineEarthMetals a:hover,
@@ -264,7 +266,7 @@ a.elementCardMedium {
 
 .TransitionMetals {
     background-color: #E4EEFD;
-    border-color: #0070FF;
+    /* border-color: #0070FF; */
 }
 
 .element.TransitionMetals a:hover,
@@ -275,7 +277,7 @@ a.elementCardMedium {
 
 .unknownProperties {
     background-color: #DDDDDD;
-    border-color: #454545;
+    /* border-color: #454545; */
 }
 
 .element.unknownProperties a:hover,
@@ -286,7 +288,7 @@ a.elementCardMedium {
 
 .lanthanide {
     background-color: #EBDFF8;
-    border-color: #7A00FF;
+    /* border-color: #7A00FF; */
 }
 
 .element.lanthanide a:hover,
@@ -297,7 +299,7 @@ a.elementCardMedium {
 
 .lanthanum {
     background-color: #EBDFF8;
-    border-color: #7A00FF;
+    /* border-color: #7A00FF; */
     border-width: 2px;
 }
 
@@ -309,7 +311,7 @@ a.elementCardMedium {
 
 .actinide {
     background-color: #FBE7D6;
-    border-color: #FF7500;
+    /* border-color: #FF7500; */
 }
 
 .element.actinide a:hover,
@@ -320,7 +322,7 @@ a.elementCardMedium {
 
 .actinium {
     background-color: #FBE7D6;
-    border-color: #FF7500;
+    /* border-color: #FF7500; */
     border-width: 2px;
 }
 
@@ -332,7 +334,7 @@ a.elementCardMedium {
 
 .metalloid {
     background-color: #FFFEC6;
-    border-color: #959339;
+    /* border-color: #959339; */
 }
 
 .element.metalloid:hover a,
@@ -343,7 +345,7 @@ a.elementCardMedium {
 
 .postTransitionMetal {
     background-color: #D6FAD3;
-    border-color: #15D905;
+    /* border-color: #15D905; */
 }
 
 .element.postTransitionMetal a:hover,
@@ -354,7 +356,7 @@ a.elementCardMedium {
 
 .nobleGas {
     background-color: #FFFFFF;
-    border-color: #CCCCCC;
+    /* border-color: #CCCCCC; */
 }
 
 .element.nobleGas a:hover,
