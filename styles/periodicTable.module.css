@@ -153,6 +153,13 @@ a.elementCardMedium:nth-child(18n) {
     /* Need hover effect for this */
 }
 
+
+.element a:hover .elementCardMedium .name {
+    font-size: 0.6rem;
+    color: #FFF;
+    /* Need hover effect for this */
+}
+
 .periodicTable32 .elementCardMedium .name {
     font-size: 0.4rem;
 }
@@ -231,6 +238,11 @@ a.elementCardMedium:nth-child(18n) {
 ############################################### 
 */
 
+.elementCardMedium:hover .name,
+.element.selected a.elementCardMedium .name {
+    color: #FFF;
+}
+
 .reactiveNonMetals {
     background-color: #F8D6EB;
     /* border-color: #FF00FF; */
@@ -242,6 +254,7 @@ a.elementCardMedium:nth-child(18n) {
     color: #FFFFFF;
 }
 
+
 .AlkaliMetals {
     background-color: #D4F5F6;
     /* border-color: #05B6BB; */
@@ -251,7 +264,6 @@ a.elementCardMedium:nth-child(18n) {
 .element.AlkaliMetals a:hover,
 .element.AlkaliMetals.selected a {
     background-color: #05B6BB;
-
     color: #FFFFFF;
 }
 
