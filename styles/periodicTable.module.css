@@ -25,6 +25,21 @@
     /* Ensure padding and border are included in the width calculations */
 }
 
+.periodicTable18 .element:nth-child(1),
+.periodicTable18 .element:nth-child(2),
+.periodicTable18 .element:nth-child(3),
+.periodicTable18 .element:nth-child(5),
+.periodicTable18 .element:nth-child(11),
+.periodicTable18 .element:nth-child(13),
+.periodicTable18 .element:nth-child(19),
+.periodicTable18 .element:nth-child(37),
+.periodicTable18 .element:nth-child(55),
+.periodicTable18 .element:nth-child(58),
+.periodicTable18 .element:nth-child(87),
+.periodicTable18 .element:nth-child(90) {
+    border-left: 1px solid #999;
+}
+
 .periodicTable32 {
     display: grid;
     grid-template-columns: repeat(32, 1fr);
