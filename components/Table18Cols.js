@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import Link from 'next/link';
 import { TableContext } from '../utils/TableProvider';
 import getCategoryClassName from '../utils/getCategoryClassName';
-import getQuadrantColors, { getAdjacentElements, updateBackgroundGradient } from '../utils/getQuadrantColors';
 import elementStyles from '../styles/periodicTable.module.css'
 
 
