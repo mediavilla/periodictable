@@ -20,7 +20,7 @@
 .periodicTable18 {
     display: grid;
     grid-gap: 1px;
-    grid-template-columns: repeat(18, minmax(4vw, 50px));
+    grid-template-columns: repeat(18, minmax(3em, 4.5em));
     box-sizing: border-box;
     justify-content: center;
     /* Ensure padding and border are included in the width calculations */
@@ -28,7 +28,8 @@
 
 .periodicTable32 {
     display: grid;
-    grid-template-columns: repeat(32, 1fr);
+    grid-gap: 1px;
+    grid-template-columns: repeat(32, minmax(3em, 4.5em));
     grid-gap: 0px;
     width: 100%;
     box-sizing: border-box;
@@ -91,8 +92,7 @@ a.elementCardMedium {
     padding: 0;
     display: grid;
     grid-template-rows: 1fr 2fr 1fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+    grid-gap: 0px;
     outline: 1px solid #333;
     /* Set to your desired border width and color */
 
