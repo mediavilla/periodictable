@@ -19,6 +19,7 @@
 /* Make the table fit within the body */
 .periodicTable18 {
     display: grid;
+    grid-gap: 1px;
     grid-template-columns: repeat(18, minmax(4vw, 50px));
     box-sizing: border-box;
     justify-content: center;
@@ -51,6 +52,7 @@
 }
 
 .element {
+    aspect-ratio: 1 / 1;
     padding: 0;
     display: flex;
     justify-content: center;
