@@ -23,7 +23,7 @@
     grid-template-columns: repeat(18, minmax(3em, 4.5em));
     box-sizing: border-box;
     justify-content: center;
-    /* Ensure padding and border are included in the width calculations */
+    transition: transform 0.1s;
 }
 
 .periodicTable32 {
@@ -304,8 +304,13 @@ a.elementCardMedium {
 }
 
 .lanthanum {
-    background-color: #EBDFF8;
+    background: repeating-linear-gradient(-45deg,
+            #e6d6f7,
+            #e6d6f7 10px,
+            #cea8f7 10px,
+            #cea8f7 20px);
 }
+
 
 .element.lanthanum a:hover,
 .element.lanthanum.selected a {
@@ -324,7 +329,11 @@ a.elementCardMedium {
 }
 
 .actinium {
-    background-color: #FBE7D6;
+    background: repeating-linear-gradient(-45deg,
+            #FBE7D6,
+            #FBE7D6 10px,
+            #f9d6b7 10px,
+            #f9d6b7 20px);
 }
 
 .element.actinium a:hover,
