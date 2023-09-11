@@ -303,7 +303,7 @@ a.elementCardMedium {
     color: #FFFFFF;
 }
 
-.lanthanum {
+.periodicTable18 .lanthanum {
     background: repeating-linear-gradient(-45deg,
             #e6d6f7,
             #e6d6f7 10px,
@@ -311,6 +311,9 @@ a.elementCardMedium {
             #cea8f7 20px);
 }
 
+.periodicTable32 .lanthanum {
+    background-color: #e6d6f7;
+}
 
 .element.lanthanum a:hover,
 .element.lanthanum.selected a {
@@ -328,13 +331,18 @@ a.elementCardMedium {
     color: #FFFFFF;
 }
 
-.actinium {
+.periodicTable18 .actinium {
     background: repeating-linear-gradient(-45deg,
             #FBE7D6,
             #FBE7D6 10px,
             #f9d6b7 10px,
             #f9d6b7 20px);
 }
+
+.periodicTable32 .actinium {
+    background-color: #FBE7D6;
+}
+
 
 .element.actinium a:hover,
 .element.actinium.selected a {
