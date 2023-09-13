@@ -12,6 +12,7 @@ import BohrBackground from '../components/BohrBackground'
 import Table18 from '../components/Table18Cols'
 import Table32 from '../components/Table32Cols'
 import TableRaceTrack from '../components/TableRaceTrack'
+import TableRenderer from '../components/TableRenderer'
 import Footer from '../components/Footer'
 
 
@@ -76,6 +77,14 @@ function App() {
             />
           </nav>
 
+          <TableRenderer
+            elements={elements}
+            currentElement={currentElement}
+            TableComponent18={Table18}
+            TableComponent32={Table32}
+            TableComponentRaceTrack={TableRaceTrack}
+            setCurrentElement={setCurrentElement} // Pass setCurrentElement to TableSwitcher
+          />
         </div>
 
 
