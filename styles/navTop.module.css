@@ -1,4 +1,4 @@
-.navTop ul {
+ul.navTop {
     list-style: none;
     /* Removes the default bullets */
     padding: 0;
@@ -7,7 +7,7 @@
     /* Removes margin */
 }
 
-.navTop ul li {
+ul.navTop li {
     display: inline-block;
     /* Makes the list items display inline */
     margin-right: 10px;
