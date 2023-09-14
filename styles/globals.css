@@ -146,10 +146,10 @@ main {
 
 /* Need to fix this */
 #content {
-    flex: 1 0 auto;
-    /* This will allow #content to grow and shrink, but not below its content size */
-    /* This means the column will take the remaining space */
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 0;
+    justify-content: flex-start;
 }
 
 /* 
@@ -159,8 +159,12 @@ main {
 */
 
 nav {
+    background-color: rgb(103, 103, 103);
+    border-radius: 6em;
+    display: inline-block;
+    margin: 1em auto;
+    padding: 1em;
     text-align: center;
-    background-color: antiquewhite;
 }
 
 
