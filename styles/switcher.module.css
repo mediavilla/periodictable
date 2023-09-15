@@ -6,8 +6,8 @@
 }
 
 .pager button {
-    background-color: #f0f0f0;
     /* Light gray background */
+    background: none;
     border: none;
     padding: 10px;
     border-radius: 5px;
@@ -19,4 +19,12 @@
 .pager button:hover {
     background-color: #e0e0e0;
     /* Slightly darker background on hover */
+}
+
+.pager button span.iconTable {
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    background-color: blue;
+    border-radius: 50%;
 }

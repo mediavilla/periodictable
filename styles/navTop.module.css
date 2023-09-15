@@ -9,7 +9,19 @@ ul.navTop {
 
 ul.navTop li {
     display: inline-block;
-    /* Makes the list items display inline */
+    font-size: 1.2em;
     margin-right: 10px;
-    /* Optional spacing between items */
+    text-shadow: 0 1px 0 #000;
+}
+
+ul.navTop li a {
+    color: #FFFFFF;
+    text-decoration: none;
+    text-shadow: #000000;
+}
+
+ul.navTop li a:hover {
+    color: #fffb00;
+    text-decoration: none;
+    text-shadow: #000000;
 }

@@ -13,8 +13,9 @@ import NavMiniTable18 from '@/components/NavMiniTable18';
 import NavMiniTable32 from '@/components/NavMiniTable32';
 import NavTop from '../components/NavTop';
 import NavMiniTableRaceTrack from '@/components/NavMiniTableRaceTrack';
+import TableRenderer from '../components/TableRenderer';
 
-export default function Element({ element }) {
+export default function Element({ element, currentElement }) {
 
     const { setCurrentElement, tableType } = useContext(TableContext);
 
@@ -27,15 +28,24 @@ export default function Element({ element }) {
     return (
         <main>
             <NavElement />
-            <NavTop />
-            <div id="content">
+            <nav>
+                <NavTop />
                 <TableSwitcher
                     elements={elementsData}
                     TableComponent18={NavMiniTable18}
                     TableComponent32={NavMiniTable32}
                     TableComponentRaceTrack={NavMiniTableRaceTrack}
                 />
+            </nav>
+            <div id="content">
 
+                <TableRenderer
+                    currentElement={currentElement}
+                    TableComponent18={NavMiniTable18}
+                    TableComponent32={NavMiniTable32}
+                    TableComponentRaceTrack={NavMiniTableRaceTrack}
+                    setCurrentElement={setCurrentElement} // Pass setCurrentElement to TableSwitcher
+                />
                 <section className={elementStyles.cardBorhOrbitals}>
                     <ElementCard element={element} getCategoryClassName={getCategoryClassName} />
                     <Borh element={element} getCategoryClassName={getCategoryClassName} />

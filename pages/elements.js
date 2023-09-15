@@ -19,6 +19,7 @@ export default function elements() {
 
                     <NavTop />
 
+                    <p>This need to be a bento box page that changes dynamically depending on the date and search takes prominence so that users can search for elements to jump to their page</p>
                     <p>There are 118 elements in the periodic table, these are the elements that make up everything in the universe, our planet, us</p>
                     <p>Would be cool to get a few ways to filter elements in different ways:</p>
                     <ul>

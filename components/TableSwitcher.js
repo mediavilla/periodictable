@@ -8,9 +8,11 @@ export default function TableSwitcher() {
 
     return (
         <div className={switcherStyles.pager}>
-            <button onClick={() => setTableType("table18")}>Table 18 columns</button>
-            <button onClick={() => setTableType("table32")}>Table 32 columns</button>
-            <button onClick={() => setTableType("tableRaceTrack")}>Race Track</button>
+            <button onClick={() => setTableType("table18")}>
+                <span className={`${switcherStyles.iconTable} ${switcherStyles.iconTable18}`}></span>Table 18 ssscolumns
+            </button>
+            <button onClick={() => setTableType("table32")}><span className={switcherStyles.iconTable32}></span>Table 32 columns</button>
+            <button onClick={() => setTableType("tableRaceTrack")}><span className={switcherStyles.iconTableRaceTrack}></span>Race Track</button>
         </div>
     );
 }

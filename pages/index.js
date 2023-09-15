@@ -8,12 +8,12 @@ import getQuadrantColors from '../utils/getQuadrantColors';
 import TableSwitcher from '../components/TableSwitcher';
 import NavTop from '../components/NavTop';
 import CanvasBackground from '../components/CanvasBackground';
-import BohrBackground from '../components/BohrBackground'
-import Table18 from '../components/Table18Cols'
-import Table32 from '../components/Table32Cols'
-import TableRaceTrack from '../components/TableRaceTrack'
-import TableRenderer from '../components/TableRenderer'
-import Footer from '../components/Footer'
+import BohrBackground from '../components/BohrBackground';
+import Table18 from '../components/Table18Cols';
+import Table32 from '../components/Table32Cols';
+import TableRaceTrack from '../components/TableRaceTrack';
+import TableRenderer from '../components/TableRenderer';
+import Footer from '../components/Footer';
 
 
 function App() {
