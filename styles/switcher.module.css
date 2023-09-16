@@ -25,6 +25,21 @@
     display: inline-block;
     width: 2em;
     height: 2em;
-    background-color: blue;
     border-radius: 50%;
+    background-color: #FFF;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.iconTable18 {
+    background-image: url("/images/icon-18.svg");
+}
+
+.iconTable32 {
+    background-image: url("/images/icon-32.svg");
+}
+
+.iconTableRT {
+    background-image: url("/images/icon-RT.svg");
 }
