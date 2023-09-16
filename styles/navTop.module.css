@@ -1,15 +1,16 @@
 ul.navTop {
+    display: flex;
+    justify-content: space-around;
     list-style: none;
     /* Removes the default bullets */
     padding: 0;
     /* Removes padding */
-    margin: 0;
-    /* Removes margin */
+    margin: 0 0 1em 0;
 }
 
 ul.navTop li {
-    display: inline-block;
     font-size: 1.2em;
+    font-weight: 700;
     margin-right: 10px;
     text-shadow: 0 1px 0 #000;
 }
