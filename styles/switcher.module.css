@@ -23,11 +23,11 @@
 
 .pager button span.iconTable {
     display: inline-block;
-    width: 2em;
-    height: 2em;
+    width: 3em;
+    height: 3em;
     border-radius: 50%;
     background-color: #FFF;
-    background-size: cover;
+    background-size: 75%;
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -38,6 +38,10 @@
 
 .iconTable32 {
     background-image: url("/images/icon-32.svg");
+    background-size: 50%;
+    /* Adjust as necessary */
+    background-position: center 10%;
+    /* Adjust as necessary */
 }
 
 .iconTableRT {
