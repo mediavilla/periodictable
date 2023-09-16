@@ -160,10 +160,10 @@ main {
 
 nav {
     background-color: rgb(103, 103, 103);
-    border-radius: 6em;
+    border-radius: 0 0 3em 3em;
     display: inline-block;
-    margin: 1em auto;
-    padding: 1em;
+    margin: 0 auto 1em auto;
+    padding: 0.2em 1em 1em 1em;
     text-align: center;
 }
 

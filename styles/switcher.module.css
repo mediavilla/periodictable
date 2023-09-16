@@ -1,19 +1,17 @@
 .pager {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    /* Adjust as necessary to get the desired spacing */
 }
 
 .pager button {
-    /* Light gray background */
-    background: none;
+    display: flex;
+    align-items: center;
+    background-color: black;
+    color: #FFF;
     border: none;
     padding: 10px;
-    border-radius: 5px;
-    /* Rounded corners */
+    border-radius: 48px;
     cursor: pointer;
-    /* Hand cursor on hover */
 }
 
 .pager button:hover {
@@ -30,6 +28,7 @@
     background-size: 75%;
     background-repeat: no-repeat;
     background-position: center;
+    margin-right: 0.4em;
 }
 
 .iconTable18 {

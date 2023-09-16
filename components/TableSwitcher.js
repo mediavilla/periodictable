@@ -9,10 +9,10 @@ export default function TableSwitcher() {
     return (
         <div className={switcherStyles.pager}>
             <button onClick={() => setTableType("table18")}>
-                <span className={`${switcherStyles.iconTable} ${switcherStyles.iconTable18}`}></span>Table 18 columns
+                <span className={`${switcherStyles.iconTable} ${switcherStyles.iconTable18}`}></span>18 columns
             </button>
             <button onClick={() => setTableType("table32")}>
-                <span className={`${switcherStyles.iconTable} ${switcherStyles.iconTable32}`}></span>Table 32 columns
+                <span className={`${switcherStyles.iconTable} ${switcherStyles.iconTable32}`}></span>32 columns
             </button>
             <button onClick={() => setTableType("tableRaceTrack")}>
                 <span className={`${switcherStyles.iconTable} ${switcherStyles.iconTableRT}`}></span>Race Track
