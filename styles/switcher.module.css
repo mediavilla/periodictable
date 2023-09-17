@@ -1,6 +1,7 @@
 .pager {
     display: flex;
     justify-content: center;
+    gap: 1em;
 }
 
 .pager button {
@@ -16,7 +17,6 @@
 
 .pager button:hover {
     background-color: #e0e0e0;
-    /* Slightly darker background on hover */
 }
 
 .pager button span.iconTable {
