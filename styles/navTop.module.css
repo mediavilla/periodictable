@@ -14,13 +14,12 @@ ul.navTop li {
 }
 
 ul.navTop li a {
-    color: #FFFFFF;
+    color: #333;
     text-decoration: none;
-    text-shadow: #000000;
+    text-shadow: 0 1px 0 #ccc;
 }
 
 ul.navTop li a:hover {
-    color: #fffb00;
+    color: #0000ff;
     text-decoration: none;
-    text-shadow: #000000;
 }
