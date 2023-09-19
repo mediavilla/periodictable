@@ -5,18 +5,22 @@
 }
 
 .pager button {
-    display: flex;
     align-items: center;
-    background-color: black;
-    color: #FFF;
+    background-color: #ffe604;
     border: none;
-    padding: 10px;
     border-radius: 48px;
+    color: #000;
     cursor: pointer;
+    display: flex;
+    font-weight: 600;
+    padding: 10px;
+    transition: border-radius 0.3s ease;
 }
 
 .pager button:hover {
-    background-color: #e0e0e0;
+    background-color: #000;
+    color: #ffe604;
+    border-radius: 12px;
 }
 
 .pager button span.iconTable {
@@ -29,6 +33,11 @@
     background-repeat: no-repeat;
     background-position: center;
     margin-right: 0.4em;
+    transition: background-color 0.3s ease;
+}
+
+.pager button:hover span.iconTable {
+    background-color: #ffe604;
 }
 
 .iconTable18 {
