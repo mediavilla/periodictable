@@ -160,13 +160,27 @@ main {
 
 nav {
     background-color: rgb(255, 255, 255);
-    border-radius: 0 0 3em 3em;
+    border-radius: 0 0 12px 12px;
+    display: inline-block;
+    margin: 0 auto 1em auto;
+    text-align: center;
+}
+
+/* 
+############################################
+################   NAV BACKUP  ####################
+############################################
+nav {
+    background-color: rgb(255, 255, 255);
+    border-radius: 0 0 12px 12px;
     display: inline-block;
     margin: 0 auto 1em auto;
     padding: 0.2em 1em 1em 1em;
     text-align: center;
 }
 
+
+*/
 
 
 /* 

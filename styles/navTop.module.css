@@ -1,25 +1,30 @@
 ul.navTop {
     display: flex;
-    justify-content: space-around;
+    box-sizing: border-box;
+    justify-content: space-between;
+    /* Adjust to space-between to distribute items evenly */
     list-style: none;
     padding: 0;
-    margin: 0 0 1em 0;
 }
 
 ul.navTop li {
+    flex: 1;
+    /* Allow each item to grow and take up equal space */
     font-size: 1.2em;
     font-weight: 700;
-    margin-right: 10px;
-    text-shadow: 0 1px 0 #000;
+    text-shadow: none;
 }
 
 ul.navTop li a {
+    display: block;
     color: #333;
+    padding: 0.5em;
     text-decoration: none;
-    text-shadow: 0 1px 0 #ccc;
+    text-shadow: none;
 }
 
 ul.navTop li a:hover {
-    color: #0000ff;
+    background-color: #000;
+    color: #ffe604;
     text-decoration: none;
 }

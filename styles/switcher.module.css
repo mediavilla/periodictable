@@ -1,26 +1,43 @@
 .pager {
+    border-top: 1px solid #292990;
     display: flex;
     justify-content: center;
-    gap: 1em;
 }
 
 .pager button {
     align-items: center;
+    /* 
+    BACKUP 
     background-color: #ffe604;
-    border: none;
+    border: none; 
     border-radius: 48px;
+    */
+    background: none;
     color: #000;
     cursor: pointer;
     display: flex;
     font-weight: 600;
     padding: 10px;
-    transition: border-radius 0.3s ease;
+    transition: background-color 0.3s ease;
+}
+
+.pager button:nth-child(-n + 2) {
+    border-right: 1px solid #292990;
+}
+
+.pager button:nth-child(1) {
+    border-radius: 0 0 0 12px;
+    /* top-left, top-right, bottom-right, bottom-left */
+}
+
+.pager button:nth-child(3) {
+    border-radius: 0 0 12px 0;
+    /* top-left, top-right, bottom-right, bottom-left */
 }
 
 .pager button:hover {
     background-color: #000;
     color: #ffe604;
-    border-radius: 12px;
 }
 
 .pager button span.iconTable {
