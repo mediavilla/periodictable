@@ -13,11 +13,13 @@
     border-radius: 48px;
     */
     background: none;
+    border-bottom: 5px solid #3b3b3b;
     color: #000;
     cursor: pointer;
     display: flex;
     font-weight: 600;
-    padding: 10px;
+    padding: 10px 10px 5px 10px;
+    /* top right left bottom*/
     transition: background-color 0.3s ease;
 }
 
@@ -38,6 +40,7 @@
 .pager button:hover {
     background-color: #000;
     color: #ffe604;
+    border-bottom: 5px solid #000;
 }
 
 .pager button span.iconTable {
@@ -67,4 +70,19 @@
 
 .iconTableRT {
     background-image: url("/images/icon-RT.svg");
+}
+
+.pager button.selected span.iconTable {
+    background-color: #ffe604;
+}
+
+.pager button.selected {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #000;
+    padding: 10px 10px 9px 10px;
+}
+
+.pager button.selected:hover {
+    cursor: default;
+    color: #000;
 }

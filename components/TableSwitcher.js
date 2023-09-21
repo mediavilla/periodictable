@@ -4,17 +4,23 @@ import { TableContext } from '../utils/TableProvider';
 import switcherStyles from '../styles/switcher.module.css';
 
 export default function TableSwitcher() {
-    const { setTableType } = useContext(TableContext);
+
+    const { tableType, setTableType } = useContext(TableContext);
+
+
+    const getButtonClass = (type) => {
+        return tableType === type ? switcherStyles.selected : '';
+    };
 
     return (
         <div className={switcherStyles.pager}>
-            <button onClick={() => setTableType("table18")}>
+            <button className={getButtonClass("table18")} onClick={() => setTableType("table18")}>
                 <span className={`${switcherStyles.iconTable} ${switcherStyles.iconTable18}`}></span>18 columns
             </button>
-            <button onClick={() => setTableType("table32")}>
+            <button className={getButtonClass("table32")} onClick={() => setTableType("table32")}>
                 <span className={`${switcherStyles.iconTable} ${switcherStyles.iconTable32}`}></span>32 columns
             </button>
-            <button onClick={() => setTableType("tableRaceTrack")}>
+            <button className={getButtonClass("tableRaceTrack")} onClick={() => setTableType("tableRaceTrack")}>
                 <span className={`${switcherStyles.iconTable} ${switcherStyles.iconTableRT}`}></span>Race Track
             </button>
         </div>
