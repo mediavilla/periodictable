@@ -6,12 +6,6 @@
 
 .pager button {
     align-items: center;
-    /* 
-    BACKUP 
-    background-color: #ffe604;
-    border: none; 
-    border-radius: 48px;
-    */
     background: none;
     border-bottom: 5px solid #3b3b3b;
     color: #000;
@@ -19,9 +13,23 @@
     display: flex;
     font-weight: 600;
     padding: 10px 10px 5px 10px;
-    /* top right left bottom*/
     transition: background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
 }
+
+.pager button::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    transition: height 0.3s ease;
+    z-index: 0;
+}
+
 
 .pager button:nth-child(-n + 2) {
     border-right: 1px solid #292990;
@@ -37,10 +45,15 @@
     /* top-left, top-right, bottom-right, bottom-left */
 }
 
-.pager button:hover {
-    background-color: #000;
+.pager button:hover::before {
+    height: 100%;
+    background-color: #3b3b3b;
     color: #ffe604;
-    border-bottom: 5px solid #000;
+}
+
+.pager button.selected:hover::before {
+    height: 0%;
+    background-color: #FFF;
 }
 
 .pager button span.iconTable {
@@ -54,10 +67,40 @@
     background-position: center;
     margin-right: 0.4em;
     transition: background-color 0.3s ease;
+    z-index: 2;
+    /* Add this line */
+    position: relative;
+    /* Add this line */
 }
 
-.pager button:hover span.iconTable {
+.pager button:hover span.iconTable,
+.pager button.selected span.iconTable {
     background-color: #ffe604;
+}
+
+.pager button.selected {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #777;
+    padding: 10px 10px 9px 10px;
+}
+
+.pager button.selected:hover {
+    cursor: default;
+    color: #000;
+
+}
+
+.buttonText {
+    z-index: 2;
+    position: relative;
+}
+
+.pager button:hover .buttonText {
+    color: #FFF;
+}
+
+.pager button.selected:hover .buttonText {
+    color: #000;
 }
 
 .iconTable18 {
@@ -70,19 +113,4 @@
 
 .iconTableRT {
     background-image: url("/images/icon-RT.svg");
-}
-
-.pager button.selected span.iconTable {
-    background-color: #ffe604;
-}
-
-.pager button.selected {
-    background-color: #f7f7f7;
-    border-bottom: 1px solid #000;
-    padding: 10px 10px 9px 10px;
-}
-
-.pager button.selected:hover {
-    cursor: default;
-    color: #000;
 }

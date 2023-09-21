@@ -15,13 +15,16 @@ export default function TableSwitcher() {
     return (
         <div className={switcherStyles.pager}>
             <button className={getButtonClass("table18")} onClick={() => setTableType("table18")}>
-                <span className={`${switcherStyles.iconTable} ${switcherStyles.iconTable18}`}></span>18 columns
+                <span className={`${switcherStyles.iconTable} ${switcherStyles.iconTable18}`}></span>
+                <span className={switcherStyles.buttonText}>18 columns</span>
             </button>
             <button className={getButtonClass("table32")} onClick={() => setTableType("table32")}>
-                <span className={`${switcherStyles.iconTable} ${switcherStyles.iconTable32}`}></span>32 columns
+                <span className={`${switcherStyles.iconTable} ${switcherStyles.iconTable32}`}></span>
+                <span className={switcherStyles.buttonText}>32 columns</span>
             </button>
             <button className={getButtonClass("tableRaceTrack")} onClick={() => setTableType("tableRaceTrack")}>
-                <span className={`${switcherStyles.iconTable} ${switcherStyles.iconTableRT}`}></span>Race Track
+                <span className={`${switcherStyles.iconTable} ${switcherStyles.iconTableRT}`}></span>
+                <span className={switcherStyles.buttonText}>Race Track</span>
             </button>
         </div>
     );
