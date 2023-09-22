@@ -16,15 +16,25 @@ ul.navTop li {
 }
 
 ul.navTop li a {
-    display: block;
+    border-top: 3px solid #3b3b3b;
     color: #333;
-    padding: 0.5em;
+    display: block;
+    padding: 10px 10px 10px 10px;
     text-decoration: none;
     text-shadow: none;
 }
 
 ul.navTop li a:hover {
-    background-color: #000;
+    border-top: 3px solid #3b3b3b;
+    background-color: #3b3b3b;
     color: #ffe604;
     text-decoration: none;
+}
+
+.timelineNav {
+    background-color: #81a7d6;
+}
+
+a.timelineNav {
+    background-color: #81a7d6;
 }

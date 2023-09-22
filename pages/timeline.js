@@ -79,7 +79,7 @@ export default function timeline() {
 
             <main>
 
-                <div id="content">
+                <div id="content" className="timeline">
                     <NavTop />
 
                     <TimelineContent
