@@ -4,41 +4,16 @@ import { TableContext } from '../utils/TableProvider';
 
 function CanvasBackground({ colors = {} }) {
     const canvasRef = useRef(null);
+    const { currentElement } = useContext(TableContext);
 
-    const [rectangles, setRectangles] = useState([]); // To store the six rectangles
-
-    const { currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
-
-    // Function to determine the direction of mouse movement
-
-    const getDirection = () => {
-        let direction = null;
-
-        if (currentElement && prevCol18Xpos !== null) {
-            if (prevCol18Xpos < currentElement.col18Xpos) {
-                direction = 'right';
-            } else if (prevCol18Xpos > currentElement.col18Xpos) {
-                direction = 'left';
-            }
-        }
-
-        if (currentElement && prevCol18Ypos !== null) {
-            if (prevCol18Ypos < currentElement.col18Ypos) {
-                direction = 'down';
-            } else if (prevCol18Ypos > currentElement.col18Ypos) {
-                direction = 'up';
-            }
-        }
-
-        return direction;
-    };
-
-
-    // Function to animate the rectangles
-    const animate = (direction) => {
-        // Animation logic here
-        // You'll update the x and y positions of all rectangles based on the direction
-    };
+    const [rectangles, setRectangles] = useState([
+        { x: 0, y: 0, color: 'transparent' },
+        { x: 0, y: 0, color: 'transparent' },
+        { x: 0, y: 0, color: 'transparent' },
+        { x: 0, y: 0, color: 'transparent' },
+        { x: 0, y: 0, color: 'transparent' },
+        { x: 0, y: 0, color: 'transparent' }
+    ]);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -53,6 +28,11 @@ function CanvasBackground({ colors = {} }) {
 
         // Apply blur filter
         ctx.filter = 'blur(150px)';
+
+        rectangles.forEach(rect => {
+            ctx.fillStyle = rect.color;
+            ctx.fillRect(rect.x, rect.y, canvas.width / 2, canvas.height / 2);
+        });
 
         // Draw the rectangles based on passed colors
         if (colors.topLeftColor) {
@@ -75,14 +55,6 @@ function CanvasBackground({ colors = {} }) {
             ctx.fillRect(canvas.width / 2, canvas.height / 2, canvas.width / 2, canvas.height / 2);
         }
 
-        // Determine the direction of movement
-        const direction = getDirection();
-
-        // Trigger the animation
-        if (direction) {
-            animate(direction);
-        }
-
         // Handle window resize
         const handleResize = () => {
             canvas.width = window.innerWidth;
@@ -95,15 +67,7 @@ function CanvasBackground({ colors = {} }) {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, [colors, currentElement, prevCol18Xpos, prevCol18Ypos]);
-
-    useEffect(() => {
-        // Log the values in the browser's console
-        console.log("currentElement.col18Xpos: ", currentElement ? currentElement.col18Xpos : "Not set yet");
-        console.log("currentElement.col18Ypos: ", currentElement ? currentElement.col18Ypos : "Not set yet");
-        console.log("prevCol18Xpos: ", prevCol18Xpos);
-        console.log("prevCol18Ypos: ", prevCol18Ypos);
-    }, [currentElement, prevCol18Xpos, prevCol18Ypos]);
+    }, [colors, currentElement]);
 
     return (
         <canvas ref={canvasRef} style={{ position: 'fixed', top: 0, left: 0, zIndex: -2 }} />

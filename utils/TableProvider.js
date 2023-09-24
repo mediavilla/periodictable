@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import fetchElement from './fetchElement';
 import elements from '../public/elements.json';
@@ -18,15 +18,9 @@ export function TableProvider({ children }) {
     const [tableType, setTableType] = useState('18 columns'); // Default value set here
     const [loading, setLoading] = useState(true);
 
-    // Hover state variables
-    const [prevCol18Xpos, setPrevCol18Xpos] = useState(null);
-    const [prevCol18Ypos, setPrevCol18Ypos] = useState(null);
-
-    // useEffect for logging
-    useEffect(() => {
-        console.log('### New currentElement:', currentElement);
-    }, [currentElement]);
-
+    // Create a ref to store the previous values
+    const prevCol18XposRef = useRef(null);
+    const prevCol18YposRef = useRef(null);
 
     const defaultElement = elements[0]; // Assuming elements is an array of element objects
 
@@ -35,11 +29,12 @@ export function TableProvider({ children }) {
         if (!currentElement) setCurrentElement(defaultElement);
     }, []);
 
-    // useEffect for updating prevCol18Xpos and prevCol18Ypos
+
+    // Update the ref with the current values after each render
     useEffect(() => {
         if (currentElement) {
-            setPrevCol18Xpos(currentElement.col18Xpos);
-            setPrevCol18Ypos(currentElement.col18Ypos);
+            prevCol18XposRef.current = currentElement.col18Xpos;
+            prevCol18YposRef.current = currentElement.col18Ypos;
         }
     }, [currentElement]);
 
@@ -62,13 +57,18 @@ export function TableProvider({ children }) {
         }
     }, [router.isReady, router.pathname]);
 
-
-
     return (
 
-        <TableContext.Provider value={{ currentElement, setCurrentElement, tableType, setTableType, loading }}>
+        <TableContext.Provider value={{
+            currentElement,
+            setCurrentElement,
+            tableType,
+            setTableType,
+            loading,
+            prevCol18Xpos: prevCol18XposRef.current, // Use the ref's current value
+            prevCol18Ypos: prevCol18YposRef.current  // Use the ref's current value
+        }}>
             {children}
         </TableContext.Provider>
     );
 }
-

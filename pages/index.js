@@ -43,7 +43,6 @@ function App() {
       default:
         break;
     }
-
     nextElement && setCurrentElement(nextElement);
   });
 
