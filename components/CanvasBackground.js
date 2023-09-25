@@ -61,19 +61,18 @@ function CanvasBackground({ colors = {} }) {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-
-        // Initialize positions if they are at (0, 0)
-        if (topLeft.x === 0 && topLeft.y === 0) {
-            setTopLeft({ x: 0, y: 0 });
-            setTopRight({ x: canvas.width / 2, y: 0 });
-            setBottomLeft({ x: 0, y: canvas.height / 2 });
-            setBottomRight({ x: canvas.width / 2, y: canvas.height / 2 });
-
-            setOffCanvasTopLeft({ x: 0, y: -canvas.height });
-            setOffCanvasTopRight({ x: canvas.width / 2, y: -canvas.height });
-            setOffCanvasBottomLeft({ x: 0, y: canvas.height * 2 });
-            setOffCanvasBottomRight({ x: canvas.width / 2, y: canvas.height * 2 });
+        // Initialize rectangles if empty
+        if (rectangles.length === 0) {
+            const initialRectangles = [
+                { x: 0, y: 0, color: colors.topLeftColor },
+                { x: canvas.width / 2, y: 0, color: colors.topRightColor },
+                { x: 0, y: canvas.height / 2, color: colors.bottomLeftColor },
+                { x: canvas.width / 2, y: canvas.height / 2, color: colors.bottomRightColor },
+                // Add off-canvas rectangles here if needed
+            ];
+            setRectangles(initialRectangles);
         }
+
         // Determine the direction of movement
         const direction = getDirection();
 
@@ -90,25 +89,11 @@ function CanvasBackground({ colors = {} }) {
 
         // Draw the rectangles based on passed colors
 
-        if (colors.topLeftColor) {
-            ctx.fillStyle = colors.topLeftColor;
-            ctx.fillRect(topLeft.x, topLeft.y, canvas.width / 2, canvas.height / 2);
-        }
-
-        if (colors.bottomLeftColor) {
-            ctx.fillStyle = colors.bottomLeftColor;
-            ctx.fillRect(bottomLeft.x, bottomLeft.y, canvas.width / 2, canvas.height / 2);
-        }
-
-        if (colors.topRightColor) {
-            ctx.fillStyle = colors.topRightColor;
-            ctx.fillRect(topRight.x, topRight.y, canvas.width / 2, canvas.height / 2);
-        }
-
-        if (colors.bottomRightColor) {
-            ctx.fillStyle = colors.bottomRightColor;
-            ctx.fillRect(bottomRight.x, bottomRight.y, canvas.width / 2, canvas.height / 2);
-        }
+        // Update drawing code to use latest positions
+        rectangles.forEach((rect, index) => {
+            ctx.fillStyle = rect.color;
+            ctx.fillRect(rect.x, rect.y, canvas.width / 2, canvas.height / 2);
+        });
 
         // Trigger the animation
         if (direction) {
