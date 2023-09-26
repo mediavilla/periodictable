@@ -4,10 +4,14 @@ import { TableContext } from '../utils/TableProvider';
 
 function CanvasBackground({ colors = {} }) {
     const canvasRef = useRef(null);
+    const { currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
+
+    const [isHovering, setIsHovering] = useState(false);
+
+    const [positionsChanged, setPositionsChanged] = useState(false);
+
 
     const [rectangles, setRectangles] = useState([]); // To store the six rectangles NOT SURE IF I NEED THIS
-
-    const { currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
 
     // Step 1: Move rectangle position variables outside of useEffect
     // Step 2: Use useState to manage positions
@@ -48,56 +52,51 @@ function CanvasBackground({ colors = {} }) {
 
 
     // Function to animate the rectangles
-    const animate = (direction) => {
-        // Animation logic here
-        // You'll update the x and y positions of all rectangles based on the direction
+    const animate = (direction, setRectangles, canvas, ctx) => {
+        console.log('Animating', direction);
+
+        let start;
+
+        const step = (timestamp) => {
+            if (start === undefined) {
+                start = timestamp;
+            }
+            const elapsed = timestamp - start;
+
+            // Update the rectangles' positions based on elapsed time and direction
+            updateRectanglePositions(direction, topLeft, topRight, bottomLeft, bottomRight, offCanvasTopLeft, offCanvasTopRight, offCanvasBottomLeft, offCanvasBottomRight, canvas);
+
+            // Redraw the rectangles
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            rectangles.forEach((rect, index) => {
+                ctx.fillStyle = rect.color;
+                ctx.fillRect(rect.x, rect.y, canvas.width / 2, canvas.height / 2);
+            });
+
+            if (elapsed < 1000) { // Stop after one second
+                requestAnimationFrame(step);
+            }
+        };
+
+        requestAnimationFrame(step);
     };
 
+
     useEffect(() => {
+        // Initialization logic here
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
-
-        // Set canvas dimensions
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        // Initialize rectangles if empty
         if (rectangles.length === 0) {
             const initialRectangles = [
-                { x: 0, y: 0, color: colors.topLeftColor },
-                { x: canvas.width / 2, y: 0, color: colors.topRightColor },
-                { x: 0, y: canvas.height / 2, color: colors.bottomLeftColor },
-                { x: canvas.width / 2, y: canvas.height / 2, color: colors.bottomRightColor },
-                // Add off-canvas rectangles here if needed
+                { x: 0, y: 0, color: colors.topLeftColor || 'black' },
+                { x: canvas.width / 2, y: 0, color: colors.topRightColor || 'black' },
+                { x: 0, y: canvas.height / 2, color: colors.bottomLeftColor || 'black' },
+                { x: canvas.width / 2, y: canvas.height / 2, color: colors.bottomRightColor || 'black' },
             ];
             setRectangles(initialRectangles);
-        }
-
-        // Determine the direction of movement
-        const direction = getDirection();
-
-        // Update positions based on direction
-        if (direction) {
-            updateRectanglePositions(direction, topLeft, topRight, bottomLeft, bottomRight, offCanvasTopLeft, offCanvasTopRight, offCanvasBottomLeft, offCanvasBottomRight, canvas);
-        }
-
-        // Clear the canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Apply blur filter
-        ctx.filter = 'blur(150px)';
-
-        // Draw the rectangles based on passed colors
-
-        // Update drawing code to use latest positions
-        rectangles.forEach((rect, index) => {
-            ctx.fillStyle = rect.color;
-            ctx.fillRect(rect.x, rect.y, canvas.width / 2, canvas.height / 2);
-        });
-
-        // Trigger the animation
-        if (direction) {
-            animate(direction);
         }
 
         // Handle window resize
@@ -112,9 +111,59 @@ function CanvasBackground({ colors = {} }) {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, [colors, topLeft, topRight, bottomLeft, bottomRight, offCanvasTopLeft, offCanvasTopRight, offCanvasBottomLeft, offCanvasBottomRight, currentElement, prevCol18Xpos, prevCol18Ypos]);
+    }, []);
 
 
+
+
+    useEffect(() => {
+        // Update logic here
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        const direction = getDirection();
+
+        // Apply blur filter
+        ctx.filter = 'blur(150px)';
+
+        // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw the rectangles based on passed colors
+        rectangles.forEach((rect, index) => {
+            ctx.fillStyle = rect.color;
+            ctx.fillRect(rect.x, rect.y, canvas.width / 2, canvas.height / 2);
+        });
+
+        // Check if currentElement is not null and if the positions have actually changed to avoid infinite loop
+        if (currentElement && (prevCol18Xpos !== currentElement.col18Xpos || prevCol18Ypos !== currentElement.col18Ypos)) {
+            // Update the rectangles and positions
+            const updatedRectangles = [
+                { x: topLeft.x, y: topLeft.y, color: colors.topLeftColor },
+                { x: topRight.x, y: topRight.y, color: colors.topRightColor },
+                { x: bottomLeft.x, y: bottomLeft.y, color: colors.bottomLeftColor },
+                { x: bottomRight.x, y: bottomRight.y, color: colors.bottomRightColor },
+            ];
+            setRectangles(updatedRectangles);
+        }
+        if (direction && !positionsChanged) {
+            const { newTopLeft, newTopRight, newBottomLeft, newBottomRight } = updateRectanglePositions(direction, topLeft, topRight, bottomLeft, bottomRight, offCanvasTopLeft, offCanvasTopRight, offCanvasBottomLeft, offCanvasBottomRight, canvas);
+
+            // Check if positions have actually changed
+            if (JSON.stringify({ topLeft, topRight, bottomLeft, bottomRight }) !== JSON.stringify({ newTopLeft, newTopRight, newBottomLeft, newBottomRight })) {
+                setTopLeft(newTopLeft);
+                setTopRight(newTopRight);
+                setBottomLeft(newBottomLeft);
+                setBottomRight(newBottomRight);
+                setPositionsChanged(true);  // Update the flag
+            }
+        }
+    }, [topLeft, topRight, bottomLeft, bottomRight, offCanvasTopLeft, offCanvasTopRight, offCanvasBottomLeft, offCanvasBottomRight, positionsChanged]);
+
+    useEffect(() => {
+        if (positionsChanged) {
+            setPositionsChanged(false);
+        }
+    }, [positionsChanged]);
 
     useEffect(() => {
         // Log the values in the browser's console
@@ -129,6 +178,7 @@ function CanvasBackground({ colors = {} }) {
 
     const updateRectanglePositions = (direction, topLeft, topRight, bottomLeft, bottomRight, offCanvasTopLeft, offCanvasTopRight, offCanvasBottomLeft, offCanvasBottomRight, canvas) => {
 
+        console.log("Canvas inside updateRectanglePositions:", canvas);
         const halfCanvasWidth = canvas.width / 2;
         const halfCanvasHeight = canvas.height / 2;
 
@@ -180,6 +230,13 @@ function CanvasBackground({ colors = {} }) {
                 offCanvasTopRight.x = topRight.x + canvas.width;
                 offCanvasBottomRight.x = bottomRight.x + canvas.width;
                 break;
+        } return {
+
+            newTopLeft: { x: topLeft.x, y: topLeft.y },
+            newTopRight: { x: topRight.x, y: topRight.y },
+            newBottomLeft: { x: bottomLeft.x, y: bottomLeft.y },
+            newBottomRight: { x: bottomRight.x, y: bottomRight.y }
+
         }
     };
 
