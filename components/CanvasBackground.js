@@ -122,6 +122,10 @@ function CanvasBackground({ colors = {} }) {
         const ctx = canvas.getContext('2d');
         const direction = getDirection();
 
+
+        console.log("Canvas dimensions:", canvas.width, canvas.height);
+        console.log("Rectangles:", rectangles);
+
         // Apply blur filter
         ctx.filter = 'blur(150px)';
 
