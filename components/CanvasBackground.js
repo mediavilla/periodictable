@@ -6,10 +6,7 @@ function CanvasBackground({ colors = {} }) {
     const canvasRef = useRef(null);
     const { currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
 
-    const [isHovering, setIsHovering] = useState(false);
-
     const [positionsChanged, setPositionsChanged] = useState(false);
-
 
     const [rectangles, setRectangles] = useState([]); // To store the six rectangles NOT SURE IF I NEED THIS
 
@@ -30,6 +27,14 @@ function CanvasBackground({ colors = {} }) {
 
     const getDirection = () => {
         let direction = null;
+
+        // Inside getDirection function
+        console.log("Inside getDirection, returning: ", /* whatever getDirection returns */);
+
+        console.log("currentElement in getDirection:", currentElement);
+        console.log("prevCol18Xpos in getDirection:", prevCol18Xpos);
+        console.log("prevCol18Ypos in getDirection:", prevCol18Ypos);
+
 
         if (currentElement && prevCol18Xpos !== null) {
             if (prevCol18Xpos < currentElement.col18Xpos) {
@@ -97,7 +102,11 @@ function CanvasBackground({ colors = {} }) {
                 { x: canvas.width / 2, y: canvas.height / 2, color: colors.bottomRightColor || 'black' },
             ];
             setRectangles(initialRectangles);
+
+            console.log("INITIAL REC: ", initialRectangles)
         }
+
+
 
         // Handle window resize
         const handleResize = () => {
@@ -124,7 +133,12 @@ function CanvasBackground({ colors = {} }) {
 
 
         console.log("Canvas dimensions:", canvas.width, canvas.height);
-        console.log("Rectangles:", rectangles);
+        console.log("Rectangles!!!!!!!!:", rectangles);
+
+        // Inside the update useEffect
+        console.log("Is update useEffect running?: ", "Yes");
+        console.log("Value of direction: ", direction);
+        console.log("Value of positionsChanged: ", positionsChanged);
 
         // Apply blur filter
         ctx.filter = 'blur(150px)';
@@ -138,7 +152,10 @@ function CanvasBackground({ colors = {} }) {
             ctx.fillRect(rect.x, rect.y, canvas.width / 2, canvas.height / 2);
         });
 
-        // Check if currentElement is not null and if the positions have actually changed to avoid infinite loop
+        console.log("direction: ", direction)
+        console.log("positionsChanged: ", positionsChanged)
+
+
         if (currentElement && (prevCol18Xpos !== currentElement.col18Xpos || prevCol18Ypos !== currentElement.col18Ypos)) {
             // Update the rectangles and positions
             const updatedRectangles = [
@@ -147,8 +164,12 @@ function CanvasBackground({ colors = {} }) {
                 { x: bottomLeft.x, y: bottomLeft.y, color: colors.bottomLeftColor },
                 { x: bottomRight.x, y: bottomRight.y, color: colors.bottomRightColor },
             ];
-            setRectangles(updatedRectangles);
+
+            if (updatedRectangles.length > 0) {
+                setRectangles(updatedRectangles);
+            }
         }
+
         if (direction && !positionsChanged) {
             const { newTopLeft, newTopRight, newBottomLeft, newBottomRight } = updateRectanglePositions(direction, topLeft, topRight, bottomLeft, bottomRight, offCanvasTopLeft, offCanvasTopRight, offCanvasBottomLeft, offCanvasBottomRight, canvas);
 
@@ -159,8 +180,15 @@ function CanvasBackground({ colors = {} }) {
                 setBottomLeft(newBottomLeft);
                 setBottomRight(newBottomRight);
                 setPositionsChanged(true);  // Update the flag
+
+                console.log("newTopLeft: ", newTopLeft)
+                console.log("newTopRight: ", newTopRight)
+                console.log("newBottomLeft: ", newBottomLeft)
+                console.log("newBottomRight: ", newBottomRight)
+
             }
         }
+
     }, [topLeft, topRight, bottomLeft, bottomRight, offCanvasTopLeft, offCanvasTopRight, offCanvasBottomLeft, offCanvasBottomRight, positionsChanged]);
 
     useEffect(() => {
@@ -178,11 +206,12 @@ function CanvasBackground({ colors = {} }) {
     }, [currentElement, prevCol18Xpos, prevCol18Ypos]);
 
 
-    // CanvasBackground.js
+    useEffect(() => {
+        console.log("Rectangles state changed:", rectangles);
+    }, [rectangles]);
 
     const updateRectanglePositions = (direction, topLeft, topRight, bottomLeft, bottomRight, offCanvasTopLeft, offCanvasTopRight, offCanvasBottomLeft, offCanvasBottomRight, canvas) => {
 
-        console.log("Canvas inside updateRectanglePositions:", canvas);
         const halfCanvasWidth = canvas.width / 2;
         const halfCanvasHeight = canvas.height / 2;
 
@@ -234,6 +263,7 @@ function CanvasBackground({ colors = {} }) {
                 offCanvasTopRight.x = topRight.x + canvas.width;
                 offCanvasBottomRight.x = bottomRight.x + canvas.width;
                 break;
+
         } return {
 
             newTopLeft: { x: topLeft.x, y: topLeft.y },
@@ -243,7 +273,6 @@ function CanvasBackground({ colors = {} }) {
 
         }
     };
-
 
 
     return (
