@@ -1,4 +1,4 @@
-// CanvasBackground.jsx
+// CanvasBackground.jsx Some of it works but not great
 import React, { useRef, useEffect, useContext, useState } from 'react';
 import { TableContext } from '../utils/TableProvider';
 
