@@ -45,7 +45,6 @@ const CanvasBackground = () => {
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
-        console.log("CTX: ", ctx);
 
         let animationQueue = []; // The animations in the queue that might happen if the user goes too fast will be killed
 
@@ -61,6 +60,9 @@ const CanvasBackground = () => {
         let offCanvasSquareOne = { x: 0, y: -(canvas.height / 2), color: 'purple' };
         let offCanvasSquareTwo = { x: canvas.width / 2, y: -(canvas.height / 2), color: 'orange' };
 
+        // Debugging: Log initial positions of off-canvas squares
+        console.log("Initial offCanvasSquareOne:", offCanvasSquareOne);
+        console.log("Initial offCanvasSquareTwo:", offCanvasSquareTwo);
 
         // Your drawSquares function here
 
@@ -69,7 +71,7 @@ const CanvasBackground = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const allSquares = squares.concat([offCanvasSquareOne, offCanvasSquareTwo]);
             allSquares.forEach(square => {
-                console.log('Square:', square);
+                // console.log('Square:', square);
                 if (square) {  // Check if square is not undefined
                     ctx.fillStyle = square.color;
                     ctx.fillRect(square.x, square.y, canvas.width / 2, canvas.height / 2);
@@ -98,11 +100,11 @@ const CanvasBackground = () => {
 
         // Your move function here
 
-
         function move(direction) {
-            // Log initial positions of off-canvas squares
-            // console.log("Initial offCanvasSquareOne:", offCanvasSquareOne);
-            // console.log("Initial offCanvasSquareTwo:", offCanvasSquareTwo);
+            // Debugging: Log positions of off-canvas squares during animation
+            console.log("During Animation offCanvasSquareOne:", offCanvasSquareOne);
+            console.log("During Animation offCanvasSquareTwo:", offCanvasSquareTwo);
+
 
             // Animate all squares (visible and off-canvas)
             const allSquares = squares.concat([offCanvasSquareOne, offCanvasSquareTwo]);
@@ -112,12 +114,16 @@ const CanvasBackground = () => {
 
                 if (direction === 'up') {
                     targetY -= canvas.height / 2;
+                    console.log("GOING UP")
                 } else if (direction === 'down') {
                     targetY += canvas.height / 2;
+                    console.log("GOING DOWN")
                 } else if (direction === 'left') {
                     targetX -= canvas.width / 2;
+                    console.log("GOING LEFT")
                 } else if (direction === 'right') {
                     targetX += canvas.width / 2;
+                    console.log("GOING RIGHT")
                 }
 
                 // Animate squares
@@ -148,20 +154,15 @@ const CanvasBackground = () => {
                         // Set the flag to false, indicating that the animation is complete
                         setIsAnimating(false);
 
-
-                        // Debugging: Log the final state
-                        //console.log("Final squares:", squares);
-                        //console.log("Final offCanvasSquareOne:", offCanvasSquareOne);
-                        //console.log("Final offCanvasSquareTwo:", offCanvasSquareTwo);
-
+                        // Debugging: Log positions of off-canvas squares after animation
+                        console.log("After Animation offCanvasSquareOne:", offCanvasSquareOne);
+                        console.log("After Animation offCanvasSquareTwo:", offCanvasSquareTwo);
 
                     }
                 });
 
             });
         }
-
-        console.log('Canvas dimensions:', canvas.width, canvas.height);
 
         // Draw squares initially
         drawSquares();
