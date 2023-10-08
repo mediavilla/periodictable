@@ -105,6 +105,32 @@ const CanvasBackground = () => {
             console.log("During Animation offCanvasSquareOne:", offCanvasSquareOne);
             console.log("During Animation offCanvasSquareTwo:", offCanvasSquareTwo);
 
+            // Set initial positions for off-canvas squares based on direction
+            if (direction === 'up') {
+                console.log("UP BUTTON PRESSED")
+                offCanvasSquareOne.x = 0;
+                offCanvasSquareTwo.x = canvas.width / 2;
+                offCanvasSquareOne.y = canvas.height;
+                offCanvasSquareTwo.y = canvas.height;
+            } else if (direction === 'down') {
+                console.log("DOWN BUTTON PRESSED")
+                offCanvasSquareOne.x = 0;
+                offCanvasSquareTwo.x = canvas.width / 2;
+                offCanvasSquareOne.y = -canvas.height / 2;
+                offCanvasSquareTwo.y = -canvas.height / 2;
+            } else if (direction === 'left') {
+                console.log("LEFT BUTTON PRESSED")
+                offCanvasSquareOne.x = canvas.width;
+                offCanvasSquareTwo.x = canvas.width;
+                offCanvasSquareOne.y = 0;
+                offCanvasSquareTwo.y = canvas.height / 2;
+            } else if (direction === 'right') {
+                console.log("RIGHT BUTTON PRESSED")
+                offCanvasSquareOne.x = -canvas.width / 2;
+                offCanvasSquareTwo.x = -canvas.width / 2;
+                offCanvasSquareOne.y = 0;
+                offCanvasSquareTwo.y = canvas.height / 2;
+            }
 
             // Animate all squares (visible and off-canvas)
             const allSquares = squares.concat([offCanvasSquareOne, offCanvasSquareTwo]);
@@ -163,6 +189,7 @@ const CanvasBackground = () => {
 
             });
         }
+
 
         // Draw squares initially
         drawSquares();
