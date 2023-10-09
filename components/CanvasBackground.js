@@ -3,10 +3,13 @@
 import React, { useEffect, useRef, useContext, useState } from 'react';
 import anime from 'animejs';
 import { TableContext } from '../utils/TableProvider'; // Import the context
+import getQuadrantColors from '../utils/getQuadrantColors';
 
 const CanvasBackground = () => {
     const canvasRef = useRef(null);
-    const { currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
+    const { elements, currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
+
+    //    const { currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
     const [isAnimating, setIsAnimating] = useState(false);
     let animationQueue = [];
 
@@ -48,12 +51,15 @@ const CanvasBackground = () => {
 
         let animationQueue = []; // The animations in the queue that might happen if the user goes too fast will be killed
 
-        // Initialize four squares with different colors and positions
+        // Get quadrant colors based on the current element and elements array
+        const { topLeftColor, bottomLeftColor, topRightColor, bottomRightColor } = getQuadrantColors(currentElement, elements);
+
+        // Initialize four squares with dynamic colors and positions
         let squares = [
-            { x: 0, y: 0, color: 'red' },
-            { x: canvas.width / 2, y: 0, color: 'blue' },
-            { x: 0, y: canvas.height / 2, color: 'green' },
-            { x: canvas.width / 2, y: canvas.height / 2, color: 'yellow' }
+            { x: 0, y: 0, color: topLeftColor },
+            { x: canvas.width / 2, y: 0, color: topRightColor },
+            { x: 0, y: canvas.height / 2, color: bottomLeftColor },
+            { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor }
         ];
 
         // Initialize off-canvas squares individually with specific positions
