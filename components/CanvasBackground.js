@@ -51,10 +51,12 @@ const CanvasBackground = () => {
 
         let animationQueue = []; // The animations in the queue that might happen if the user goes too fast will be killed
 
-        // Get quadrant colors based on the current element and elements array
-        const { topLeftColor, bottomLeftColor, topRightColor, bottomRightColor } = getQuadrantColors(currentElement, elements);
+        let topLeftColor, bottomLeftColor, topRightColor, bottomRightColor;
 
-        // Initialize four squares with dynamic colors and positions
+        // Get quadrant colors based on the current element and elements array
+        if (elements && currentElement) {
+            ({ topLeftColor, bottomLeftColor, topRightColor, bottomRightColor } = getQuadrantColors(currentElement, elements));
+        }
         let squares = [
             { x: 0, y: 0, color: topLeftColor },
             { x: canvas.width / 2, y: 0, color: topRightColor },
