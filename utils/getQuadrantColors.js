@@ -1,6 +1,11 @@
 import getCategoryHexColor from './getCategoryHexColor';
 
 export function getAdjacentElements(currentElement, elements) {
+
+    if (!elements || !currentElement) {
+        return {};
+    }
+
     const xPos = currentElement.col18Xpos;
     const yPos = currentElement.col18Ypos;
 

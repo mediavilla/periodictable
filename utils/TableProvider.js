@@ -6,6 +6,7 @@ import elements from '../public/elements.json';
 export const TableContext = React.createContext({
     currentElement: null,
     tableType: null,
+    elements: null,
     // additional fields as needed...
     setCurrentElement: () => { },
     setTableType: () => { },
@@ -60,6 +61,7 @@ export function TableProvider({ children }) {
     return (
 
         <TableContext.Provider value={{
+            elements,
             currentElement,
             setCurrentElement,
             tableType,

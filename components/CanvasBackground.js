@@ -46,6 +46,10 @@ const CanvasBackground = () => {
 
 
     useEffect(() => {
+
+        console.log("From CanvasBackground - Elements:", elements);
+        console.log("From CanvasBackground - Current Element:", currentElement);
+
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
 
@@ -69,8 +73,13 @@ const CanvasBackground = () => {
         let offCanvasSquareTwo = { x: canvas.width / 2, y: -(canvas.height / 2), color: 'orange' };
 
         // Debugging: Log initial positions of off-canvas squares
-        console.log("Initial offCanvasSquareOne:", offCanvasSquareOne);
-        console.log("Initial offCanvasSquareTwo:", offCanvasSquareTwo);
+        // console.log("Initial offCanvasSquareOne:", offCanvasSquareOne);
+        // console.log("Initial offCanvasSquareTwo:", offCanvasSquareTwo);
+
+        console.log('Elements:', elements);
+        console.log('Current Element:', currentElement);
+        console.log('Quadrant Colors:', getQuadrantColors(currentElement, elements));
+
 
         // Your drawSquares function here
 
