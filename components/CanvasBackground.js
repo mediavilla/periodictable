@@ -3,7 +3,8 @@
 import React, { useEffect, useRef, useContext, useState } from 'react';
 import anime from 'animejs';
 import { TableContext } from '../utils/TableProvider'; // Import the context
-import getQuadrantColors from '../utils/getQuadrantColors';
+import { getQuadrantColors, getAdjacentElements } from '../utils/getQuadrantColors';
+
 
 const CanvasBackground = () => {
     const canvasRef = useRef(null);
@@ -78,7 +79,7 @@ const CanvasBackground = () => {
 
         console.log('Elements:', elements);
         console.log('Current Element:', currentElement);
-        console.log('Quadrant Colors:', getQuadrantColors(currentElement, elements));
+        // console.log('Quadrant Colors:', getQuadrantColors(currentElement, elements));
 
 
         // Your drawSquares function here
@@ -123,31 +124,47 @@ const CanvasBackground = () => {
             console.log("During Animation offCanvasSquareTwo:", offCanvasSquareTwo);
 
             // Set initial positions for off-canvas squares based on direction
+
+            // Determine the adjacent elements based on the direction
+            let adjacentElements = {};
+
             if (direction === 'up') {
                 console.log("UP BUTTON PRESSED")
                 offCanvasSquareOne.x = 0;
                 offCanvasSquareTwo.x = canvas.width / 2;
                 offCanvasSquareOne.y = canvas.height;
                 offCanvasSquareTwo.y = canvas.height;
+                adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos, col18Ypos: currentElement.col18Ypos - 1 }, elements);
             } else if (direction === 'down') {
                 console.log("DOWN BUTTON PRESSED")
                 offCanvasSquareOne.x = 0;
                 offCanvasSquareTwo.x = canvas.width / 2;
                 offCanvasSquareOne.y = -canvas.height / 2;
                 offCanvasSquareTwo.y = -canvas.height / 2;
+                adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos, col18Ypos: currentElement.col18Ypos + 1 }, elements);
             } else if (direction === 'left') {
                 console.log("LEFT BUTTON PRESSED")
                 offCanvasSquareOne.x = canvas.width;
                 offCanvasSquareTwo.x = canvas.width;
                 offCanvasSquareOne.y = 0;
                 offCanvasSquareTwo.y = canvas.height / 2;
+                adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos - 1, col18Ypos: currentElement.col18Ypos }, elements);
             } else if (direction === 'right') {
                 console.log("RIGHT BUTTON PRESSED")
                 offCanvasSquareOne.x = -canvas.width / 2;
                 offCanvasSquareTwo.x = -canvas.width / 2;
                 offCanvasSquareOne.y = 0;
                 offCanvasSquareTwo.y = canvas.height / 2;
+                adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos + 1, col18Ypos: currentElement.col18Ypos }, elements);
             }
+
+            // Get the colors for the off-canvas squares
+            const { topLeftColor: offCanvasTopLeftColor, topRightColor: offCanvasTopRightColor } = getQuadrantColors(adjacentElements.topLeftElement, elements);
+
+            // Set the colors for the off-canvas squares
+            offCanvasSquareOne.color = offCanvasTopLeftColor;
+            offCanvasSquareTwo.color = offCanvasTopRightColor;
+
 
             // Animate all squares (visible and off-canvas)
             const allSquares = squares.concat([offCanvasSquareOne, offCanvasSquareTwo]);

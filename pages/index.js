@@ -4,7 +4,7 @@ import Head from 'next/head';
 import KeyboardArrowsNav from '../utils/KeyboardArrowsNav.js'
 import elements from '../public/elements.json';
 import { TableContext } from '../utils/TableProvider';
-import getQuadrantColors from '../utils/getQuadrantColors';
+import { getQuadrantColors } from '../utils/getQuadrantColors';
 import TableSwitcher from '../components/TableSwitcher';
 import NavTop from '../components/NavTop';
 import CanvasBackground from '../components/CanvasBackground';

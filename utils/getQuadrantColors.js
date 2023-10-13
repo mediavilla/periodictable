@@ -30,7 +30,7 @@ function hexToRgba(hex, alpha) {
 const opacity = 0.1; // 20% opacity
 const opacityCurrent = 0.3; // 20% opacity
 
-const getQuadrantColors = (currentElement, elements) => {
+export function getQuadrantColors(currentElement, elements) {
     if (!currentElement) return {};
 
     const { topLeftElement, bottomLeftElement, topRightElement, bottomRightElement } = getAdjacentElements(currentElement, elements);
@@ -46,5 +46,4 @@ const getQuadrantColors = (currentElement, elements) => {
     };
 };
 
-export default getQuadrantColors;
 
