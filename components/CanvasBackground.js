@@ -73,6 +73,12 @@ const CanvasBackground = () => {
         let offCanvasSquareOne = { x: 0, y: -(canvas.height / 2), color: 'purple' };
         let offCanvasSquareTwo = { x: canvas.width / 2, y: -(canvas.height / 2), color: 'orange' };
 
+        // Log the initial colors of the off-canvas squares
+        console.log("Initial offCanvasSquareOne color:", offCanvasSquareOne.color);
+        console.log("Initial offCanvasSquareTwo color:", offCanvasSquareTwo.color);
+
+
+
         // Debugging: Log initial positions of off-canvas squares
         // console.log("Initial offCanvasSquareOne:", offCanvasSquareOne);
         // console.log("Initial offCanvasSquareTwo:", offCanvasSquareTwo);
@@ -186,6 +192,10 @@ const CanvasBackground = () => {
                     console.log("GOING RIGHT")
                 }
 
+                // Log for debugging
+                console.log("From CanvasBackground - Elements:", elements);
+                console.log("From CanvasBackground - Current Element:", currentElement);
+
                 // Animate squares
                 anime({
                     targets: square,
@@ -217,6 +227,11 @@ const CanvasBackground = () => {
                         // Debugging: Log positions of off-canvas squares after animation
                         console.log("After Animation offCanvasSquareOne:", offCanvasSquareOne);
                         console.log("After Animation offCanvasSquareTwo:", offCanvasSquareTwo);
+
+                        // Log the final colors of the off-canvas squares
+                        console.log("Final offCanvasSquareOne color:", offCanvasSquareOne.color);
+                        console.log("Final offCanvasSquareTwo color:", offCanvasSquareTwo.color);
+
 
                     }
                 });
