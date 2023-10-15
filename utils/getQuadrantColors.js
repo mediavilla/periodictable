@@ -15,6 +15,12 @@ export function getAdjacentElements(currentElement, elements) {
     const topRightElement = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos) || null;
     const bottomRightElement = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos + 1) || null;
 
+    console.log("Current Element:", currentElement);
+    console.log("Top Left Element:", topLeftElement);
+    console.log("Bottom Left Element:", bottomLeftElement);
+    console.log("Top Right Element:", topRightElement);
+    console.log("Bottom Right Element:", bottomRightElement);
+
     return { topLeftElement, bottomLeftElement, topRightElement, bottomRightElement };
 }
 
@@ -34,15 +40,23 @@ export function getQuadrantColors(currentElement, elements) {
 
     const { topLeftElement, bottomLeftElement, topRightElement, bottomRightElement } = getAdjacentElements(currentElement, elements);
 
+    console.log("Current Element:", currentElement);
+    console.log("Top Left Element:", topLeftElement);
+    console.log("Bottom Left Element:", bottomLeftElement);
+    console.log("Top Right Element:", topRightElement);
+    console.log("Bottom Right Element:", bottomRightElement);
+
     const xPos = currentElement.col18Xpos;
     const yPos = currentElement.col18Ypos;
 
-    return {
+    const colors = {
         topLeftColor: topLeftElement ? hexToRgba(getCategoryHexColor(topLeftElement.category), opacityCurrent) : '#efefef',
         bottomLeftColor: bottomLeftElement ? hexToRgba(getCategoryHexColor(bottomLeftElement.category), opacity) : '#efefef',
         topRightColor: topRightElement ? hexToRgba(getCategoryHexColor(topRightElement.category), opacity) : '#efefef',
         bottomRightColor: bottomRightElement ? hexToRgba(getCategoryHexColor(bottomRightElement.category), opacity) : '#efefef'
     };
+
+    console.log("Quadrant Colors:", colors);
+
+    return colors;
 };
-
-

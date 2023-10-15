@@ -28,17 +28,17 @@ const CanvasBackground = () => {
 
         if (currentElement && prevCol18Xpos !== null) {
             if (prevCol18Xpos < currentElement.col18Xpos) {
-                direction = 'right';
-            } else if (prevCol18Xpos > currentElement.col18Xpos) {
                 direction = 'left';
+            } else if (prevCol18Xpos > currentElement.col18Xpos) {
+                direction = 'right';
             }
         }
 
         if (currentElement && prevCol18Ypos !== null) {
             if (prevCol18Ypos < currentElement.col18Ypos) {
-                direction = 'down';
-            } else if (prevCol18Ypos > currentElement.col18Ypos) {
                 direction = 'up';
+            } else if (prevCol18Ypos > currentElement.col18Ypos) {
+                direction = 'down';
             }
         }
 
@@ -125,43 +125,37 @@ const CanvasBackground = () => {
         // Your move function here
 
         function move(direction) {
-            // Debugging: Log positions of off-canvas squares during animation
-            console.log("During Animation offCanvasSquareOne:", offCanvasSquareOne);
-            console.log("During Animation offCanvasSquareTwo:", offCanvasSquareTwo);
 
-            // Set initial positions for off-canvas squares based on direction
-
-            // Determine the adjacent elements based on the direction
             let adjacentElements = {};
 
             if (direction === 'up') {
-                console.log("UP BUTTON PRESSED")
-                offCanvasSquareOne.x = 0;
-                offCanvasSquareTwo.x = canvas.width / 2;
-                offCanvasSquareOne.y = canvas.height;
-                offCanvasSquareTwo.y = canvas.height;
-                adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos, col18Ypos: currentElement.col18Ypos - 1 }, elements);
-            } else if (direction === 'down') {
-                console.log("DOWN BUTTON PRESSED")
+                // Initial positions for 'up' are now set to what was previously 'down'
                 offCanvasSquareOne.x = 0;
                 offCanvasSquareTwo.x = canvas.width / 2;
                 offCanvasSquareOne.y = -canvas.height / 2;
                 offCanvasSquareTwo.y = -canvas.height / 2;
+                adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos, col18Ypos: currentElement.col18Ypos - 1 }, elements);
+            } else if (direction === 'down') {
+                // Initial positions for 'down' are now set to what was previously 'up'
+                offCanvasSquareOne.x = 0;
+                offCanvasSquareTwo.x = canvas.width / 2;
+                offCanvasSquareOne.y = canvas.height;
+                offCanvasSquareTwo.y = canvas.height;
                 adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos, col18Ypos: currentElement.col18Ypos + 1 }, elements);
             } else if (direction === 'left') {
-                console.log("LEFT BUTTON PRESSED")
-                offCanvasSquareOne.x = canvas.width;
-                offCanvasSquareTwo.x = canvas.width;
-                offCanvasSquareOne.y = 0;
-                offCanvasSquareTwo.y = canvas.height / 2;
-                adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos - 1, col18Ypos: currentElement.col18Ypos }, elements);
-            } else if (direction === 'right') {
-                console.log("RIGHT BUTTON PRESSED")
+                // Initial positions for 'left' are now set to what was previously 'right'
                 offCanvasSquareOne.x = -canvas.width / 2;
                 offCanvasSquareTwo.x = -canvas.width / 2;
                 offCanvasSquareOne.y = 0;
                 offCanvasSquareTwo.y = canvas.height / 2;
                 adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos + 1, col18Ypos: currentElement.col18Ypos }, elements);
+            } else if (direction === 'right') {
+                // Initial positions for 'right' are now set to what was previously 'left'
+                offCanvasSquareOne.x = canvas.width;
+                offCanvasSquareTwo.x = canvas.width;
+                offCanvasSquareOne.y = 0;
+                offCanvasSquareTwo.y = canvas.height / 2;
+                adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos - 1, col18Ypos: currentElement.col18Ypos }, elements);
             }
 
             // Get the colors for the off-canvas squares
