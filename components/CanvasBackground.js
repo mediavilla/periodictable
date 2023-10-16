@@ -48,8 +48,8 @@ const CanvasBackground = () => {
 
     useEffect(() => {
 
-        console.log("From CanvasBackground - Elements:", elements);
-        console.log("From CanvasBackground - Current Element:", currentElement);
+        // console.log("From CanvasBackground - Elements:", elements);
+        // console.log("From CanvasBackground - Current Element:", currentElement);
 
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
@@ -82,9 +82,6 @@ const CanvasBackground = () => {
         // Debugging: Log initial positions of off-canvas squares
         // console.log("Initial offCanvasSquareOne:", offCanvasSquareOne);
         // console.log("Initial offCanvasSquareTwo:", offCanvasSquareTwo);
-
-        console.log('Elements:', elements);
-        console.log('Current Element:', currentElement);
         // console.log('Quadrant Colors:', getQuadrantColors(currentElement, elements));
 
 
@@ -187,7 +184,7 @@ const CanvasBackground = () => {
                 }
 
                 // Log for debugging
-                console.log("From CanvasBackground - Elements:", elements);
+                // console.log("From CanvasBackground - Elements:", elements);
                 console.log("From CanvasBackground - Current Element:", currentElement);
 
                 // Animate squares
@@ -202,6 +199,7 @@ const CanvasBackground = () => {
                         // Filter squares that are within the visible canvas area
                         const visibleSquares = allSquares.filter(s => s && s.x >= 0 && s.x < canvas.width && s.y >= 0 && s.y < canvas.height);
 
+
                         // Filter squares that are outside the visible canvas area
                         const offCanvasSquares = allSquares.filter(s => s && (s.x < 0 || s.x >= canvas.width || s.y < 0 || s.y >= canvas.height));
 
@@ -215,16 +213,31 @@ const CanvasBackground = () => {
                         offCanvasSquareOne = offCanvasSquares[0];
                         offCanvasSquareTwo = offCanvasSquares[1];
 
+
+
+
+                        // Get the new colors based on the current element
+                        if (elements && currentElement) {
+                            const { topLeftColor, bottomLeftColor, topRightColor, bottomRightColor } = getQuadrantColors(currentElement, elements);
+
+                            // Update the colors of the visible squares
+                            squares.forEach((square, index) => {
+                                if (index === 0) square.color = topLeftColor;
+                                if (index === 1) square.color = topRightColor;
+                                if (index === 2) square.color = bottomLeftColor;
+                                if (index === 3) square.color = bottomRightColor;
+                            });
+                        }
                         // Set the flag to false, indicating that the animation is complete
                         setIsAnimating(false);
 
                         // Debugging: Log positions of off-canvas squares after animation
-                        console.log("After Animation offCanvasSquareOne:", offCanvasSquareOne);
-                        console.log("After Animation offCanvasSquareTwo:", offCanvasSquareTwo);
+                        // console.log("After Animation offCanvasSquareOne:", offCanvasSquareOne);
+                        // console.log("After Animation offCanvasSquareTwo:", offCanvasSquareTwo);
 
                         // Log the final colors of the off-canvas squares
-                        console.log("Final offCanvasSquareOne color:", offCanvasSquareOne.color);
-                        console.log("Final offCanvasSquareTwo color:", offCanvasSquareTwo.color);
+                        // console.log("Final offCanvasSquareOne color:", offCanvasSquareOne.color);
+                        // console.log("Final offCanvasSquareTwo color:", offCanvasSquareTwo.color);
 
 
                     }

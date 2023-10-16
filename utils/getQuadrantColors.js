@@ -15,11 +15,6 @@ export function getAdjacentElements(currentElement, elements) {
     const topRightElement = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos) || null;
     const bottomRightElement = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos + 1) || null;
 
-    console.log("Current Element:", currentElement);
-    console.log("Top Left Element:", topLeftElement);
-    console.log("Bottom Left Element:", bottomLeftElement);
-    console.log("Top Right Element:", topRightElement);
-    console.log("Bottom Right Element:", bottomRightElement);
 
     return { topLeftElement, bottomLeftElement, topRightElement, bottomRightElement };
 }
