@@ -48,8 +48,10 @@ const CanvasBackground = () => {
 
     useEffect(() => {
 
-        // console.log("From CanvasBackground - Elements:", elements);
-        // console.log("From CanvasBackground - Current Element:", currentElement);
+        // Only proceed if elements and currentElement are available
+        if (!elements || !currentElement) {
+            return;
+        }
 
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
@@ -186,6 +188,8 @@ const CanvasBackground = () => {
                 // Log for debugging
                 // console.log("From CanvasBackground - Elements:", elements);
                 console.log("From CanvasBackground - Current Element:", currentElement);
+                // Debugging: Check adjacent elements
+                console.log("Adjacent Elements:", adjacentElements);
 
                 // Animate squares
                 anime({
@@ -232,12 +236,12 @@ const CanvasBackground = () => {
                         setIsAnimating(false);
 
                         // Debugging: Log positions of off-canvas squares after animation
-                        // console.log("After Animation offCanvasSquareOne:", offCanvasSquareOne);
-                        // console.log("After Animation offCanvasSquareTwo:", offCanvasSquareTwo);
+                        // Debugging: Log the colors of the squares after the animation is complete
+                        console.log("Squares after animation:", squares);
 
                         // Log the final colors of the off-canvas squares
-                        // console.log("Final offCanvasSquareOne color:", offCanvasSquareOne.color);
-                        // console.log("Final offCanvasSquareTwo color:", offCanvasSquareTwo.color);
+                        console.log("Final offCanvasSquareOne color:", offCanvasSquareOne.color);
+                        console.log("Final offCanvasSquareTwo color:", offCanvasSquareTwo.color);
 
 
                     }

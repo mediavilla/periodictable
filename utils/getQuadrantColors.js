@@ -1,7 +1,8 @@
+// getQuadrantColors.js
+
 import getCategoryHexColor from './getCategoryHexColor';
 
 export function getAdjacentElements(currentElement, elements) {
-
     if (!elements || !currentElement) {
         return {};
     }
@@ -9,12 +10,10 @@ export function getAdjacentElements(currentElement, elements) {
     const xPos = currentElement.col18Xpos;
     const yPos = currentElement.col18Ypos;
 
-    const topLeftElement = currentElement;
-
-    const bottomLeftElement = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos + 1) || null;
+    const topLeftElement = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos) || null;
+    const bottomLeftElement = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos - 1) || null;
     const topRightElement = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos) || null;
-    const bottomRightElement = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos + 1) || null;
-
+    const bottomRightElement = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos - 1) || null;
 
     return { topLeftElement, bottomLeftElement, topRightElement, bottomRightElement };
 }
