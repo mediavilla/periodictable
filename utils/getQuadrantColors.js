@@ -11,9 +11,9 @@ export function getAdjacentElements(currentElement, elements) {
     const yPos = currentElement.col18Ypos;
 
     const topLeftElement = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos) || null;
-    const bottomLeftElement = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos - 1) || null;
+    const bottomLeftElement = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos + 1) || null;  // Changed to yPos + 1
     const topRightElement = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos) || null;
-    const bottomRightElement = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos - 1) || null;
+    const bottomRightElement = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos + 1) || null;  // Changed to yPos + 1
 
     return { topLeftElement, bottomLeftElement, topRightElement, bottomRightElement };
 }

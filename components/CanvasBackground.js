@@ -12,6 +12,7 @@ const CanvasBackground = () => {
 
     //    const { currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
     const [isAnimating, setIsAnimating] = useState(false);
+
     let animationQueue = [];
 
     useEffect(() => {
@@ -87,7 +88,6 @@ const CanvasBackground = () => {
         // console.log('Quadrant Colors:', getQuadrantColors(currentElement, elements));
 
 
-        // Your drawSquares function here
 
         function drawSquares() {
             console.log('Drawing squares');
@@ -102,20 +102,18 @@ const CanvasBackground = () => {
             });
         }
 
-        // Your executeAnimation function here
 
         function executeAnimation() {
             // If an animation is already in progress, return
             if (isAnimating) return;
 
-            console.log("ANIMATION NOT IN QUEUE");
             if (animationQueue.length === 0) return;
-            console.log("ANIMATION IN QUEUE: ", animationQueue);
 
             // Set the flag to true, indicating that an animation is in progress
             setIsAnimating(true);
 
             const direction = animationQueue.pop(); // Take the last item from the queue
+
             animationQueue = []; // Clear the queue
 
             move(direction); // Call your existing move function
@@ -128,28 +126,24 @@ const CanvasBackground = () => {
             let adjacentElements = {};
 
             if (direction === 'up') {
-                // Initial positions for 'up' are now set to what was previously 'down'
                 offCanvasSquareOne.x = 0;
                 offCanvasSquareTwo.x = canvas.width / 2;
                 offCanvasSquareOne.y = -canvas.height / 2;
                 offCanvasSquareTwo.y = -canvas.height / 2;
                 adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos, col18Ypos: currentElement.col18Ypos - 1 }, elements);
             } else if (direction === 'down') {
-                // Initial positions for 'down' are now set to what was previously 'up'
                 offCanvasSquareOne.x = 0;
                 offCanvasSquareTwo.x = canvas.width / 2;
                 offCanvasSquareOne.y = canvas.height;
                 offCanvasSquareTwo.y = canvas.height;
                 adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos, col18Ypos: currentElement.col18Ypos + 1 }, elements);
             } else if (direction === 'left') {
-                // Initial positions for 'left' are now set to what was previously 'right'
                 offCanvasSquareOne.x = -canvas.width / 2;
                 offCanvasSquareTwo.x = -canvas.width / 2;
                 offCanvasSquareOne.y = 0;
                 offCanvasSquareTwo.y = canvas.height / 2;
                 adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos + 1, col18Ypos: currentElement.col18Ypos }, elements);
             } else if (direction === 'right') {
-                // Initial positions for 'right' are now set to what was previously 'left'
                 offCanvasSquareOne.x = canvas.width;
                 offCanvasSquareTwo.x = canvas.width;
                 offCanvasSquareOne.y = 0;
