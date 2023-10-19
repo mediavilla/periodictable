@@ -29,7 +29,7 @@ function hexToRgba(hex, alpha) {
 const opacity = 1; // 20% opacity
 const opacityCurrent = 1; // 20% opacity
 
-export function getQuadrantColors(currentElement, elements) {
+export function getQuadrantColors(currentElement, elements, direction) {
     if (!currentElement) return {};
 
     const { topLeftElement, bottomLeftElement, topRightElement, bottomRightElement } = getAdjacentElements(currentElement, elements);
@@ -50,7 +50,35 @@ export function getQuadrantColors(currentElement, elements) {
         bottomRightColor: bottomRightElement ? hexToRgba(getCategoryHexColor(bottomRightElement.category), opacity) : '#efefef'
     };
 
-    console.log("Quadrant Colors:", colors);
+    return {
+        colors
+    }
+}
 
-    return colors;
-};
+export function getOffCanvasElements(direction, adjacentElements, elements) {
+    if (!direction || !adjacentElements || !elements) {
+        return {};
+    }
+
+    const { bottomLeftElement, bottomRightElement, topLeftElement, topRightElement } = adjacentElements;
+
+    let offCanvasSquareOneElement = null;
+    let offCanvasSquareTwoElement = null;
+
+    if (direction === 'down') {
+        offCanvasSquareOneElement = elements.find(el => el.col18Xpos === bottomLeftElement.col18Xpos && el.col18Ypos === bottomLeftElement.col18Ypos + 1) || null;
+        offCanvasSquareTwoElement = elements.find(el => el.col18Xpos === bottomRightElement.col18Xpos && el.col18Ypos === bottomRightElement.col18Ypos + 1) || null;
+    } else if (direction === 'up') {
+        offCanvasSquareOneElement = elements.find(el => el.col18Xpos === topLeftElement.col18Xpos && el.col18Ypos === topLeftElement.col18Ypos - 1) || null;
+        offCanvasSquareTwoElement = elements.find(el => el.col18Xpos === topRightElement.col18Xpos && el.col18Ypos === topRightElement.col18Ypos - 1) || null;
+    } else if (direction === 'left') {
+        offCanvasSquareOneElement = elements.find(el => el.col18Xpos === topLeftElement.col18Xpos - 1 && el.col18Ypos === topLeftElement.col18Ypos) || null;
+        offCanvasSquareTwoElement = elements.find(el => el.col18Xpos === bottomLeftElement.col18Xpos - 1 && el.col18Ypos === bottomLeftElement.col18Ypos) || null;
+    } else if (direction === 'right') {
+        offCanvasSquareOneElement = elements.find(el => el.col18Xpos === topRightElement.col18Xpos + 1 && el.col18Ypos === topRightElement.col18Ypos) || null;
+        offCanvasSquareTwoElement = elements.find(el => el.col18Xpos === bottomRightElement.col18Xpos + 1 && el.col18Ypos === bottomRightElement.col18Ypos) || null;
+    }
+
+    return { offCanvasSquareOneElement, offCanvasSquareTwoElement };
+}
+
