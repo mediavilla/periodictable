@@ -77,18 +77,6 @@ const CanvasBackground = () => {
         let offCanvasSquareOne = { x: 0, y: -(canvas.height / 2), color: 'purple' };
         let offCanvasSquareTwo = { x: canvas.width / 2, y: -(canvas.height / 2), color: 'orange' };
 
-        // Log the initial colors of the off-canvas squares
-        console.log("Initial offCanvasSquareOne color:", offCanvasSquareOne.color);
-        console.log("Initial offCanvasSquareTwo color:", offCanvasSquareTwo.color);
-
-
-
-        // Debugging: Log initial positions of off-canvas squares
-        // console.log("Initial offCanvasSquareOne:", offCanvasSquareOne);
-        // console.log("Initial offCanvasSquareTwo:", offCanvasSquareTwo);
-        // console.log('Quadrant Colors:', getQuadrantColors(currentElement, elements));
-
-
 
         function drawSquares() {
             console.log('Drawing squares');
@@ -125,48 +113,46 @@ const CanvasBackground = () => {
         function move(direction) {
 
             let adjacentElements = {};
-
             if (direction === 'up') {
-                offCanvasSquareOne.x = 0;
-                offCanvasSquareTwo.x = canvas.width / 2;
-                offCanvasSquareOne.y = -canvas.height / 2;
-                offCanvasSquareTwo.y = -canvas.height / 2;
-                adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos, col18Ypos: currentElement.col18Ypos - 1 }, elements);
-
-            } else if (direction === 'down') {
+                // offCanvasSquareOne bottom left & offCanvasSquareTwo bottom right
                 offCanvasSquareOne.x = 0;
                 offCanvasSquareTwo.x = canvas.width / 2;
                 offCanvasSquareOne.y = canvas.height;
                 offCanvasSquareTwo.y = canvas.height;
                 adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos, col18Ypos: currentElement.col18Ypos + 1 }, elements);
 
-            } else if (direction === 'left') {
-                offCanvasSquareOne.x = -canvas.width / 2;
-                offCanvasSquareTwo.x = -canvas.width / 2;
-                offCanvasSquareOne.y = 0;
-                offCanvasSquareTwo.y = canvas.height / 2;
-                adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos + 1, col18Ypos: currentElement.col18Ypos }, elements);
+            } else if (direction === 'down') {
+                // offCanvasSquareOne top left & offCanvasSquareTwo top right
+                offCanvasSquareOne.x = 0;
+                offCanvasSquareTwo.x = canvas.width / 2;
+                offCanvasSquareOne.y = -canvas.height / 2;
+                offCanvasSquareTwo.y = -canvas.height / 2;
+                adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos, col18Ypos: currentElement.col18Ypos - 1 }, elements);
 
-            } else if (direction === 'right') {
+
+            } else if (direction === 'left') {
+                // offCanvasSquareOne top righ & offCanvasSquareTwo bottom right
                 offCanvasSquareOne.x = canvas.width;
                 offCanvasSquareTwo.x = canvas.width;
                 offCanvasSquareOne.y = 0;
                 offCanvasSquareTwo.y = canvas.height / 2;
                 adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos - 1, col18Ypos: currentElement.col18Ypos }, elements);
 
+            } else if (direction === 'right') {
+                // offCanvasSquareOne top left & offCanvasSquareTwo bottom left
+                offCanvasSquareOne.x = -canvas.width / 2;
+                offCanvasSquareTwo.x = -canvas.width / 2;
+                offCanvasSquareOne.y = 0;
+                offCanvasSquareTwo.y = canvas.height / 2;
+                adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos + 1, col18Ypos: currentElement.col18Ypos }, elements);
+
             }
 
-            // Get off-canvas elements
-            const { offCanvasSquareOneElement, offCanvasSquareTwoElement } = getOffCanvasElements(currentElement, elements, direction);
-
-            // Update the colors of off-canvas squares
-            offCanvasSquareOne.color = offCanvasSquareOneElement ? hexToRgba(getCategoryHexColor(offCanvasSquareOneElement.category), opacity) : '#efefef';
-            offCanvasSquareTwo.color = offCanvasSquareTwoElement ? hexToRgba(getCategoryHexColor(offCanvasSquareTwoElement.category), opacity) : '#efefef';
 
             // Animate all squares (visible and off-canvas)
             const allSquares = squares.concat([offCanvasSquareOne, offCanvasSquareTwo]);
-
             allSquares.forEach(square => {
+
                 let targetX = square.x;  // Initialize targetX
                 let targetY = square.y;  // Initialize targetY
 
@@ -202,20 +188,6 @@ const CanvasBackground = () => {
                         // Filter squares that are within the visible canvas area
                         const visibleSquares = allSquares.filter(s => s && s.x >= 0 && s.x < canvas.width && s.y >= 0 && s.y < canvas.height);
 
-                        // Filter squares that are outside the visible canvas area
-                        const offCanvasSquares = allSquares.filter(s => s && (s.x < 0 || s.x >= canvas.width || s.y < 0 || s.y >= canvas.height));
-
-                        // Update the squares and off-canvas queue
-                        squares = visibleSquares;
-
-                        // Sort off-canvas squares by their x and y positions
-                        offCanvasSquares.sort((a, b) => a.x - b.x || a.y - b.y);
-
-                        // Update offCanvasSquareOne and offCanvasSquareTwo
-                        offCanvasSquareOne = offCanvasSquares[0];
-                        offCanvasSquareTwo = offCanvasSquares[1];
-
-
                         // Get the new colors based on the current element
                         if (elements && currentElement) {
                             const { topLeftColor, bottomLeftColor, topRightColor, bottomRightColor } = (currentElement, elements, direction)
@@ -230,15 +202,6 @@ const CanvasBackground = () => {
                         }
                         // Set the flag to false, indicating that the animation is complete
                         setIsAnimating(false);
-
-                        // Debugging: Log positions of off-canvas squares after animation
-                        // Debugging: Log the colors of the squares after the animation is complete
-                        // console.log("Squares after animation:", squares);
-
-                        // Log the final colors of the off-canvas squares
-                        console.log("Final offCanvasSquareOne color:", offCanvasSquareOne.color);
-                        console.log("Final offCanvasSquareTwo color:", offCanvasSquareTwo.color);
-
 
                     }
                 });
@@ -259,7 +222,7 @@ const CanvasBackground = () => {
 
 
     return (
-        <canvas ref={canvasRef} style={{ position: 'fixed', top: 0, left: 0, zIndex: -2, backgroundColor: 'grey' }} />
+        <canvas ref={canvasRef} style={{ position: 'fixed', top: 0, left: 0, zIndex: -2, backgroundColor: 'white' }} />
     );
 };
 
