@@ -1,5 +1,9 @@
 import getCategoryHexColor from './getCategoryHexColor';
 
+const opacity = 1; // 20% opacity
+const opacityCurrent = 1; // 20% opacity
+
+// Function to get adjacent elements based on the current element
 export function getAdjacentElements(currentElement, elements) {
 
     if (!elements || !currentElement) {
@@ -19,6 +23,37 @@ export function getAdjacentElements(currentElement, elements) {
     return { topLeftElement, bottomLeftElement, topRightElement, bottomRightElement };
 }
 
+// Function to get off-canvas elements based on the current element and direction
+export function getOffCanvasElements(currentElement, elements, direction) {
+    if (!elements || !currentElement) {
+        return {};
+    }
+
+    const xPos = currentElement.col18Xpos;
+    const yPos = currentElement.col18Ypos;
+    let offCanvasSquareOne = null;
+    let offCanvasSquareTwo = null;
+
+    if (direction === 'up') {
+        offCanvasSquareOne = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos - 1) || null;
+        offCanvasSquareTwo = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos - 1) || null;
+    }
+    if (direction === 'down') {
+        offCanvasSquareOne = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos + 2) || null;
+        offCanvasSquareTwo = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos + 2) || null;
+    }
+    if (direction === 'left') {
+        offCanvasSquareOne = elements.find(el => el.col18Ypos === yPos && el.col18Xpos === xPos - 1) || null;
+        offCanvasSquareTwo = elements.find(el => el.col18Ypos === yPos + 1 && el.col18Xpos === xPos - 1) || null;
+    }
+    if (direction === 'right') {
+        offCanvasSquareOne = elements.find(el => el.col18Ypos === yPos && el.col18Xpos === xPos + 2) || null;
+        offCanvasSquareTwo = elements.find(el => el.col18Ypos === yPos + 1 && el.col18Xpos === xPos + 2) || null;
+    }
+    return { offCanvasSquareOne, offCanvasSquareTwo };
+}
+
+// Function to convert HEX to RGBA
 function hexToRgba(hex, alpha) {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -27,9 +62,8 @@ function hexToRgba(hex, alpha) {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-const opacity = 1; // 20% opacity
-const opacityCurrent = 1; // 20% opacity
 
+// Function to get quadrant colors based on the current element
 export function getQuadrantColors(currentElement, elements) {
     if (!currentElement) return {};
 
@@ -41,9 +75,6 @@ export function getQuadrantColors(currentElement, elements) {
     console.log("Top Right Element:", topRightElement);
     console.log("Bottom Right Element:", bottomRightElement);
 
-    const xPos = currentElement.col18Xpos;
-    const yPos = currentElement.col18Ypos;
-
     const colors = {
         topLeftColor: topLeftElement ? hexToRgba(getCategoryHexColor(topLeftElement.category), opacityCurrent) : '#efefef',
         bottomLeftColor: bottomLeftElement ? hexToRgba(getCategoryHexColor(bottomLeftElement.category), opacity) : '#efefef',
@@ -54,4 +85,35 @@ export function getQuadrantColors(currentElement, elements) {
     console.log("Quadrant Colors:", colors);
 
     return colors;
+};
+
+// Function to get off-canvas square colors based on the current element
+export function getOffCanvasSquaresColors(currentElement, elements) {
+    // Debugging: Log the input values
+    console.log("get Off-Canvas SquaresColors - Current Element:", currentElement);
+    console.log("get Off-Canvas SquaresColors - Elements:", elements);
+
+    if (!currentElement) return {};
+
+    // Get off-canvas elements based on the current element
+    const { offCanvasSquareOne, offCanvasSquareTwo } = getOffCanvasElements(currentElement, elements);
+
+    // Define colors for off-canvas squares
+    const offColors = {
+        offCanvasSquareOneColor: offCanvasSquareOne ? hexToRgba(getCategoryHexColor(offCanvasSquareOne.category), opacity) : '#efefef',
+        offCanvasSquareTwoColor: offCanvasSquareTwo ? hexToRgba(getCategoryHexColor(offCanvasSquareTwo.category), opacity) : '#efefef',
+
+    };
+
+    // Debugging: Log the calculated colors
+    console.log("Calculated Off-Canvas Colors:", offColors);
+
+
+
+    // Debugging: Log the off-canvas colors 
+    console.log("offCanvasSquareOne: ", offCanvasSquareOne);
+    console.log("offCanvasSquareTwo: ", offCanvasSquareTwo);
+    console.log("Off Canvas Squares Colors:", offColors);
+
+    return offColors;
 };
