@@ -5,6 +5,8 @@ const opacityCurrent = 1; // 20% opacity
 
 // Function to get adjacent elements based on the current element
 export function getAdjacentElements(currentElement, elements) {
+    // console.log("Received currentElement:", currentElement);
+    // console.log("Received elements:", elements);
 
     if (!elements || !currentElement) {
         return {};
@@ -25,30 +27,46 @@ export function getAdjacentElements(currentElement, elements) {
 
 // Function to get off-canvas elements based on the current element and direction
 export function getOffCanvasElements(currentElement, elements, direction) {
+    console.log("getOffCanvasElements, currentElement: ", currentElement)
+    console.log("getOffCanvasElements, elements: ", elements)
+    console.log("getOffCanvasElements, direction: ", direction)
     if (!elements || !currentElement) {
         return {};
     }
 
     const xPos = currentElement.col18Xpos;
     const yPos = currentElement.col18Ypos;
+
     let offCanvasSquareOne = null;
     let offCanvasSquareTwo = null;
 
-    if (direction === 'up') {
-        offCanvasSquareOne = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos - 1) || null;
-        offCanvasSquareTwo = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos - 1) || null;
-    }
     if (direction === 'down') {
+        console.log("off-Canvas Direction: DOWN")
         offCanvasSquareOne = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos + 2) || null;
         offCanvasSquareTwo = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos + 2) || null;
+        console.log("offCanvasSquareOne: ", offCanvasSquareOne)
+        console.log("offCanvasSquareTwo: ", offCanvasSquareTwo)
     }
-    if (direction === 'left') {
-        offCanvasSquareOne = elements.find(el => el.col18Ypos === yPos && el.col18Xpos === xPos - 1) || null;
-        offCanvasSquareTwo = elements.find(el => el.col18Ypos === yPos + 1 && el.col18Xpos === xPos - 1) || null;
+    if (direction === 'up') {
+        console.log("off-Canvas Direction: UP")
+        offCanvasSquareOne = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos - 1) || null;
+        offCanvasSquareTwo = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos - 1) || null;
+        console.log("offCanvasSquareOne: ", offCanvasSquareOne)
+        console.log("offCanvasSquareTwo: ", offCanvasSquareTwo)
     }
     if (direction === 'right') {
+        console.log("off-Canvas Direction: RIGHT")
         offCanvasSquareOne = elements.find(el => el.col18Ypos === yPos && el.col18Xpos === xPos + 2) || null;
         offCanvasSquareTwo = elements.find(el => el.col18Ypos === yPos + 1 && el.col18Xpos === xPos + 2) || null;
+        console.log("offCanvasSquareOne: ", offCanvasSquareOne)
+        console.log("offCanvasSquareTwo: ", offCanvasSquareTwo)
+    }
+    if (direction === 'left') {
+        console.log("off-Canvas Direction: LEFT")
+        offCanvasSquareOne = elements.find(el => el.col18Ypos === yPos && el.col18Xpos === xPos - 1) || null;
+        offCanvasSquareTwo = elements.find(el => el.col18Ypos === yPos + 1 && el.col18Xpos === xPos - 1) || null;
+        console.log("offCanvasSquareOne: ", offCanvasSquareOne)
+        console.log("offCanvasSquareTwo: ", offCanvasSquareTwo)
     }
     return { offCanvasSquareOne, offCanvasSquareTwo };
 }
@@ -65,15 +83,10 @@ function hexToRgba(hex, alpha) {
 
 // Function to get quadrant colors based on the current element
 export function getQuadrantColors(currentElement, elements) {
+
     if (!currentElement) return {};
 
     const { topLeftElement, bottomLeftElement, topRightElement, bottomRightElement } = getAdjacentElements(currentElement, elements);
-
-    console.log("Current Element:", currentElement);
-    console.log("Top Left Element:", topLeftElement);
-    console.log("Bottom Left Element:", bottomLeftElement);
-    console.log("Top Right Element:", topRightElement);
-    console.log("Bottom Right Element:", bottomRightElement);
 
     const colors = {
         topLeftColor: topLeftElement ? hexToRgba(getCategoryHexColor(topLeftElement.category), opacityCurrent) : '#efefef',
@@ -88,15 +101,12 @@ export function getQuadrantColors(currentElement, elements) {
 };
 
 // Function to get off-canvas square colors based on the current element
-export function getOffCanvasSquaresColors(currentElement, elements) {
-    // Debugging: Log the input values
-    console.log("get Off-Canvas SquaresColors - Current Element:", currentElement);
-    console.log("get Off-Canvas SquaresColors - Elements:", elements);
+export function getOffCanvasSquaresColors(currentElement, elements, direction) {
 
     if (!currentElement) return {};
 
     // Get off-canvas elements based on the current element
-    const { offCanvasSquareOne, offCanvasSquareTwo } = getOffCanvasElements(currentElement, elements);
+    const { offCanvasSquareOne, offCanvasSquareTwo } = getOffCanvasElements(currentElement, elements, direction);
 
     // Define colors for off-canvas squares
     const offColors = {
@@ -104,16 +114,6 @@ export function getOffCanvasSquaresColors(currentElement, elements) {
         offCanvasSquareTwoColor: offCanvasSquareTwo ? hexToRgba(getCategoryHexColor(offCanvasSquareTwo.category), opacity) : '#efefef',
 
     };
-
-    // Debugging: Log the calculated colors
-    console.log("Calculated Off-Canvas Colors:", offColors);
-
-
-
-    // Debugging: Log the off-canvas colors 
-    console.log("offCanvasSquareOne: ", offCanvasSquareOne);
-    console.log("offCanvasSquareTwo: ", offCanvasSquareTwo);
-    console.log("Off Canvas Squares Colors:", offColors);
-
+    console.log("offColors: ", offColors)
     return offColors;
 };

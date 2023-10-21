@@ -5,13 +5,10 @@ import anime from 'animejs';
 import { TableContext } from '../utils/TableProvider'; // Import the context
 import { getQuadrantColors, getAdjacentElements, getOffCanvasElements, getOffCanvasSquaresColors } from '../utils/getQuadrantColors';
 
-
-
 const CanvasBackground = () => {
     const canvasRef = useRef(null);
     const { elements, currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
 
-    //    const { currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
     const [isAnimating, setIsAnimating] = useState(false);
 
     let animationQueue = [];
@@ -61,11 +58,13 @@ const CanvasBackground = () => {
         let animationQueue = []; // The animations in the queue that might happen if the user goes too fast will be killed
 
         let topLeftColor, bottomLeftColor, topRightColor, bottomRightColor;
+        let offCanvasSquareOne, offCanvasSquareTwo;
 
         // Get quadrant colors based on the current element and elements array
         if (elements && currentElement) {
             ({ topLeftColor, bottomLeftColor, topRightColor, bottomRightColor } = getQuadrantColors(currentElement, elements));
         }
+
         let squares = [
             { x: 0, y: 0, color: topLeftColor },
             { x: canvas.width / 2, y: 0, color: topRightColor },
@@ -74,12 +73,10 @@ const CanvasBackground = () => {
         ];
 
 
-
-
         function drawSquares() {
             console.log('Drawing squares');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const allSquares = squares.concat([getOffCanvasElements]);
+            const allSquares = squares.concat([offCanvasSquareOne, offCanvasSquareTwo]);
             allSquares.forEach(square => {
                 // console.log('Square:', square);
                 if (square) {  // Check if square is not undefined
@@ -106,38 +103,12 @@ const CanvasBackground = () => {
             move(direction); // Call your existing move function
         }
 
-
-        // Get the current direction
-        const currentDirection = getDirection();
-
-
-        // Get off-canvas elements based on the current element and direction
-        const { offCanvasSquareOne, offCanvasSquareTwo } = getOffCanvasElements(currentElement, elements, currentDirection);
-
-
-        // Get off-canvas square colors
-        let { offCanvasSquareOneColor, offCanvasSquareTwoColor } = {};
-        if (elements && currentElement) {
-            ({ offCanvasSquareOneColor, offCanvasSquareTwoColor } = getOffCanvasSquaresColors(offCanvasSquareOne, offCanvasSquareTwo));
-        }
-
-        // Update off-canvas square colors
-        if (offCanvasSquareOne) {
-            offCanvasSquareOne.color = offCanvasSquareOneColor;
-        }
-        if (offCanvasSquareTwo) {
-            offCanvasSquareTwo.color = offCanvasSquareTwoColor;
-        }
-
         // Your move function here
 
         function move(direction) {
 
             let adjacentElements = {};
-
-            // Get off-canvas elements based on the current element and direction
-            const { offCanvasSquareOne, offCanvasSquareTwo } = getOffCanvasElements(currentElement, elements, direction);
-
+            let offCanvasElementsColors = {};
 
             if (direction === 'up') {
                 // offCanvasSquareOne bottom left & offCanvasSquareTwo bottom right
@@ -149,7 +120,8 @@ const CanvasBackground = () => {
                     offCanvasSquareTwo.x = canvas.width / 2;
                     offCanvasSquareTwo.y = canvas.height;
                 }
-                adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos, col18Ypos: currentElement.col18Ypos + 1 }, elements);
+
+                offCanvasElementsColors = getOffCanvasSquaresColors(currentElement, elements, "up");
 
             } else if (direction === 'down') {
                 // offCanvasSquareOne top left & offCanvasSquareTwo top right
@@ -161,10 +133,10 @@ const CanvasBackground = () => {
                     offCanvasSquareTwo.x = canvas.width / 2;
                     offCanvasSquareTwo.y = -canvas.height / 2;
                 }
-                adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos, col18Ypos: currentElement.col18Ypos - 1 }, elements);
 
+                offCanvasElementsColors = getOffCanvasSquaresColors(currentElement, elements, "down");
 
-            } else if (direction === 'left') {
+            } else if (direction === 'right') {
                 // offCanvasSquareOne top righ & offCanvasSquareTwo bottom right
                 if (offCanvasSquareOne) {
                     offCanvasSquareOne.y = 0;
@@ -174,21 +146,26 @@ const CanvasBackground = () => {
                     offCanvasSquareTwo.x = canvas.width;
                     offCanvasSquareTwo.y = canvas.height / 2;
                 }
-                adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos - 1, col18Ypos: currentElement.col18Ypos }, elements);
 
-            } else if (direction === 'right') {
+                offCanvasElementsColors = getOffCanvasSquaresColors(currentElement, elements, "right");
+
+            } else if (direction === 'left') {
                 // offCanvasSquareOne top left & offCanvasSquareTwo bottom left
-                offCanvasSquareOne.x = -canvas.width / 2;
-                offCanvasSquareTwo.x = -canvas.width / 2;
-                offCanvasSquareOne.y = 0;
-                offCanvasSquareTwo.y = canvas.height / 2;
-                adjacentElements = getAdjacentElements({ col18Xpos: currentElement.col18Xpos + 1, col18Ypos: currentElement.col18Ypos }, elements);
+                if (offCanvasSquareOne) {
+                    offCanvasSquareOne.x = -canvas.width / 2;
+                    offCanvasSquareOne.y = 0;
+                }
+                if (offCanvasSquareTwo) {
+                    offCanvasSquareTwo.x = -canvas.width / 2;
+                    offCanvasSquareTwo.y = canvas.height / 2;
+                }
 
+                offCanvasElementsColors = getOffCanvasSquaresColors(currentElement, elements, "left");
             }
 
 
             // Animate all squares (visible and off-canvas)
-            const allSquares = squares.concat([getOffCanvasElements]);
+            const allSquares = squares.concat([offCanvasElementsColors]);
             allSquares.forEach(square => {
 
                 let targetX = square.x;  // Initialize targetX
@@ -219,7 +196,7 @@ const CanvasBackground = () => {
                     update: drawSquares,
                     complete: function () {
                         // Filter squares that are within the visible canvas area
-                        const visibleSquares = allSquares.filter(s => s && s.x >= 0 && s.x < canvas.width && s.y >= 0 && s.y < canvas.height);
+                        // const visibleSquares = allSquares.filter(s => s && s.x >= 0 && s.x < canvas.width && s.y >= 0 && s.y < canvas.height);
 
                         // Get the new colors based on the current element
                         if (elements && currentElement) {
@@ -231,14 +208,8 @@ const CanvasBackground = () => {
                                 if (index === 1) square.color = topRightColor;
                                 if (index === 2) square.color = bottomLeftColor;
                                 if (index === 3) square.color = bottomRightColor;
-                                console.log("topLeftColor: ", topLeftColor)
-                                console.log("topRightColorL: ", topRightColor)
-                                console.log("bottomLeftColor: ", bottomLeftColor)
-                                console.log("bottomRightColor: ", bottomRightColor)
                             });
                         }
-
-
 
                         // Set the flag to false, indicating that the animation is complete
                         setIsAnimating(false);
