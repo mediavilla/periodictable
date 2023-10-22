@@ -220,7 +220,6 @@ const CanvasBackground = () => {
             });
         }
 
-
         // Draw squares initially
         drawSquares();
 
