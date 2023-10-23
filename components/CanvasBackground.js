@@ -3,15 +3,13 @@
 import React, { useEffect, useRef, useContext, useState } from 'react';
 import anime from 'animejs';
 import { TableContext } from '../utils/TableProvider'; // Import the context
-import { getQuadrantColors, getAdjacentElements, getOffCanvasElements, getOffCanvasSquaresColors } from '../utils/getQuadrantColors';
+import { getQuadrantColors, getOffCanvasSquaresColors } from '../utils/getQuadrantColors';
 
 const CanvasBackground = () => {
     const canvasRef = useRef(null);
     const { elements, currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
 
     const [isAnimating, setIsAnimating] = useState(false);
-
-    let animationQueue = [];
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -199,6 +197,7 @@ const CanvasBackground = () => {
                         // const visibleSquares = allSquares.filter(s => s && s.x >= 0 && s.x < canvas.width && s.y >= 0 && s.y < canvas.height);
 
                         // Get the new colors based on the current element
+                        /*
                         if (elements && currentElement) {
                             const { topLeftColor, bottomLeftColor, topRightColor, bottomRightColor } = (currentElement, elements, direction)
 
@@ -210,6 +209,7 @@ const CanvasBackground = () => {
                                 if (index === 3) square.color = bottomRightColor;
                             });
                         }
+                        */
 
                         // Set the flag to false, indicating that the animation is complete
                         setIsAnimating(false);

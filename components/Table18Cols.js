@@ -60,6 +60,7 @@ export default function Table18({ elements }) {
                 className={`${elementStyles.elementCardMedium}`}
                 onMouseEnter={() => {
                   setCurrentElement(element);
+                  console.log('Hover event triggered for element:', element.name);
                 }}
 
               >
