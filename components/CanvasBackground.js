@@ -9,6 +9,8 @@ const CanvasBackground = () => {
     const canvasRef = useRef(null);
     const { elements, currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
 
+    let animationQueue = []; // Move this line outside useEffect
+
     const [isAnimating, setIsAnimating] = useState(false);
 
     useEffect(() => {
@@ -53,8 +55,6 @@ const CanvasBackground = () => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
 
-        let animationQueue = []; // The animations in the queue that might happen if the user goes too fast will be killed
-
         let topLeftColor, bottomLeftColor, topRightColor, bottomRightColor;
         let offCanvasSquareOne, offCanvasSquareTwo;
 
@@ -73,6 +73,8 @@ const CanvasBackground = () => {
 
         function drawSquares() {
             console.log('Drawing squares');
+            console.log('Drawing squares with colors:', squares.map(s => s.color));
+
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const allSquares = squares.concat([offCanvasSquareOne, offCanvasSquareTwo]);
             allSquares.forEach(square => {
@@ -85,21 +87,33 @@ const CanvasBackground = () => {
         }
 
 
-        function executeAnimation() {
+        // Inside useEffect
+        function executeAnimation(direction) {
             // If an animation is already in progress, return
             if (isAnimating) return;
-
-            if (animationQueue.length === 0) return;
 
             // Set the flag to true, indicating that an animation is in progress
             setIsAnimating(true);
 
-            const direction = animationQueue.pop(); // Take the last item from the queue
-
-            animationQueue = []; // Clear the queue
-
             move(direction); // Call your existing move function
         }
+
+
+        // Inside useEffect
+        function startLastAnimation() {
+            // Only proceed if the queue has items and no animation is in progress
+            if (animationQueue.length === 0 || isAnimating) return;
+
+            // Take the last item from the queue
+            const lastDirection = animationQueue.pop();
+
+            // Clear the queue
+            animationQueue = [];
+
+            // Start the animation
+            executeAnimation(lastDirection);
+        }
+
 
         // Your move function here
 
@@ -226,8 +240,9 @@ const CanvasBackground = () => {
         const direction = getDirection(); // Get the direction based on the context values
         if (direction && !isAnimating) {  // Check if not currently animating
             animationQueue.push(direction);
-            executeAnimation();
+            startLastAnimation();
         }
+
     }, [currentElement, prevCol18Xpos, prevCol18Ypos]);  // Removed isAnimating from dependency array
 
 
