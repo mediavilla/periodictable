@@ -74,6 +74,9 @@ const CanvasBackground = () => {
         function drawSquares() {
             console.log('Drawing squares');
             console.log('Drawing squares with colors:', squares.map(s => s.color));
+            console.log('Current squares:', squares.map(s => s));
+            console.log('Current offCanvasSquareOne:', offCanvasSquareOne);
+            console.log('Current offCanvasSquareTwo:', offCanvasSquareTwo);
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const allSquares = squares.concat([offCanvasSquareOne, offCanvasSquareTwo]);
@@ -205,7 +208,10 @@ const CanvasBackground = () => {
                     y: targetY,
                     duration: 2500,
                     easing: 'linear',
-                    update: drawSquares,
+                    update: function () {
+                        console.log('Animating square:', square);
+                        drawSquares();
+                    },
                     complete: function () {
                         // Filter squares that are within the visible canvas area
                         // const visibleSquares = allSquares.filter(s => s && s.x >= 0 && s.x < canvas.width && s.y >= 0 && s.y < canvas.height);
