@@ -1,3 +1,5 @@
+// getQuadrantColors.js
+
 import getCategoryHexColor from './getCategoryHexColor';
 
 const opacity = 1; // 20% opacity
