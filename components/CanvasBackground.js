@@ -50,6 +50,7 @@ const CanvasBackground = () => {
     };
 
     useEffect(() => {
+        console.log('###################### Effect Start');
 
         // Only proceed if elements and currentElement are available
         if (!elements || !currentElement) {
@@ -73,8 +74,13 @@ const CanvasBackground = () => {
             { x: 0, y: canvas.height / 2, color: bottomLeftColor },
             { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor }
         ];
+        console.log("topLeftColor: ", topLeftColor)
+        console.log("topRightColor: ", topRightColor)
+        console.log("bottomLeftColor: ", bottomLeftColor)
+        console.log("bottomRightColor: ", bottomRightColor)
 
         function offCanvasSquares(direction) {
+            console.log("offCanvasSquares: ", direction)
             let offCanvasSquareOne = {};  // Initialize to empty object
             let offCanvasSquareTwo = {};  // Initialize to empty object
             let offCanvasElementsColors = {};
@@ -92,14 +98,14 @@ const CanvasBackground = () => {
 
             } else if (direction === 'right') {
                 // offCanvasSquareOne top righ & offCanvasSquareTwo bottom right
-                offCanvasSquareOne = { x: canvas.width, y: 0 };
-                offCanvasSquareTwo = { x: canvas.width, y: canvas.height / 2 }
+                offCanvasSquareOne = { x: -canvas.width / 2, y: 0 };
+                offCanvasSquareTwo = { x: -canvas.width / 2, y: canvas.height / 2 }
                 offCanvasElementsColors = getOffCanvasSquaresColors(currentElement, elements, "right");
 
             } else if (direction === 'left') {
                 // offCanvasSquareOne top left & offCanvasSquareTwo bottom left
-                offCanvasSquareOne = { x: -canvas.width / 2, y: 0 };
-                offCanvasSquareTwo = { x: -canvas.width / 2, y: canvas.height / 2 }
+                offCanvasSquareOne = { x: canvas.width, y: 0 };
+                offCanvasSquareTwo = { x: canvas.width, y: canvas.height / 2 }
                 offCanvasElementsColors = getOffCanvasSquaresColors(currentElement, elements, "left");
             }
 
@@ -115,6 +121,10 @@ const CanvasBackground = () => {
 
             // Return the squares directly, no need to check if they're undefined
             // as we initialized them as empty objects
+
+            console.log("offCanvasSquares Off-Canvas Square One:", offCanvasSquareOne);
+            console.log("offCanvasSquares Off-Canvas Square Two:", offCanvasSquareTwo);
+
             return [
                 { x: offCanvasSquareOne.x, y: offCanvasSquareOne.y, color: offCanvasSquareOneColor },
                 { x: offCanvasSquareTwo.x, y: offCanvasSquareTwo.y, color: offCanvasSquareTwoColor }
@@ -144,6 +154,7 @@ const CanvasBackground = () => {
 
         // Inside useEffect
         function executeAnimation(direction) {
+            console.log("executeAnimation: ", direction)
             // If an animation is already in progress, return
             if (isAnimating) return;
 
@@ -156,6 +167,7 @@ const CanvasBackground = () => {
 
         // Inside useEffect
         function startLastAnimation() {
+            console.log("startLastAnimation: ")
             // Only proceed if the queue has items and no animation is in progress
             if (animationQueue.length === 0 || isAnimating) return;
 
@@ -164,7 +176,7 @@ const CanvasBackground = () => {
 
             // Clear the queue
             animationQueue = [];
-
+            console.log("startLastAnimation lastDirection: ", lastDirection)
             // Start the animation
             executeAnimation(lastDirection);
         }
@@ -174,6 +186,7 @@ const CanvasBackground = () => {
         // Inside CanvasBackground.js
 
         function move(direction) {
+            console.log("FUNCTION MOVE: ", direction)
             // Get the off-canvas squares
             const offCanvas = offCanvasSquares(direction);
             console.log("offCanvas move function", offCanvas)
@@ -205,11 +218,12 @@ const CanvasBackground = () => {
                     easing: 'linear',
                     update: function () {
                         drawSquares();
+                        console.log("ANIME UPDATE")
                     },
                     complete: function () {
                         // Set the flag to false, indicating that the animation is complete
                         setIsAnimating(false);
-
+                        console.log("MOVE COMPLETE")
                         // Update the squares array with new positions
                         squares = allSquares.map(s => {
                             return {
@@ -231,8 +245,9 @@ const CanvasBackground = () => {
         if (direction && !isAnimating) {  // Check if not currently animating
             animationQueue.push(direction);
             startLastAnimation();
+            console.log("CONDITIONAL DIRECTION MOVE")
         }
-
+        console.log('###################### Effect End');
     }, [currentElement, prevCol18Xpos, prevCol18Ypos]);  // Removed isAnimating from dependency array
 
 
