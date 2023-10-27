@@ -86,6 +86,8 @@ function hexToRgba(hex, alpha) {
 // Function to get quadrant colors based on the current element
 export function getQuadrantColors(currentElement, elements) {
 
+    console.log("getQuadrantColors STAR:", currentElement)
+
     if (!currentElement) return {};
 
     const { topLeftElement, bottomLeftElement, topRightElement, bottomRightElement } = getAdjacentElements(currentElement, elements);
@@ -97,7 +99,7 @@ export function getQuadrantColors(currentElement, elements) {
         bottomRightColor: bottomRightElement ? hexToRgba(getCategoryHexColor(bottomRightElement.category), opacity) : '#efefef'
     };
 
-    console.log("Quadrant Colors:", colors);
+    console.log("getQuadrantColors Quadrant Colors:", colors);
 
     return colors;
 };
