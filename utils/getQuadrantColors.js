@@ -51,8 +51,8 @@ export function getOffCanvasElements(currentElement, elements, direction) {
     }
     if (direction === 'up') {
         console.log("off-Canvas Direction: UP")
-        offCanvasSquareOne = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos + 2) || null;
-        offCanvasSquareTwo = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos + 2) || null;
+        offCanvasSquareOne = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos + 1) || null;
+        offCanvasSquareTwo = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos + 1) || null;
         console.log("offCanvasSquareOne: ", offCanvasSquareOne)
         console.log("offCanvasSquareTwo: ", offCanvasSquareTwo)
     }
