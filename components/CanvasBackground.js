@@ -13,6 +13,12 @@ const CanvasBackground = () => {
 
     const [isAnimating, setIsAnimating] = useState(false);
 
+
+    let offCanvasSquareOne = {};  // Initialize to empty object
+    let offCanvasSquareTwo = {};  // Initialize to empty object
+    let offCanvasElementsColors = {};
+
+
     useEffect(() => {
         const canvas = canvasRef.current;
         canvas.width = window.innerWidth;
@@ -61,7 +67,6 @@ const CanvasBackground = () => {
         const ctx = canvas.getContext('2d');
 
         let topLeftColor, bottomLeftColor, topRightColor, bottomRightColor;
-        let offCanvasSquareOne, offCanvasSquareTwo;
 
         // Get quadrant colors based on the current element and elements array
         if (elements && currentElement) {
@@ -79,11 +84,9 @@ const CanvasBackground = () => {
         console.log("bottomLeftColor: ", bottomLeftColor)
         console.log("bottomRightColor: ", bottomRightColor)
 
+
         function offCanvasSquares(direction) {
             console.log("offCanvasSquares: ", direction)
-            let offCanvasSquareOne = {};  // Initialize to empty object
-            let offCanvasSquareTwo = {};  // Initialize to empty object
-            let offCanvasElementsColors = {};
 
             if (direction === 'up') {
                 offCanvasSquareOne = { x: 0, y: canvas.height };
@@ -133,7 +136,6 @@ const CanvasBackground = () => {
 
 
         function drawSquares() {
-            console.log('Drawing squares');
             console.log('Drawing squares with colors:', squares.map(s => s.color));
             console.log('Current squares:', squares.map(s => s));
             console.log('drawSquares Current offCanvasSquareOne:', offCanvasSquareOne);
@@ -223,7 +225,9 @@ const CanvasBackground = () => {
                     complete: function () {
                         // Set the flag to false, indicating that the animation is complete
                         setIsAnimating(false);
+
                         console.log("MOVE COMPLETE")
+
                         // Update the squares array with new positions
                         squares = allSquares.map(s => {
                             return {
@@ -232,6 +236,10 @@ const CanvasBackground = () => {
                                 color: s.color
                             };
                         });
+                        // Update offCanvasSquareOne and offCanvasSquareTwo with new positions and colors
+                        const offCanvasUpdated = allSquares.slice(-2); // last two items should be offCanvasSquares
+                        offCanvasSquareOne = offCanvasUpdated[0];
+                        offCanvasSquareTwo = offCanvasUpdated[1];
                     }
                 });
             });
@@ -248,7 +256,7 @@ const CanvasBackground = () => {
             console.log("CONDITIONAL DIRECTION MOVE")
         }
         console.log('###################### Effect End');
-    }, [currentElement, prevCol18Xpos, prevCol18Ypos]);  // Removed isAnimating from dependency array
+    }, [currentElement]);  // Removed isAnimating from dependency array
 
 
     return (

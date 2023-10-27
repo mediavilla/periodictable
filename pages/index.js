@@ -1,10 +1,11 @@
+// index.js
+
 import React, { useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import KeyboardArrowsNav from '../utils/KeyboardArrowsNav.js'
 import elements from '../public/elements.json';
 import { TableContext } from '../utils/TableProvider';
-import { getQuadrantColors } from '../utils/getQuadrantColors';
 import TableSwitcher from '../components/TableSwitcher';
 import NavTop from '../components/NavTop';
 import CanvasBackground from '../components/CanvasBackground';
@@ -20,8 +21,6 @@ function App() {
 
   const router = useRouter();
   const { currentElement, setCurrentElement } = useContext(TableContext);
-
-  const CanvasColorsObject = getQuadrantColors(currentElement, elements);
 
   KeyboardArrowsNav(currentElement, (key) => {
     let nextElement;
@@ -60,7 +59,7 @@ function App() {
       </Head>
       <main>
 
-        <CanvasBackground colors={CanvasColorsObject} />
+        <CanvasBackground />
 
         <div id="content">
 
