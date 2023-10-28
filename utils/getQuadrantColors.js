@@ -86,7 +86,7 @@ function hexToRgba(hex, alpha) {
 // Function to get quadrant colors based on the current element
 export function getQuadrantColors(currentElement, elements) {
 
-    console.log("getQuadrantColors STAR:", currentElement)
+    console.log("getQuadrantColors START:", currentElement)
 
     if (!currentElement) return {};
 
