@@ -33,22 +33,23 @@ const CanvasBackground = () => {
 
         if (currentElement && prevCol18Xpos !== null) {
             if (prevCol18Xpos < currentElement.col18Xpos) {
-                direction = 'left';
-            } else if (prevCol18Xpos > currentElement.col18Xpos) {
                 direction = 'right';
+            } else if (prevCol18Xpos > currentElement.col18Xpos) {
+                direction = 'left';
             }
         }
 
         if (currentElement && prevCol18Ypos !== null) {
             if (prevCol18Ypos < currentElement.col18Ypos) {
-                direction = 'up';
-            } else if (prevCol18Ypos > currentElement.col18Ypos) {
                 direction = 'down';
+            } else if (prevCol18Ypos > currentElement.col18Ypos) {
+                direction = 'up';
             }
         }
 
         return direction;
     };
+
     const [movementDirection, setMovementDirection] = useState(null);
 
     const updateMovementDirection = (newDirection) => {
@@ -65,7 +66,6 @@ const CanvasBackground = () => {
 
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
-
         let topLeftColor, bottomLeftColor, topRightColor, bottomRightColor;
 
         // Get quadrant colors based on the current element and elements array
@@ -136,10 +136,10 @@ const CanvasBackground = () => {
 
 
         function drawSquares() {
-            console.log('Drawing squares with colors:', squares.map(s => s.color));
-            console.log('Current squares:', squares.map(s => s));
-            console.log('drawSquares Current offCanvasSquareOne:', offCanvasSquareOne);
-            console.log('drawSquares Current offCanvasSquareTwo:', offCanvasSquareTwo);
+            // console.log('Drawing squares with colors:', squares.map(s => s.color));
+            // console.log('Current squares:', squares.map(s => s));
+            // console.log('drawSquares Current offCanvasSquareOne:', offCanvasSquareOne);
+            // console.log('drawSquares Current offCanvasSquareTwo:', offCanvasSquareTwo);
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const allSquares = squares.concat([offCanvasSquareOne, offCanvasSquareTwo]);
@@ -185,7 +185,7 @@ const CanvasBackground = () => {
 
 
 
-        // Inside CanvasBackground.js
+        // MOVE SQUARES
 
         function move(direction) {
             console.log("FUNCTION MOVE: ", direction)
@@ -201,13 +201,13 @@ const CanvasBackground = () => {
                 let targetX = square.x;  // Initialize targetX
                 let targetY = square.y;  // Initialize targetY
 
-                if (direction === 'up') {
+                if (direction === 'down') {
                     targetY -= canvas.height / 2;
-                } else if (direction === 'down') {
+                } else if (direction === 'up') {
                     targetY += canvas.height / 2;
-                } else if (direction === 'left') {
-                    targetX -= canvas.width / 2;
                 } else if (direction === 'right') {
+                    targetX -= canvas.width / 2;
+                } else if (direction === 'left') {
                     targetX += canvas.width / 2;
                 }
 

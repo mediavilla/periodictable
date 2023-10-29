@@ -43,28 +43,28 @@ export function getOffCanvasElements(currentElement, elements, direction) {
     let offCanvasSquareTwo = null;
 
     if (direction === 'down') {
-        console.log("off-Canvas Direction: DOWN")
-        offCanvasSquareOne = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos - 1) || null;
-        offCanvasSquareTwo = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos + 1) || null;
-        console.log("offCanvasSquareOne: ", offCanvasSquareOne)
-        console.log("offCanvasSquareTwo: ", offCanvasSquareTwo)
-    }
-    if (direction === 'up') {
-        console.log("off-Canvas Direction: UP")
+        console.log("offCanvas Direction: DOWN")
         offCanvasSquareOne = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos + 1) || null;
         offCanvasSquareTwo = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos + 1) || null;
         console.log("offCanvasSquareOne: ", offCanvasSquareOne)
         console.log("offCanvasSquareTwo: ", offCanvasSquareTwo)
     }
+    if (direction === 'up') {
+        console.log("offCanvas Direction: UP")
+        offCanvasSquareOne = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos - 1) || null;
+        offCanvasSquareTwo = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos - 1) || null;
+        console.log("offCanvasSquareOne: ", offCanvasSquareOne)
+        console.log("offCanvasSquareTwo: ", offCanvasSquareTwo)
+    }
     if (direction === 'right') {
-        console.log("off-Canvas Direction: RIGHT")
-        offCanvasSquareOne = elements.find(el => el.col18Ypos === yPos && el.col18Xpos === xPos + 2) || null;
-        offCanvasSquareTwo = elements.find(el => el.col18Ypos === yPos + 1 && el.col18Xpos === xPos + 2) || null;
+        console.log("offCanvas Direction: RIGHT")
+        offCanvasSquareOne = elements.find(el => el.col18Ypos === yPos && el.col18Xpos === xPos + 1) || null;
+        offCanvasSquareTwo = elements.find(el => el.col18Ypos === yPos + 1 && el.col18Xpos === xPos + 1) || null;
         console.log("offCanvasSquareOne: ", offCanvasSquareOne)
         console.log("offCanvasSquareTwo: ", offCanvasSquareTwo)
     }
     if (direction === 'left') {
-        console.log("off-Canvas Direction: LEFT")
+        console.log("offCanvas Direction: LEFT")
         offCanvasSquareOne = elements.find(el => el.col18Ypos === yPos && el.col18Xpos === xPos - 1) || null;
         offCanvasSquareTwo = elements.find(el => el.col18Ypos === yPos + 1 && el.col18Xpos === xPos - 1) || null;
         console.log("offCanvasSquareOne: ", offCanvasSquareOne)
