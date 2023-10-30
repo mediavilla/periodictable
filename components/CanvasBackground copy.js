@@ -7,7 +7,8 @@ import { getQuadrantColors, getOffCanvasSquaresColors } from '../utils/getQuadra
 
 const CanvasBackground = () => {
     const canvasRef = useRef(null);
-
+    // Create a ref to keep track of whether this is the first update
+    const isFirstUpdate = useRef(true);
     const { elements, currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
 
     let animationQueue = []; // Move this line outside useEffect
@@ -57,17 +58,6 @@ const CanvasBackground = () => {
         setMovementDirection(newDirection);
     };
 
-    let topLeftColor, bottomLeftColor, topRightColor, bottomRightColor;
-
-    useEffect(() => {
-        // Get quadrant colors based on the current element and elements array
-
-        if (elements && currentElement) {
-            ({ topLeftColor, bottomLeftColor, topRightColor, bottomRightColor } = getQuadrantColors(currentElement, elements));
-        }
-
-    })
-
     useEffect(() => {
         console.log('###################### Effect Start');
 
@@ -78,6 +68,13 @@ const CanvasBackground = () => {
 
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
+        let topLeftColor, bottomLeftColor, topRightColor, bottomRightColor;
+
+        // Get quadrant colors based on the current element and elements array
+
+        if (elements && currentElement) {
+            ({ topLeftColor, bottomLeftColor, topRightColor, bottomRightColor } = getQuadrantColors(currentElement, elements));
+        }
 
 
         let squares = [
@@ -150,7 +147,7 @@ const CanvasBackground = () => {
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const allSquares = squares.concat([offCanvasSquareOne, offCanvasSquareTwo]);
-            // console.log("ALL SQUARES: ", allSquares)
+            console.log("ALL SQUARES: ", allSquares)
             allSquares.forEach(square => {
                 // console.log('Square:', square);
                 if (square) {  // Check if square is not undefined
