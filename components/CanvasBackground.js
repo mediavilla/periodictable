@@ -19,6 +19,12 @@ const CanvasBackground = () => {
     let offCanvasSquareTwo = {};  // Initialize to empty object
     let offCanvasElementsColors = {};
 
+    const [squares, setSquares] = useState([
+        { x: 0, y: 0, color: '' },  // Placeholder, these will be updated in useEffect
+        { x: 0, y: 0, color: '' },
+        { x: 0, y: 0, color: '' },
+        { x: 0, y: 0, color: '' }
+    ]);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -79,13 +85,14 @@ const CanvasBackground = () => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
 
-
-        let squares = [
+        const newSquares = [
             { x: 0, y: 0, color: topLeftColor },
             { x: canvas.width / 2, y: 0, color: topRightColor },
             { x: 0, y: canvas.height / 2, color: bottomLeftColor },
             { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor }
         ];
+        setSquares(newSquares);
+
         console.log("topLeftColor: ", topLeftColor)
         console.log("topRightColor: ", topRightColor)
         console.log("bottomLeftColor: ", bottomLeftColor)
@@ -237,7 +244,7 @@ const CanvasBackground = () => {
                         const offCanvasSquares = allSquares.filter(s => s && (s.x < 0 || s.x >= canvas.width || s.y < 0 || s.y >= canvas.height));
 
                         // Update the squares and off-canvas queue
-                        squares = visibleSquares;
+                        setSquares(visibleSquares);
 
                         // Sort off-canvas squares by their x and y positions
                         offCanvasSquares.sort((a, b) => a.x - b.x || a.y - b.y);
