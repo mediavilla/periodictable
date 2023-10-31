@@ -230,23 +230,25 @@ const CanvasBackground = () => {
                         console.log("ANIME UPDATE")
                     },
                     complete: function () {
+                        // Filter squares that are within the visible canvas area
+                        const visibleSquares = allSquares.filter(s => s && s.x >= 0 && s.x < canvas.width && s.y >= 0 && s.y < canvas.height);
+
+                        // Filter squares that are outside the visible canvas area
+                        const offCanvasSquares = allSquares.filter(s => s && (s.x < 0 || s.x >= canvas.width || s.y < 0 || s.y >= canvas.height));
+
+                        // Update the squares and off-canvas queue
+                        squares = visibleSquares;
+
+                        // Sort off-canvas squares by their x and y positions
+                        offCanvasSquares.sort((a, b) => a.x - b.x || a.y - b.y);
+
+                        // Update offCanvasSquareOne and offCanvasSquareTwo
+                        offCanvasSquareOne = offCanvasSquares[0];
+                        offCanvasSquareTwo = offCanvasSquares[1];
+
                         // Set the flag to false, indicating that the animation is complete
                         setIsAnimating(false);
 
-                        console.log("MOVE COMPLETE")
-
-                        // Update the squares array with new positions
-                        squares = allSquares.map(s => {
-                            return {
-                                x: s.x,
-                                y: s.y,
-                                color: s.color
-                            };
-                        });
-                        // Update offCanvasSquareOne and offCanvasSquareTwo with new positions and colors
-                        const offCanvasUpdated = allSquares.slice(-2); // last two items should be offCanvasSquares
-                        offCanvasSquareOne = offCanvasUpdated[0];
-                        offCanvasSquareTwo = offCanvasUpdated[1];
                     }
                 });
             });
