@@ -5,6 +5,8 @@ import anime from 'animejs';
 import { TableContext } from '../utils/TableProvider'; // Import the context
 import { getQuadrantColors, getOffCanvasSquaresColors } from '../utils/getQuadrantColors';
 
+//Starting again
+
 const CanvasBackground = () => {
     const canvasRef = useRef(null);
 
