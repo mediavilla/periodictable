@@ -26,6 +26,7 @@ const CanvasBackground = () => {
     // #########################################################################################
     // useEffect to set the initial window size and setup resize event listener
     useEffect(() => {
+        console.log('##############   WINDOW');
         updateWindowSize();
         // Add event listener for window resize
         window.addEventListener('resize', updateWindowSize);
@@ -37,11 +38,18 @@ const CanvasBackground = () => {
     // #########################################################################################
     // Function to draw the squares on the canvas
     const drawSquares = () => {
+        if (!canvasRef.current) {
+            console.log('Canvas not ready');
+            return []; // Return an empty array if the canvas is not ready
+        }
+        console.log('drawSquares FIRE!!!!!!!!!');
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         canvas.width = windowSize.width || window.innerWidth;
         canvas.height = windowSize.height || window.innerHeight;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        let squares = []; // Initialize an empty array to hold the squares
 
         if (elements && currentElement) {
             const { topLeftColor, topRightColor, bottomLeftColor, bottomRightColor } = getQuadrantColors(currentElement, elements);
@@ -56,21 +64,24 @@ const CanvasBackground = () => {
                 ctx.fillRect(square.x, square.y, canvas.width / 2, canvas.height / 2);
             });
         }
+        return squares; // Return the array of squares
     };
 
     // #########################################################################################
     // #########################################################################################
     // useEffect for initial drawing of squares
     useEffect(() => {
+        console.log("IS THIS RUNNING FOR THAN ONCE???")
         if (!isInitialized && windowSize.width && windowSize.height) {
             drawSquares();
             setIsInitialized(true);
         }
-    }, [elements, currentElement]); // Only run this effect when elements or currentElement changes
+    }, [windowSize.width, windowSize.height]); // Depend on window size
 
+    // SEQUENCE OF EVENTS FOR ANIMATION STARTS HERE:
     // #########################################################################################
     // #########################################################################################
-    // Deternime direction
+    // 1. Deternime direction
     const setDirection = () => {
         // Temporary variable to determine the new direction
         let newDirection = '';
@@ -96,7 +107,7 @@ const CanvasBackground = () => {
 
     // #########################################################################################
     // #########################################################################################
-    // Get off-canvas squares in the right place with the right colors
+    // 2. Get off-canvas squares in the right place with the right colors
     function offCanvasSquares() {
         const direction = directionRef.current; // Access the current direction value
         const canvas = canvasRef.current;
@@ -133,9 +144,6 @@ const CanvasBackground = () => {
         // Return the squares directly, no need to check if they're undefined
         // as we initialized them as empty objects
 
-        console.log("offCanvasSquares Off-Canvas Square One:", offCanvasSquareOne);
-        console.log("offCanvasSquares Off-Canvas Square Two:", offCanvasSquareTwo);
-
         return [
             { x: offCanvasSquareOne.x, y: offCanvasSquareOne.y, color: offCanvasSquareOneColor },
             { x: offCanvasSquareTwo.x, y: offCanvasSquareTwo.y, color: offCanvasSquareTwoColor }
@@ -145,14 +153,16 @@ const CanvasBackground = () => {
 
     // #########################################################################################
     // #########################################################################################
+    // Get the squares in the canvas and outside the canvas
+
+    // One variable to rule them all 
+
+
+
+
+    // #########################################################################################
+    // #########################################################################################
     // useEffect that manages the sequesnce of events for 
-    useEffect(() => {
-        // Assuming handleHover is the function that updates the direction
-        setDirection();
-        offCanvasSquares();
-
-    }, [currentElement]); // Only run this effect when currentElement changes
-
 
     // #########################################################################################
     // #########################################################################################

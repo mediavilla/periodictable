@@ -30,7 +30,7 @@ export function getAdjacentElements(currentElement, elements) {
 // Function to get off-canvas elements based on the current element and direction
 export function getOffCanvasElements(currentElement, elements, direction) {
     console.log("getOffCanvasElements, currentElement: ", currentElement)
-    console.log("getOffCanvasElements, elements: ", elements)
+    // console.log("getOffCanvasElements, elements: ", elements)
     console.log("getOffCanvasElements, direction: ", direction)
     if (!elements || !currentElement) {
         return {};
