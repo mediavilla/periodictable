@@ -1,61 +1,171 @@
 // CanvasBackground.js
 
 import React, { useEffect, useContext, useRef, useState } from 'react';
-import anime from 'animejs';
-import { TableContext } from '../utils/TableProvider'; // Import the context
+import { TableContext } from '../utils/TableProvider';
 import { getQuadrantColors, getOffCanvasSquaresColors } from '../utils/getQuadrantColors';
 
 const CanvasBackground = () => {
+
+    // #########################################################################################
+    // #########################################################################################
+    // Variables
     const canvasRef = useRef(null);
-    const { elements, currentElement } = useContext(TableContext);
+    const { elements, currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
+    const [windowSize, setWindowSize] = useState({ width: undefined, height: undefined });
     const [isInitialized, setIsInitialized] = useState(false);
+    const directionRef = useRef('');
 
-    // useEffect that runs only once to get the backghround squares colors on page load
-    // Effect to update squares state when currentElement and elements are available
-    // #####################################################        
+    // #########################################################################################
+    // #########################################################################################
+    // Function to update the window size state
+    const updateWindowSize = () => {
+        setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    // #########################################################################################
+    // #########################################################################################
+    // useEffect to set the initial window size and setup resize event listener
     useEffect(() => {
-        if (elements && currentElement && !isInitialized) {
+        updateWindowSize();
+        // Add event listener for window resize
+        window.addEventListener('resize', updateWindowSize);
+        // Cleanup function to remove the event listener
+        return () => window.removeEventListener('resize', updateWindowSize);
+    }, []);
 
-            console.log("USEEFFECT IF WORKING")
+    // #########################################################################################
+    // #########################################################################################
+    // Function to draw the squares on the canvas
+    const drawSquares = () => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        canvas.width = windowSize.width || window.innerWidth;
+        canvas.height = windowSize.height || window.innerHeight;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Variables to setup the canvas
-            const canvas = canvasRef.current;
-            const ctx = canvas.getContext('2d');
-
-            // Variables to get the squares colors
+        if (elements && currentElement) {
             const { topLeftColor, topRightColor, bottomLeftColor, bottomRightColor } = getQuadrantColors(currentElement, elements);
-
-            // Canvas sizing
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            console.log("topLeftColor: ", topLeftColor)
-
-            // Assign colors and positions to the initial squares
-            const InitialSquares = [
+            const squares = [
                 { x: 0, y: 0, color: topLeftColor },
-                { x: window.innerWidth / 2, y: 0, color: topRightColor },
-                { x: 0, y: window.innerHeight / 2, color: bottomLeftColor },
-                { x: window.innerWidth / 2, y: window.innerHeight / 2, color: bottomRightColor }
+                { x: canvas.width / 2, y: 0, color: topRightColor },
+                { x: 0, y: canvas.height / 2, color: bottomLeftColor },
+                { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor },
             ];
-
-            // Iterate over each square to draw them in the canvas
-            InitialSquares.forEach(square => {
-                // console.log('Square:', square);
-                if (square) {  // Check if square is not undefined
-                    ctx.fillStyle = square.color;
-                    ctx.fillRect(square.x, square.y, canvas.width / 2, canvas.height / 2);
-                }
+            squares.forEach(square => {
+                ctx.fillStyle = square.color;
+                ctx.fillRect(square.x, square.y, canvas.width / 2, canvas.height / 2);
             });
-            // Set isInitialized to true so this useEffect only runs once
+        }
+    };
+
+    // #########################################################################################
+    // #########################################################################################
+    // useEffect for initial drawing of squares
+    useEffect(() => {
+        if (!isInitialized && windowSize.width && windowSize.height) {
+            drawSquares();
             setIsInitialized(true);
         }
-    }, [elements, currentElement, isInitialized]);
+    }, [elements, currentElement]); // Only run this effect when elements or currentElement changes
+
+    // #########################################################################################
+    // #########################################################################################
+    // Deternime direction
+    const setDirection = () => {
+        // Temporary variable to determine the new direction
+        let newDirection = '';
+
+        // Assuming currentElement is updated in the context when hovering over an element
+        if (!currentElement) return;
+
+        // Determine the direction based on currentElement and previous positions
+        if (prevCol18Xpos !== null && prevCol18Ypos !== null) {
+            if (prevCol18Xpos < currentElement.col18Xpos) {
+                newDirection = 'right';
+            } else if (prevCol18Xpos > currentElement.col18Xpos) {
+                newDirection = 'left';
+            } else if (prevCol18Ypos < currentElement.col18Ypos) {
+                newDirection = 'down';
+            } else if (prevCol18Ypos > currentElement.col18Ypos) {
+                newDirection = 'up';
+            }
+        }
+        // Update the ref with the new direction
+        directionRef.current = newDirection;
+    };
+
+    // #########################################################################################
+    // #########################################################################################
+    // Get off-canvas squares in the right place with the right colors
+    function offCanvasSquares() {
+        const direction = directionRef.current; // Access the current direction value
+        const canvas = canvasRef.current;
+        console.log("offCanvasSquares DIRECTION: ", direction)
+
+        let offCanvasSquareOne, offCanvasSquareTwo;
+
+        if (direction === 'up') {
+            offCanvasSquareOne = { x: 0, y: canvas.height };
+            offCanvasSquareTwo = { x: canvas.width / 2, y: canvas.height };
+        } else if (direction === 'down') {
+            // offCanvasSquareOne top left & offCanvasSquareTwo top right
+            offCanvasSquareOne = { x: 0, y: -canvas.height / 2 };
+            offCanvasSquareTwo = { x: canvas.width / 2, y: -canvas.height / 2 }
+        } else if (direction === 'right') {
+            // offCanvasSquareOne top righ & offCanvasSquareTwo bottom right
+            offCanvasSquareOne = { x: -canvas.width / 2, y: 0 };
+            offCanvasSquareTwo = { x: -canvas.width / 2, y: canvas.height / 2 }
+        } else if (direction === 'left') {
+            // offCanvasSquareOne top left & offCanvasSquareTwo bottom left
+            offCanvasSquareOne = { x: canvas.width, y: 0 };
+            offCanvasSquareTwo = { x: canvas.width, y: canvas.height / 2 }
+        }
+        if (!offCanvasSquareOne || !offCanvasSquareTwo) {
+            return []; // Return an empty array if squares are undefined
+        }
+
+        // Retrieve the colors
+        const offCanvasElementsColors = getOffCanvasSquaresColors(currentElement, elements, direction);
+
+        // Destructure colors from offCanvasElementsColors
+        const { offCanvasSquareOneColor, offCanvasSquareTwoColor } = offCanvasElementsColors;
+
+        // Return the squares directly, no need to check if they're undefined
+        // as we initialized them as empty objects
+
+        console.log("offCanvasSquares Off-Canvas Square One:", offCanvasSquareOne);
+        console.log("offCanvasSquares Off-Canvas Square Two:", offCanvasSquareTwo);
+
+        return [
+            { x: offCanvasSquareOne.x, y: offCanvasSquareOne.y, color: offCanvasSquareOneColor },
+            { x: offCanvasSquareTwo.x, y: offCanvasSquareTwo.y, color: offCanvasSquareTwoColor }
+        ].filter(Boolean);  // Keep this to filter out if any object happens to be null or undefined
+    }
 
 
+    // #########################################################################################
+    // #########################################################################################
+    // useEffect that manages the sequesnce of events for 
+    useEffect(() => {
+        // Assuming handleHover is the function that updates the direction
+        setDirection();
+        offCanvasSquares();
+
+    }, [currentElement]); // Only run this effect when currentElement changes
 
 
+    // #########################################################################################
+    // #########################################################################################
+    // useEffect for handling window resize
+    useEffect(() => {
+        if (windowSize.width && windowSize.height) {
+            drawSquares(); // Redraw squares when window size changes
+        }
+    }, [windowSize]); // Only run this effect when window size changes
+
+
+    // #########################################################################################
+    // #########################################################################################
     // Render the canvas
     return (
         <canvas ref={canvasRef} style={{ position: 'fixed', top: 0, left: 0, zIndex: -2 }} />
