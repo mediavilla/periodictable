@@ -9,8 +9,8 @@ const opacityCurrent = 1; // 20% opacity
 export function getAdjacentElements(currentElement, elements) {
     // console.log("Received currentElement:", currentElement);
     // console.log("Received elements:", elements);
-
-    if (!elements || !currentElement) {
+    // Ensure elements is an array before proceeding
+    if (!Array.isArray(elements) || !currentElement) {
         return {};
     }
 
