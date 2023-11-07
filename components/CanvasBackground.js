@@ -6,6 +6,8 @@ import { getAdjacentElements, getQuadrantColors, getOffCanvasSquaresColors } fro
 
 const CanvasBackground = () => {
 
+    // ## I need time to think
+
     // #########################################################################################
     // #########################################################################################
     // Variables
