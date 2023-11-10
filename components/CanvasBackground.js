@@ -28,22 +28,30 @@ const CanvasBackground = () => {
     // #########################################################################################
     // #########################################################################################
     // Function to get the inital squares
-    const initialSQuares = () => {
-        const canvas = canvasRef.current; // Define canvas from the ref
-        const { topLeftColor, topRightColor, bottomLeftColor, bottomRightColor } = getQuadrantColors(currentElement, elements);
-        if (canvas) {
-            const squares = [
-                { x: 0, y: 0, color: topLeftColor },
-                { x: canvas.width / 2, y: 0, color: topRightColor },
-                { x: 0, y: canvas.height / 2, color: bottomLeftColor },
-                { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor },
-            ];
-            return squares; // Return the array of squares
-        }
-        return []; // Return the array of squares
-    };
 
-    console.log("squares: ", initialSQuares())
+
+    useEffect(() => {
+        // Your initialSQuares function logic here
+        const initialSQuares = () => {
+            const canvas = canvasRef.current; // Define canvas from the ref
+            const { topLeftColor, topRightColor, bottomLeftColor, bottomRightColor } = getQuadrantColors(currentElement, elements);
+            if (canvas) {
+                const squares = [
+                    { x: 0, y: 0, color: topLeftColor },
+                    { x: canvas.width / 2, y: 0, color: topRightColor },
+                    { x: 0, y: canvas.height / 2, color: bottomLeftColor },
+                    { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor },
+                ];
+                return squares; // Return the array of squares
+            }
+            return []; // Return the array of squares
+        };
+
+        console.log("squares: ", initialSQuares())
+    }, []); // Empty dependency array ensures this runs only once after the component mounts
+
+
+
 
     // Return the canvas element from the component
     return (
