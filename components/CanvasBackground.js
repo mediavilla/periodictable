@@ -8,6 +8,8 @@ const CanvasBackground = () => {
     const canvasRef = useRef(null);
     const { elements, currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
     const [squares, setSquares] = useState([]); // State to store the squares array
+    const [isInitialRender, setIsInitialRender] = useState(true);
+
     const directionRef = useRef('');
 
     // #########################################################################################
@@ -35,8 +37,8 @@ const CanvasBackground = () => {
     // #########################################################################################
     // Get the inital squares
     useEffect(() => {
-        // Your initialSQuares function logic here
-        const initialSQuares = () => {
+        // Your initialSquares function logic here
+        const initialSquares = () => {
             const canvas = canvasRef.current; // Define canvas from the ref
             const { topLeftColor, topRightColor, bottomLeftColor, bottomRightColor } = getQuadrantColors(currentElement, elements);
 
@@ -47,10 +49,13 @@ const CanvasBackground = () => {
                 { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor },
             ];
             return squares; // Return the array of squares
+
         };
-        // Update the squares state with the result of initialSQuares
-        setSquares(initialSQuares());
-        console.log("squares: ", initialSQuares())
+
+        // Update the squares state with the result of initialSquares
+        setSquares(initialSquares());
+
+
     }, []); // Empty dependency array ensures this runs only once after the component mounts
 
 
@@ -58,7 +63,6 @@ const CanvasBackground = () => {
     // #########################################################################################
     // Function to draw squares on the canvas
     const drawSquares = (ctx, squares) => {
-        console.log("Draw Squares", squares)
         squares.forEach(square => {
             ctx.fillStyle = square.color;
             ctx.fillRect(square.x, square.y, canvasRef.current.width / 2, canvasRef.current.height / 2);
@@ -112,7 +116,6 @@ const CanvasBackground = () => {
     function arrayOffCanvasSquares() {
         const direction = directionRef.current; // Access the current direction value
         const canvas = canvasRef.current;
-        console.log("offCanvasSquares DIRECTION: ", direction)
 
         let offCanvasSquareOne, offCanvasSquareTwo;
 
@@ -125,12 +128,12 @@ const CanvasBackground = () => {
             offCanvasSquareTwo = { x: canvas.width / 2, y: -canvas.height / 2 }
         } else if (direction === 'right') {
             // offCanvasSquareOne top righ & offCanvasSquareTwo bottom right
-            offCanvasSquareOne = { x: -canvas.width / 2, y: 0 };
-            offCanvasSquareTwo = { x: -canvas.width / 2, y: canvas.height / 2 }
-        } else if (direction === 'left') {
-            // offCanvasSquareOne top left & offCanvasSquareTwo bottom left
             offCanvasSquareOne = { x: canvas.width, y: 0 };
             offCanvasSquareTwo = { x: canvas.width, y: canvas.height / 2 }
+        } else if (direction === 'left') {
+            // offCanvasSquareOne top left & offCanvasSquareTwo bottom left
+            offCanvasSquareOne = { x: -canvas.width / 2, y: 0 };
+            offCanvasSquareTwo = { x: -canvas.width / 2, y: canvas.height / 2 }
         }
         if (!offCanvasSquareOne || !offCanvasSquareTwo) {
             return []; // Return an empty array if squares are undefined
@@ -148,7 +151,7 @@ const CanvasBackground = () => {
         return [
             { x: offCanvasSquareOne.x, y: offCanvasSquareOne.y, color: offCanvasSquareOneColor },
             { x: offCanvasSquareTwo.x, y: offCanvasSquareTwo.y, color: offCanvasSquareTwoColor }
-        ].filter(Boolean);  // Keep this to filter out if any object happens to be null or undefined
+        ].filter(Boolean);   // Keep this to filter out if any object happens to be null or undefined
     }
 
     // #########################################################################################
@@ -162,7 +165,40 @@ const CanvasBackground = () => {
         mergedSquares = [...canvasSquares, ...offCanvasSquares];
         return mergedSquares;
     }
-    // Merge the two arrays
+    // #########################################################################################
+    // #########################################################################################
+    // Remove squares that are moved off canvas
+
+    function updateSquaresArray() {
+
+        let newSquares;
+        const canvasWidth = canvasRef.current.width;
+        const canvasHeight = canvasRef.current.height;
+        const direction = directionRef.current;
+
+        switch (direction) {
+            case 'down':
+                // Keep squares that have not moved off the top of the canvas
+                newSquares = mergedSquares.filter(sq => sq.y >= 0);
+                break;
+            case 'up':
+                // Keep squares not below the canvas
+                newSquares = mergedSquares.filter(sq => sq.y + canvasHeight / 2 <= canvasHeight);
+                break;
+            case 'right':
+                // Keep squares not to the left of the canvas
+                newSquares = mergedSquares.filter(sq => sq.x >= 0);
+                break;
+            case 'left':
+                // Keep squares not to the right of the canvas
+                newSquares = mergedSquares.filter(sq => sq.x + canvasWidth / 2 <= canvasWidth);
+                break;
+            default:
+                newSquares = [...mergedSquares];
+        }
+
+        setSquares(newSquares);
+    }
 
     // #########################################################################################
     // #########################################################################################
@@ -183,16 +219,20 @@ const CanvasBackground = () => {
             targetX += canvas.width / 2;
         }
 
-        console.log("MOVING: ", direction);
+
         const animateSquares = (squares) => {
             anime({
                 targets: squares, // Use the argument 'squares'
                 x: '+= ' + targetX, // Adjusting x position
                 y: '+= ' + targetY, // Adjusting y position
                 easing: 'easeInOutQuad',
-                duration: 1000,
+                duration: 2000,
                 update: function (anim) {
                     drawSquares(canvasRef.current.getContext('2d'), squares);
+                },
+                complete: function (anim) {
+                    // Animation complete callback
+                    updateSquaresArray(); // Function to update the squares array
                 }
             });
         };
@@ -206,15 +246,17 @@ const CanvasBackground = () => {
     // Sequencing
 
     useEffect(() => {
-        setDirection(); // Set the direction based on the current and previous elements
+        if (isInitialRender) {
+            setIsInitialRender(false);
+            return;
+        }
+
+        setDirection(); // Set the direction
         offCanvasSquares = arrayOffCanvasSquares();
         mergeSquaresArrays();
-        moveSquares()
-        console.log("offCanvasSquares: ", offCanvasSquares)
-        console.log("mergeSquares: ", mergedSquares)
+        moveSquares();
 
-    }, [currentElement]); // Run whenever these values change
-
+    }, [currentElement]); // Run whenever currentElement changes
 
 
 
