@@ -120,12 +120,12 @@ const CanvasBackground = () => {
         let offCanvasSquareOne, offCanvasSquareTwo;
 
         if (direction === 'up') {
-            offCanvasSquareOne = { x: 0, y: canvas.height };
-            offCanvasSquareTwo = { x: canvas.width / 2, y: canvas.height };
+            offCanvasSquareOne = { x: 0, y: -canvas.height / 2 };
+            offCanvasSquareTwo = { x: canvas.width / 2, y: -canvas.height / 2 };
         } else if (direction === 'down') {
             // offCanvasSquareOne top left & offCanvasSquareTwo top right
-            offCanvasSquareOne = { x: 0, y: -canvas.height / 2 };
-            offCanvasSquareTwo = { x: canvas.width / 2, y: -canvas.height / 2 }
+            offCanvasSquareOne = { x: 0, y: canvas.height };
+            offCanvasSquareTwo = { x: canvas.width / 2, y: canvas.height }
         } else if (direction === 'right') {
             // offCanvasSquareOne top righ & offCanvasSquareTwo bottom right
             offCanvasSquareOne = { x: canvas.width, y: 0 };
@@ -163,6 +163,7 @@ const CanvasBackground = () => {
     let mergedSquares = [];
     function mergeSquaresArrays() {
         mergedSquares = [...canvasSquares, ...offCanvasSquares];
+        console.log("### MERGED SQUARES", mergedSquares)
         return mergedSquares;
     }
     // #########################################################################################
@@ -175,6 +176,8 @@ const CanvasBackground = () => {
         const canvasWidth = canvasRef.current.width;
         const canvasHeight = canvasRef.current.height;
         const direction = directionRef.current;
+
+        console.log("### SQUARES IN UPDATE ARRAY", mergedSquares)
 
         switch (direction) {
             case 'down':
@@ -237,7 +240,8 @@ const CanvasBackground = () => {
             });
         };
 
-        animateSquares(mergedSquares); // Call animateSquares here
+        console.log("### SQUARES IN ANIM", mergedSquares),
+            animateSquares(mergedSquares); // Call animateSquares here
     }
 
 

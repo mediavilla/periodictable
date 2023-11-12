@@ -23,7 +23,7 @@ export function TableProvider({ children }) {
     const prevCol18XposRef = useRef(null);
     const prevCol18YposRef = useRef(null);
 
-    const defaultElement = elements[0]; // Assuming elements is an array of element objects
+    const defaultElement = elements[20]; // Assuming elements is an array of element objects
 
     // useEffect for setting default element
     useEffect(() => {
