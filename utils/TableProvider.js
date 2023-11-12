@@ -58,6 +58,12 @@ export function TableProvider({ children }) {
         }
     }, [router.isReady, router.pathname]);
 
+    // Check if the currentElement is set, if not return null or a loading indicator
+    if (!currentElement) {
+        // Optionally show a loading spinner or similar
+        return <div>Loading...</div>; // Replace with your loading component or spinner
+    }
+
     return (
 
         <TableContext.Provider value={{
