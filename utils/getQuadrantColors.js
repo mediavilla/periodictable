@@ -38,17 +38,14 @@ export function getOffCanvasElements(currentElement, elements, direction) {
     let offCanvasSquareTwo = null;
 
     if (direction === 'down') {
-        console.log("offCanvas Direction: DOWN")
         offCanvasSquareOne = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos + 1) || null;
         offCanvasSquareTwo = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos + 1) || null;
     }
     if (direction === 'up') {
-        console.log("offCanvas Direction: UP")
         offCanvasSquareOne = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos - 1) || null;
         offCanvasSquareTwo = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos - 1) || null;
     }
     if (direction === 'right') {
-        console.log("offCanvas Direction: RIGHT")
         offCanvasSquareOne = elements.find(el => el.col18Ypos === yPos && el.col18Xpos === xPos + 1) || null;
         offCanvasSquareTwo = elements.find(el => el.col18Ypos === yPos + 1 && el.col18Xpos === xPos + 1) || null;
     }
