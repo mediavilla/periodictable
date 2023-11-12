@@ -42,8 +42,8 @@ export function getOffCanvasElements(currentElement, elements, direction) {
         offCanvasSquareTwo = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos + 1) || null;
     }
     if (direction === 'up') {
-        offCanvasSquareOne = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos - 1) || null;
-        offCanvasSquareTwo = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos - 1) || null;
+        offCanvasSquareOne = elements.find(el => el.col18Xpos === xPos && el.col18Ypos === yPos) || null;
+        offCanvasSquareTwo = elements.find(el => el.col18Xpos === xPos + 1 && el.col18Ypos === yPos) || null;
     }
     if (direction === 'right') {
         offCanvasSquareOne = elements.find(el => el.col18Ypos === yPos && el.col18Xpos === xPos + 1) || null;

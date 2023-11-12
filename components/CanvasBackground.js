@@ -9,6 +9,8 @@ const CanvasBackground = () => {
     const { elements, currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
     const [squares, setSquares] = useState([]); // State to store the squares array
     const [isInitialRender, setIsInitialRender] = useState(true);
+    const [isAnimating, setIsAnimating] = useState(false);
+    let animationQueue = [];
 
     const directionRef = useRef('');
 
@@ -206,12 +208,12 @@ const CanvasBackground = () => {
     // #########################################################################################
     // #########################################################################################
     // Animation
-    function moveSquares() {
-        let targetX = 0;  // Initialize targetX
-        let targetY = 0;  // Initialize targetY
+    // Animation function with direction parameter
+    const moveSquares = (direction) => {
+        let targetX = 0;
+        let targetY = 0;
         const canvas = canvasRef.current;
 
-        const direction = directionRef.current;
         if (direction === 'down') {
             targetY -= canvas.height / 2;
         } else if (direction === 'up') {
@@ -222,29 +224,46 @@ const CanvasBackground = () => {
             targetX += canvas.width / 2;
         }
 
+        setIsAnimating(true); // Set to true when the animation starts
 
         const animateSquares = (squares) => {
             anime({
-                targets: squares, // Use the argument 'squares'
-                x: '+= ' + targetX, // Adjusting x position
-                y: '+= ' + targetY, // Adjusting y position
+                targets: squares, // Use the merged squares
+                x: '+= ' + targetX,
+                y: '+= ' + targetY,
                 easing: 'easeInOutQuad',
-                duration: 2000,
+                duration: 500,
                 update: function (anim) {
                     drawSquares(canvasRef.current.getContext('2d'), squares);
                 },
                 complete: function (anim) {
-                    // Animation complete callback
-                    updateSquaresArray(); // Function to update the squares array
+                    updateSquaresArray(); // Update squares array
+                    setIsAnimating(false); // Animation complete
+                    startLastAnimation(); // Start next animation if any
                 }
             });
         };
 
-        console.log("### SQUARES IN ANIM", mergedSquares),
-            animateSquares(mergedSquares); // Call animateSquares here
-    }
+        animateSquares(mergedSquares); // Use merged squares for animation
+    };
 
+    // #########################################################################################
+    // #########################################################################################
+    // Queue system
+    const enqueueAnimation = (newDirection) => {
+        animationQueue.push(newDirection);
+        if (!isAnimating) {
+            startLastAnimation();
+        }
+    };
 
+    // Start the last animation from the queue
+    const startLastAnimation = () => {
+        if (animationQueue.length === 0 || isAnimating) return;
+        const lastDirection = animationQueue.pop();
+        animationQueue = []; // Clear the queue
+        moveSquares(lastDirection); // Start animation with the last direction
+    };
     // #########################################################################################
     // #########################################################################################
     // Sequencing
@@ -256,11 +275,15 @@ const CanvasBackground = () => {
         }
 
         setDirection(); // Set the direction
+        const direction = directionRef.current;
         offCanvasSquares = arrayOffCanvasSquares();
-        mergeSquaresArrays();
-        moveSquares();
+        mergeSquaresArrays(); // Merge before enqueueing
 
-    }, [currentElement]); // Run whenever currentElement changes
+        if (direction) {
+            enqueueAnimation(direction);
+        }
+
+    }, [currentElement]);
 
 
 
