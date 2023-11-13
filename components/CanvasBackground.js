@@ -9,6 +9,7 @@ const CanvasBackground = () => {
     const { elements, currentElement, prevCol18Xpos, prevCol18Ypos } = useContext(TableContext);
     const [squares, setSquares] = useState([]); // State to store the squares array
     const [isInitialRender, setIsInitialRender] = useState(true);
+    const [isNonAdjacentTransition, setIsNonAdjacentTransition] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
     let animationQueue = [];
 
@@ -33,8 +34,6 @@ const CanvasBackground = () => {
         return () => window.removeEventListener('resize', resizeCanvas);
     }, []);
 
-
-
     // #########################################################################################
     // #########################################################################################
     // Get the inital squares
@@ -45,10 +44,10 @@ const CanvasBackground = () => {
             const { topLeftColor, topRightColor, bottomLeftColor, bottomRightColor } = getQuadrantColors(currentElement, elements);
 
             const squares = [
-                { x: 0, y: 0, color: topLeftColor },
-                { x: canvas.width / 2, y: 0, color: topRightColor },
-                { x: 0, y: canvas.height / 2, color: bottomLeftColor },
-                { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor },
+                { x: 0, y: 0, color: topLeftColor, opacity: 1 },
+                { x: canvas.width / 2, y: 0, color: topRightColor, opacity: 1 },
+                { x: 0, y: canvas.height / 2, color: bottomLeftColor, opacity: 1 },
+                { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor, opacity: 1 }
             ];
             return squares; // Return the array of squares
 
@@ -67,6 +66,7 @@ const CanvasBackground = () => {
     const drawSquares = (ctx, squares) => {
         squares.forEach(square => {
             ctx.fillStyle = square.color;
+            ctx.globalAlpha = square.opacity; // Set the opacity for each square
             ctx.fillRect(square.x, square.y, canvasRef.current.width / 2, canvasRef.current.height / 2);
         });
     };
@@ -83,7 +83,6 @@ const CanvasBackground = () => {
     }, [squares, canvasRef]);
 
 
-
     // SEQUENCE OF EVENTS FOR ANIMATION STARTS HERE:
     // #########################################################################################
     // #########################################################################################
@@ -95,21 +94,92 @@ const CanvasBackground = () => {
         // Assuming currentElement is updated in the context when hovering over an element
         if (!currentElement) return;
 
-        // Determine the direction based on currentElement and previous positions
-        if (prevCol18Xpos !== null && prevCol18Ypos !== null) {
-            if (prevCol18Xpos < currentElement.col18Xpos) {
-                newDirection = 'right';
-            } else if (prevCol18Xpos > currentElement.col18Xpos) {
-                newDirection = 'left';
-            } else if (prevCol18Ypos < currentElement.col18Ypos) {
-                newDirection = 'down';
-            } else if (prevCol18Ypos > currentElement.col18Ypos) {
-                newDirection = 'up';
+
+        if (Math.abs(prevCol18Xpos - currentElement.col18Xpos) === 1 && Math.abs(prevCol18Ypos - currentElement.col18Ypos) === 1) {
+            // This is a diagonal move
+            // Handle the diagonal move here
+            console.log("DIAGONAL BITCH!!!")
+        } else if (Math.abs(prevCol18Xpos - currentElement.col18Xpos) > 1 || Math.abs(prevCol18Ypos - currentElement.col18Ypos) > 1) {
+            // This is a non-adjacent move
+            // Handle the non-adjacent move here
+            setIsNonAdjacentTransition(true);
+            console.log("NON ADJACENT BITCH!!!")
+        } else {
+            // Adjacent transition
+            setIsNonAdjacentTransition(false);
+            console.log("ADJACENT BITCH!!!")
+
+            // Determine the direction based on currentElement and previous positions
+            if (prevCol18Xpos !== null && prevCol18Ypos !== null) {
+                if (prevCol18Xpos < currentElement.col18Xpos) {
+                    newDirection = 'right';
+                } else if (prevCol18Xpos > currentElement.col18Xpos) {
+                    newDirection = 'left';
+                } else if (prevCol18Ypos < currentElement.col18Ypos) {
+                    newDirection = 'down';
+                } else if (prevCol18Ypos > currentElement.col18Ypos) {
+                    newDirection = 'up';
+                }
             }
+            // Update the ref with the new direction
         }
-        // Update the ref with the new direction
         directionRef.current = newDirection;
     };
+
+
+    // #########################################################################################
+    // #########################################################################################
+    // Function to allow for user jumping to non adjacent elements
+    // Function to allow for user jumping to non-adjacent elements
+    useEffect(() => {
+        if (isInitialRender) {
+            setIsInitialRender(false);
+            return;
+        }
+
+        setDirection();
+        const direction = directionRef.current;
+
+        if (isNonAdjacentTransition) {
+            const canvas = canvasRef.current;
+            if (canvas) {
+                setSquares(NonAdjacentSquares(canvas));
+            }
+        } else {
+            if (direction) {
+                enqueueAnimation(direction);
+            }
+
+            offCanvasSquares = arrayOffCanvasSquares();
+            mergeSquaresArrays();
+        }
+    }, [currentElement, isNonAdjacentTransition]);
+
+
+    const NonAdjacentSquares = (canvas) => {
+        const { topLeftColor, topRightColor, bottomLeftColor, bottomRightColor } = getQuadrantColors(currentElement, elements);
+
+        const squares = [
+            { x: 0, y: 0, color: topLeftColor, opacity: 0 },
+            { x: canvas.width / 2, y: 0, color: topRightColor, opacity: 0 },
+            { x: 0, y: canvas.height / 2, color: bottomLeftColor, opacity: 0 },
+            { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor, opacity: 0 }
+        ];
+        // Start fade-in animation
+        anime({
+            targets: squares,
+            opacity: 1, // Animate to full opacity
+            easing: 'easeInOutQuad',
+            duration: 1000,
+            update: function () {
+                drawSquares(canvas.getContext('2d'), squares);
+            }
+        });
+
+        // Update the squares state with the result of initialSquares
+        return squares; // Return the array of squares
+    };
+
 
 
     // #########################################################################################
