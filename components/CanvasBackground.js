@@ -44,10 +44,10 @@ const CanvasBackground = () => {
             const { topLeftColor, topRightColor, bottomLeftColor, bottomRightColor } = getQuadrantColors(currentElement, elements);
 
             const squares = [
-                { x: 0, y: 0, color: topLeftColor, opacity: 1 },
-                { x: canvas.width / 2, y: 0, color: topRightColor, opacity: 1 },
-                { x: 0, y: canvas.height / 2, color: bottomLeftColor, opacity: 1 },
-                { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor, opacity: 1 }
+                { x: 0, y: 0, color: topLeftColor, opacity: 0.5 },
+                { x: canvas.width / 2, y: 0, color: topRightColor, opacity: 0.2 },
+                { x: 0, y: canvas.height / 2, color: bottomLeftColor, opacity: 0.2 },
+                { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor, opacity: 0.2 }
             ];
             return squares; // Return the array of squares
 
@@ -168,9 +168,9 @@ const CanvasBackground = () => {
         // Start fade-in animation
         anime({
             targets: squares,
-            opacity: 1, // Animate to full opacity
+            opacity: 0.5, // Animate to full opacity
             easing: 'easeInOutQuad',
-            duration: 1000,
+            duration: 500,
             update: function () {
                 drawSquares(canvas.getContext('2d'), squares);
             }
