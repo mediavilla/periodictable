@@ -2,8 +2,8 @@
 
 import getCategoryHexColor from './getCategoryHexColor';
 
-const opacity = 0.2; // 20% opacity
-const opacityCurrent = 0.5; // 20% opacity
+const opacity = 1; // 20% opacity
+const opacityCurrent = 1; // 20% opacity
 
 // Function to get adjacent elements based on the current element
 export function getAdjacentElements(currentElement, elements) {

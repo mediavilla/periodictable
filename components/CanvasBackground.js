@@ -44,10 +44,10 @@ const CanvasBackground = () => {
             const { topLeftColor, topRightColor, bottomLeftColor, bottomRightColor } = getQuadrantColors(currentElement, elements);
 
             const squares = [
-                { x: 0, y: 0, color: topLeftColor, opacity: 0.5 },
-                { x: canvas.width / 2, y: 0, color: topRightColor, opacity: 0.2 },
-                { x: 0, y: canvas.height / 2, color: bottomLeftColor, opacity: 0.2 },
-                { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor, opacity: 0.2 }
+                { x: 0, y: 0, color: topLeftColor },
+                { x: canvas.width / 2, y: 0, color: topRightColor },
+                { x: 0, y: canvas.height / 2, color: bottomLeftColor },
+                { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor }
             ];
             return squares; // Return the array of squares
 
@@ -66,7 +66,7 @@ const CanvasBackground = () => {
     const drawSquares = (ctx, squares) => {
         squares.forEach(square => {
             ctx.fillStyle = square.color;
-            ctx.globalAlpha = square.opacity; // Set the opacity for each square
+            // ctx.globalAlpha = square.opacity; // Set the opacity for each square
             ctx.fillRect(square.x, square.y, canvasRef.current.width / 2, canvasRef.current.height / 2);
         });
     };
