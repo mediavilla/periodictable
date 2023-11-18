@@ -64,10 +64,11 @@ const CanvasBackground = () => {
     // #########################################################################################
     // Function to draw squares on the canvas
     const drawSquares = (ctx, squares) => {
+        console.log("DRAW SQUARES: ", squares)
         squares.forEach(square => {
             ctx.fillStyle = square.color;
-            // ctx.globalAlpha = square.opacity; // Set the opacity for each square
             ctx.fillRect(square.x, square.y, canvasRef.current.width / 2, canvasRef.current.height / 2);
+            console.log("ctx.fillStyle: ", ctx.fillStyle)
         });
     };
 
@@ -130,7 +131,6 @@ const CanvasBackground = () => {
     // #########################################################################################
     // #########################################################################################
     // Function to allow for user jumping to non adjacent elements
-    // Function to allow for user jumping to non-adjacent elements
     useEffect(() => {
         if (isInitialRender) {
             setIsInitialRender(false);
@@ -143,7 +143,8 @@ const CanvasBackground = () => {
         if (isNonAdjacentTransition) {
             const canvas = canvasRef.current;
             if (canvas) {
-                setSquares(NonAdjacentSquares(canvas));
+                // setSquares(NonAdjacentSquares(canvas));
+                console.log("FUCK")
             }
         } else {
             if (direction) {
@@ -157,18 +158,18 @@ const CanvasBackground = () => {
 
 
     const NonAdjacentSquares = (canvas) => {
+        console.log("WHAT??")
         const { topLeftColor, topRightColor, bottomLeftColor, bottomRightColor } = getQuadrantColors(currentElement, elements);
 
         const squares = [
-            { x: 0, y: 0, color: topLeftColor, opacity: 0 },
-            { x: canvas.width / 2, y: 0, color: topRightColor, opacity: 0 },
-            { x: 0, y: canvas.height / 2, color: bottomLeftColor, opacity: 0 },
-            { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor, opacity: 0 }
+            { x: 0, y: 0, color: topLeftColor },
+            { x: canvas.width / 2, y: 0, color: topRightColor },
+            { x: 0, y: canvas.height / 2, color: bottomLeftColor },
+            { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor }
         ];
         // Start fade-in animation
         anime({
             targets: squares,
-            opacity: 0.5, // Animate to full opacity
             easing: 'easeInOutQuad',
             duration: 500,
             update: function () {
