@@ -74,6 +74,7 @@ const CanvasBackground = () => {
 
     // useEffect to draw squares whenever they change or the canvas ref updates
     useEffect(() => {
+        console.log("SQUARES CHANGE!!!")
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
 
@@ -303,7 +304,7 @@ const CanvasBackground = () => {
                 x: '+= ' + targetX,
                 y: '+= ' + targetY,
                 easing: 'easeInOutQuad',
-                duration: 500,
+                duration: 2000,
                 update: function (anim) {
                     drawSquares(canvasRef.current.getContext('2d'), squares);
                 },
