@@ -64,17 +64,19 @@ const CanvasBackground = () => {
     // #########################################################################################
     // Function to draw squares on the canvas
     const drawSquares = (ctx, squares) => {
-        console.log("DRAW SQUARES: ", squares)
+        // console.log("DRAW SQUARES: ", squares)
         squares.forEach(square => {
             ctx.fillStyle = square.color;
+            // Apply blur filter
+            ctx.filter = 'blur(150px)';
             ctx.fillRect(square.x, square.y, canvasRef.current.width / 2, canvasRef.current.height / 2);
-            console.log("ctx.fillStyle: ", ctx.fillStyle)
+            // console.log("ctx.fillStyle: ", ctx.fillStyle)
         });
     };
 
     // useEffect to draw squares whenever they change or the canvas ref updates
     useEffect(() => {
-        console.log("SQUARES CHANGE!!!")
+        // console.log("SQUARES CHANGE!!!")
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
 
@@ -251,8 +253,6 @@ const CanvasBackground = () => {
         const canvasHeight = canvasRef.current.height;
         const direction = directionRef.current;
 
-        console.log("### SQUARES IN UPDATE ARRAY", mergedSquares)
-
         switch (direction) {
             case 'down':
                 // Keep squares that have not moved off the top of the canvas
@@ -306,7 +306,10 @@ const CanvasBackground = () => {
                 easing: 'easeInOutQuad',
                 duration: 2000,
                 update: function (anim) {
-                    drawSquares(canvasRef.current.getContext('2d'), squares);
+                    console.log("SQUARES, ANIM UPDATE", squares)
+                    requestAnimationFrame(() => {
+                        drawSquares(canvasRef.current.getContext('2d'), squares);
+                    });
                 },
                 complete: function (anim) {
                     updateSquaresArray(); // Update squares array
