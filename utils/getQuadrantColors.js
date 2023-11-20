@@ -82,7 +82,8 @@ export function getQuadrantColors(currentElement, elements) {
         bottomRightColor: bottomRightElement ? hexToRgba(getCategoryHexColor(bottomRightElement.category), opacity) : '#efefef'
     };
 
-    // console.log("getQuadrantColors Quadrant Colors:", colors);
+
+    //console.log("getQuadrantColors Quadrant Colors:", colors);
 
     return colors;
 };

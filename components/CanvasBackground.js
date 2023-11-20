@@ -65,10 +65,12 @@ const CanvasBackground = () => {
     // Function to draw squares on the canvas
     const drawSquares = (ctx, squares) => {
         // console.log("DRAW SQUARES: ", squares)
+        ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        ctx.filter = 'blur(150px)';
         squares.forEach(square => {
             ctx.fillStyle = square.color;
             // Apply blur filter
-            ctx.filter = 'blur(150px)';
+
             ctx.fillRect(square.x, square.y, canvasRef.current.width / 2, canvasRef.current.height / 2);
             // console.log("ctx.fillStyle: ", ctx.fillStyle)
         });
@@ -81,7 +83,7 @@ const CanvasBackground = () => {
         const ctx = canvas.getContext('2d');
 
         // Clear the canvas before redrawing
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         drawSquares(ctx, squares);
     }, [squares, canvasRef]);
@@ -146,7 +148,7 @@ const CanvasBackground = () => {
         if (isNonAdjacentTransition) {
             const canvas = canvasRef.current;
             if (canvas) {
-                // setSquares(NonAdjacentSquares(canvas));
+                setSquares(NonAdjacentSquares(canvas));
                 console.log("FUCK")
             }
         } else {
@@ -161,7 +163,7 @@ const CanvasBackground = () => {
 
 
     const NonAdjacentSquares = (canvas) => {
-        console.log("WHAT??")
+
         const { topLeftColor, topRightColor, bottomLeftColor, bottomRightColor } = getQuadrantColors(currentElement, elements);
 
         const squares = [
@@ -170,16 +172,39 @@ const CanvasBackground = () => {
             { x: 0, y: canvas.height / 2, color: bottomLeftColor },
             { x: canvas.width / 2, y: canvas.height / 2, color: bottomRightColor }
         ];
+
+        // Initialize opacity to 0 for all squares
+        squares.forEach(square => {
+            let rgba = square.color.match(/[\d\.]+/g);
+            rgba[3] = '0';
+            square.color = `rgba(${rgba.join(', ')})`;
+        });
+
         // Start fade-in animation
         anime({
             targets: squares,
             easing: 'easeInOutQuad',
             duration: 500,
-            update: function () {
+            update: function (anim) {
+                squares.forEach((square, index) => {
+                    let color = square.color;
+                    let rgba = color.match(/[\d\.]+/g);
+                    let opacity = parseFloat(rgba[3]);
+
+                    // Calculate the new opacity based on the animation progress
+                    let newOpacity = anim.progress / 500; // Adjust this value to change the speed of the animation
+                    newOpacity = index === 0 ? newOpacity * 0.5 : newOpacity * 0.2;
+
+                    // Update the opacity if it's less than the new opacity
+                    if (opacity < newOpacity) {
+                        rgba[3] = newOpacity.toString();
+                        square.color = `rgba(${rgba.join(', ')})`;
+                    }
+                });
+
                 drawSquares(canvas.getContext('2d'), squares);
             }
         });
-
         // Update the squares state with the result of initialSquares
         return squares; // Return the array of squares
     };
