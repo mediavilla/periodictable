@@ -76,10 +76,10 @@ export function getQuadrantColors(currentElement, elements) {
     const { topLeftElement, bottomLeftElement, topRightElement, bottomRightElement } = getAdjacentElements(currentElement, elements);
 
     const colors = {
-        topLeftColor: topLeftElement ? hexToRgba(getCategoryHexColor(topLeftElement.category), opacityCurrent) : '#efefef',
-        bottomLeftColor: bottomLeftElement ? hexToRgba(getCategoryHexColor(bottomLeftElement.category), opacity) : '#efefef',
-        topRightColor: topRightElement ? hexToRgba(getCategoryHexColor(topRightElement.category), opacity) : '#efefef',
-        bottomRightColor: bottomRightElement ? hexToRgba(getCategoryHexColor(bottomRightElement.category), opacity) : '#efefef'
+        topLeftColor: topLeftElement ? hexToRgba(getCategoryHexColor(topLeftElement.category), opacityCurrent) : 'rgba(239, 239, 239, 0.2)',
+        bottomLeftColor: bottomLeftElement ? hexToRgba(getCategoryHexColor(bottomLeftElement.category), opacity) : 'rgba(239, 239, 239, 0.2)',
+        topRightColor: topRightElement ? hexToRgba(getCategoryHexColor(topRightElement.category), opacity) : 'rgba(239, 239, 239, 0.2)',
+        bottomRightColor: bottomRightElement ? hexToRgba(getCategoryHexColor(bottomRightElement.category), opacity) : 'rgba(239, 239, 239, 0.2)'
     };
 
 
@@ -98,8 +98,8 @@ export function getOffCanvasSquaresColors(currentElement, elements, direction) {
 
     // Define colors for off-canvas squares
     const offColors = {
-        offCanvasSquareOneColor: offCanvasSquareOne ? hexToRgba(getCategoryHexColor(offCanvasSquareOne.category), opacity) : '#efefef',
-        offCanvasSquareTwoColor: offCanvasSquareTwo ? hexToRgba(getCategoryHexColor(offCanvasSquareTwo.category), opacity) : '#efefef',
+        offCanvasSquareOneColor: offCanvasSquareOne ? hexToRgba(getCategoryHexColor(offCanvasSquareOne.category), opacity) : 'rgba(239, 239, 239, 0.2)',
+        offCanvasSquareTwoColor: offCanvasSquareTwo ? hexToRgba(getCategoryHexColor(offCanvasSquareTwo.category), opacity) : 'rgba(239, 239, 239, 0.2)'
 
     };
     //  console.log("offColors: ", offColors)

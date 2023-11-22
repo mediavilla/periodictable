@@ -189,6 +189,10 @@ const CanvasBackground = () => {
                 squares.forEach((square, index) => {
                     let color = square.color;
                     let rgba = color.match(/[\d\.]+/g);
+                    if (rgba) {
+                        rgba[3] = '0';
+                        square.color = `rgba(${rgba.join(', ')})`;
+                    }
                     let opacity = parseFloat(rgba[3]);
 
                     // Calculate the new opacity based on the animation progress
@@ -329,9 +333,8 @@ const CanvasBackground = () => {
                 x: '+= ' + targetX,
                 y: '+= ' + targetY,
                 easing: 'easeInOutQuad',
-                duration: 2000,
+                duration: 1000,
                 update: function (anim) {
-                    console.log("SQUARES, ANIM UPDATE", squares)
                     requestAnimationFrame(() => {
                         drawSquares(canvasRef.current.getContext('2d'), squares);
                     });
