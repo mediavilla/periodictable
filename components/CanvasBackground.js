@@ -15,7 +15,7 @@ const CanvasBackground = () => {
 
     const directionRef = useRef('');
 
-    // #########################################################################################
+
     // #########################################################################################
     // Canvas resizing
     const resizeCanvas = () => {
@@ -34,7 +34,7 @@ const CanvasBackground = () => {
         return () => window.removeEventListener('resize', resizeCanvas);
     }, []);
 
-    // #########################################################################################
+
     // #########################################################################################
     // Get the inital squares
     useEffect(() => {
@@ -59,8 +59,6 @@ const CanvasBackground = () => {
 
     }, []); // Empty dependency array ensures this runs only once after the component mounts
 
-
-    // #########################################################################################
     // #########################################################################################
     // Function to draw squares on the canvas
     const drawSquares = (ctx, squares) => {
@@ -90,7 +88,6 @@ const CanvasBackground = () => {
 
 
     // SEQUENCE OF EVENTS FOR ANIMATION STARTS HERE:
-    // #########################################################################################
     // #########################################################################################
     // 1. Deternime direction
     const setDirection = () => {
@@ -132,8 +129,6 @@ const CanvasBackground = () => {
         directionRef.current = newDirection;
     };
 
-
-    // #########################################################################################
     // #########################################################################################
     // Function to allow for user jumping to non adjacent elements
     useEffect(() => {
@@ -213,9 +208,6 @@ const CanvasBackground = () => {
         return squares; // Return the array of squares
     };
 
-
-
-    // #########################################################################################
     // #########################################################################################
     // 2. Get off-canvas squares in the right place with the right colors
     function arrayOffCanvasSquares() {
@@ -260,7 +252,6 @@ const CanvasBackground = () => {
     }
 
     // #########################################################################################
-    // #########################################################################################
     // Merge arrays 
 
     let offCanvasSquares = [];
@@ -271,7 +262,7 @@ const CanvasBackground = () => {
         console.log("### MERGED SQUARES", mergedSquares)
         return mergedSquares;
     }
-    // #########################################################################################
+
     // #########################################################################################
     // Remove squares that are moved off canvas
 
@@ -306,7 +297,6 @@ const CanvasBackground = () => {
         setSquares(newSquares);
     }
 
-    // #########################################################################################
     // #########################################################################################
     // Animation
     // Animation function with direction parameter
@@ -371,7 +361,6 @@ const CanvasBackground = () => {
     };
 
     // #########################################################################################
-    // #########################################################################################
     // Queue system
     const enqueueAnimation = (newDirection) => {
         animationQueue.push(newDirection);
@@ -387,7 +376,7 @@ const CanvasBackground = () => {
         animationQueue = []; // Clear the queue
         moveSquares(lastDirection); // Start animation with the last direction
     };
-    // #########################################################################################
+
     // #########################################################################################
     // Sequencing
 
