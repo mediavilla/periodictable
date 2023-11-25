@@ -174,8 +174,21 @@ const CanvasBackground = () => {
             rgba[3] = '0';
             square.color = `rgba(${rgba.join(', ')})`;
         });
+        // Identify the square that will end up in the top left
+        let topLeftSquare;
 
+        topLeftSquare = squares.find(square => square.x === 0 && square.y === canvas.height / 2);
+
+        // Add a separate animation for the top left square
         // Start fade-in animation
+        if (topLeftSquare) {
+            anime({
+                targets: topLeftSquare,
+                color: topLeftSquare.color.replace(/[\d\.]+\)$/g, '0.5'),
+                easing: 'easeInOutQuad',
+                duration: 1000
+            });
+        }
         anime({
             targets: squares,
             easing: 'easeInOutQuad',
