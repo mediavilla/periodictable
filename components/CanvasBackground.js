@@ -177,44 +177,35 @@ const CanvasBackground = () => {
         // Identify the square that will end up in the top left
         let topLeftSquare;
 
-        topLeftSquare = squares.find(square => square.x === 0 && square.y === canvas.height / 2);
+        topLeftSquare = squares.find(square => square.x === 0 && square.y === 0);
 
         // Add a separate animation for the top left square
         // Start fade-in animation
-        if (topLeftSquare) {
-            anime({
-                targets: topLeftSquare,
-                color: topLeftSquare.color.replace(/[\d\.]+\)$/g, '0.5'),
-                easing: 'easeInOutQuad',
-                duration: 1000
-            });
-        }
+
         anime({
             targets: squares,
             easing: 'easeInOutQuad',
             duration: 500,
             update: function (anim) {
-                squares.forEach((square, index) => {
+                squares.forEach((square) => {
                     let color = square.color;
                     let rgba = color.match(/[\d\.]+/g);
                     if (rgba) {
-                        rgba[3] = '0';
-                        square.color = `rgba(${rgba.join(', ')})`;
-                    }
-                    let opacity = parseFloat(rgba[3]);
+                        let opacity = parseFloat(rgba[3]);
 
-                    // Calculate the new opacity based on the animation progress
-                    let newOpacity = anim.progress / 500; // Adjust this value to change the speed of the animation
-                    newOpacity = index === 0 ? newOpacity * 0.5 : newOpacity * 0.2;
+                        // Calculate the new opacity based on the animation progress
+                        let newOpacity = anim.progress / 100;
+                        newOpacity = square === topLeftSquare ? newOpacity * 0.5 : newOpacity * 0.2;
 
-                    // Update the opacity if it's less than the new opacity
-                    if (opacity < newOpacity) {
-                        rgba[3] = newOpacity.toString();
-                        square.color = `rgba(${rgba.join(', ')})`;
+                        // Update the opacity if it's less than the new opacity
+                        if (opacity < newOpacity) {
+                            rgba[3] = newOpacity.toString();
+                            square.color = `rgba(${rgba.join(', ')})`;
+                        }
                     }
+
+                    drawSquares(canvas.getContext('2d'), squares);
                 });
-
-                drawSquares(canvas.getContext('2d'), squares);
             }
         });
         // Update the squares state with the result of initialSquares
