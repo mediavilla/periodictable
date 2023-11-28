@@ -26,7 +26,7 @@ export default function TableRaceTrack({ elements }) {
         <section className="">
             <div>
 
-                <svg width="100%" height="auto" viewBox="0 0 2084 1250" version="1.1" space="preserve">
+                <svg width="90%" height="auto" viewBox="0 0 2084 1250" version="1.1" space="preserve">
                     <g>
                         <Link href="/hydrogen">
                             <path id="1" d="M410.778,689.816c20.972,39.086 57.524,68.587 101.328,80.175c-0,0 24.2,-70.357 24.088,-70.373c-25.326,-3.513 -46.488,-19.599 -58.837,-41.53l-66.579,31.728" className={`${raceTrackStyle.e1} ${currentElement.name === 'Hydrogen' ? raceTrackStyle.selected : ''}`} />
