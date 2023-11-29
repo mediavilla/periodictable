@@ -31,6 +31,20 @@
     }
 }
 
+.footerLinks a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: 100;
+    text-shadow: none;
+}
+
+
+.footerLinks a:hover {
+    color: yellow;
+    text-decoration: underline;
+}
+
 /* 
 ###############################################
 ########### M E D I A  Q U E R I E S ##########
