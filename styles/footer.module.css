@@ -1,45 +1,91 @@
+/* styles.css */
+
+.footerContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 300px;
+    /* Adjust the third column width to fit your icons */
+    grid-template-rows: repeat(4, auto);
+    /* Adjust the number of rows as needed */
+    grid-template-areas:
+        "title1 title2 icons"
+        "section1 section2 icons"
+        "section1 section2 icons"
+        "bottom bottom icons";
+    gap: 2px;
+    /* This creates the thin white lines */
+    background-color: black;
+    color: white;
+}
+
+.footerContainer>.title {
+    padding: 10px;
+    border-bottom: 1px solid white;
+}
+
+.footerContainer>.section {
+    padding: 10px;
+    border-bottom: 1px solid white;
+}
+
+.footerContainer>.bottomLink {
+    padding: 10px;
+    grid-area: bottom;
+}
+
+.footerContainer>.icon {
+    padding: 10px;
+    border-left: 1px solid white;
+    grid-area: icons;
+}
+
+/* Assign areas for titles */
+.footerContainer>.title1 {
+    grid-area: title1;
+}
+
+.footerContainer>.title2 {
+    grid-area: title2;
+}
+
+/* Assign areas for section items */
+/* Repeat for each item in section 1 */
+.footerContainer>.section1Item {
+    grid-area: section1;
+}
+
+/* Repeat for each item in section 2 */
+.footerContainer>.section2Item {
+    grid-area: section2;
+}
+
+/*
+
 .footerContainer {
     background-color: black;
     color: white;
     display: grid;
-    /* Adjust the number of columns as needed */
     grid-template-columns: repeat(3, 1fr);
-    /* Rows size will adjust based on content */
     grid-template-rows: auto;
-    /* This creates the thin white lines */
-    gap: 2px;
-    /* Background of the grid container */
-    background-color: black;
-
-
+    gap: 0px;
     background-color: #333;
-    /* Background of each grid item */
-    padding: 10px;
-    /* Adjust padding as needed */
+    padding: 0px;
     border: 1px solid white;
-    /* Optional if you need additional border */
 }
 
 @keyframes growBackground {
     from {
         background-size: 0% 100%;
     }
-
     to {
         background-size: 100% 100%;
     }
 }
 
 
-.footerLinks {
-    flex: 1;
-    padding: 15px;
-    box-sizing: border-box;
-
-    /* For mobile view or smaller screens */
-    @media (max-width: 768px) {
-        min-width: 100%;
-    }
+.footerLinks ul.footerList {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 0px;
 }
 
 .footerLinks a {
@@ -60,7 +106,7 @@
     background-repeat: no-repeat;
     animation: growBackground 0.2s linear forwards;
 }
-
+*/
 /* 
 ###############################################
 ########### M E D I A  Q U E R I E S ##########
