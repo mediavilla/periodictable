@@ -1,24 +1,35 @@
 .footerContainer {
-    flex-shrink: 0;
-}
-
-/* Need to fix this !!!!!!!!!!!!!!!!!!!!*/
-.footer {
     background-color: black;
     color: white;
-    /* margin: 15em 0 10em 0; */
-    display: flex;
-    flex-direction: row;
-    /* Ensure the footer doesn't shrink smaller than its content */
-    justify-content: space-between;
-    flex-wrap: wrap;
+    display: grid;
+    /* Adjust the number of columns as needed */
+    grid-template-columns: repeat(3, 1fr);
+    /* Rows size will adjust based on content */
+    grid-template-rows: auto;
+    /* This creates the thin white lines */
+    gap: 2px;
+    /* Background of the grid container */
+    background-color: black;
 
-    /* For mobile view or smaller screens */
-    @media (max-width: 768px) {
-        flex-direction: column;
-        align-items: center;
+
+    background-color: #333;
+    /* Background of each grid item */
+    padding: 10px;
+    /* Adjust padding as needed */
+    border: 1px solid white;
+    /* Optional if you need additional border */
+}
+
+@keyframes growBackground {
+    from {
+        background-size: 0% 100%;
+    }
+
+    to {
+        background-size: 100% 100%;
     }
 }
+
 
 .footerLinks {
     flex: 1;
@@ -37,16 +48,17 @@
     font-size: 1.2em;
     font-weight: 100;
     text-shadow: none;
-    display: inline-block;
-    line-height: 0.85;
-    margin-bottom: 0.2em;
-    border-bottom: 1px solid rgb(0, 0, 0);
+    padding: 0 0.1em;
 }
 
 
 .footerLinks a:hover {
-    color: rgb(255, 255, 235);
-    border-bottom: 1px solid rgb(255, 255, 235);
+    color: black;
+    background-color: white;
+    background: linear-gradient(to right, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 100%, transparent 100%);
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    animation: growBackground 0.2s linear forwards;
 }
 
 /* 
