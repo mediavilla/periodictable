@@ -6,19 +6,21 @@ export default function Footer() {
 
     return (
 
-        <footer className={footerStyles.footerContainer}>
-            <div className={`${footerStyles.title} ${footerStyles.title2}`}> Section 2 title</div >
-            <div className={footerStyles.icon}>Terms and Conditions</div>
-            <div className={`${footerStyles.section} ${footerStyles.section1Item}`}> Item 1</div >
-            <div className={`${footerStyles.section} ${footerStyles.section1Item}`}>Item 2</div>
-            <div className={`${footerStyles.section} ${footerStyles.section1Item}`}>Item 3</div>
-            <div className={`${footerStyles.section} ${footerStyles.section2Item}`}>Item 4</div>
-            <div className={`${footerStyles.section} ${footerStyles.section2Item}`}>Item 5</div>
-            <div className={`${footerStyles.section} ${footerStyles.section2Item}`}>Item 6</div>
-            <div className={footerStyles.bottomLink}>License</div>
-            <div className={footerStyles.bottomLink}>Cookie Policy</div>
-            <div className={footerStyles.bottomLink}>Terms and Conditions</div>
-            <div className={footerStyles.icon}>Terms and Conditions</div>
+        <footer className={footerStyles.footer}>
+            <div className={footerStyles.footerContainer}>
+                <div className={footerStyles.footerSectionTitle}> Section 1 title</div >
+                <div className={footerStyles.footerSectionTitle}> Section 2 title</div>
+                <div><Link href="#" className={footerStyles.bottomLink}>Social Media Icons</Link></div >
+                <div><Link href="#" className={footerStyles.bottomLink}>Item 2</Link></div>
+                <div><Link href="#" className={footerStyles.bottomLink}>Item 3</Link></div>
+                <div>&nbsp;</div>
+                <div><Link href="#" className={footerStyles.bottomLink}>Item 5</Link></div>
+                <div><Link href="#" className={footerStyles.bottomLink}>Item 6</Link></div>
+                <div>&nbsp;</div>
+                <div><Link href="#" className={footerStyles.bottomLink}>License</Link></div>
+                <div><Link href="#" className={footerStyles.bottomLink}>Cookie Policy</Link></div>
+                <div><Link href="#" className={footerStyles.bottomLink}>Terms and Conditions</Link></div>
+            </div>
         </footer >
     );
 }

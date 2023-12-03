@@ -1,104 +1,41 @@
 /* styles.css */
 
+.footer {
+    background-color: black;
+}
+
 .footerContainer {
     display: grid;
+    box-sizing: border-box;
     grid-template-columns: 1fr 1fr 300px;
     /* Adjust the third column width to fit your icons */
     grid-template-rows: repeat(4, auto);
     /* Adjust the number of rows as needed */
-    grid-template-areas:
-        "title1 title2 icons"
-        "section1 section2 icons"
-        "section1 section2 icons"
-        "bottom bottom icons";
-    gap: 2px;
-    /* This creates the thin white lines */
+    grid-gap: 1px;
     background-color: black;
     color: white;
 }
 
-.footerContainer>.title {
-    padding: 10px;
-    border-bottom: 1px solid white;
+.footerContainer div {
+    outline: 1px solid #ffffff;
+
 }
 
-.footerContainer>.section {
-    padding: 10px;
-    border-bottom: 1px solid white;
+a.bottomLink,
+.footerSectionTitle {
+    padding: 1em 3em;
 }
 
-.footerContainer>.bottomLink {
-    padding: 10px;
-    grid-area: bottom;
-}
-
-.footerContainer>.icon {
-    padding: 10px;
-    border-left: 1px solid white;
-    grid-area: icons;
-}
-
-/* Assign areas for titles */
-.footerContainer>.title1 {
-    grid-area: title1;
-}
-
-.footerContainer>.title2 {
-    grid-area: title2;
-}
-
-/* Assign areas for section items */
-/* Repeat for each item in section 1 */
-.footerContainer>.section1Item {
-    grid-area: section1;
-}
-
-/* Repeat for each item in section 2 */
-.footerContainer>.section2Item {
-    grid-area: section2;
-}
-
-/*
-
-.footerContainer {
-    background-color: black;
-    color: white;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto;
-    gap: 0px;
-    background-color: #333;
-    padding: 0px;
-    border: 1px solid white;
-}
-
-@keyframes growBackground {
-    from {
-        background-size: 0% 100%;
-    }
-    to {
-        background-size: 100% 100%;
-    }
-}
-
-
-.footerLinks ul.footerList {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto;
-    gap: 0px;
-}
-
-.footerLinks a {
+a.bottomLink {
+    display: block;
     color: white;
     text-decoration: none;
     font-size: 1.2em;
     font-weight: 100;
     text-shadow: none;
-    padding: 0 0.1em;
 }
 
-
-.footerLinks a:hover {
+a.bottomLink:hover {
     color: black;
     background-color: white;
     background: linear-gradient(to right, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 100%, transparent 100%);
@@ -106,7 +43,20 @@
     background-repeat: no-repeat;
     animation: growBackground 0.2s linear forwards;
 }
-*/
+
+@keyframes growBackground {
+    from {
+        background-size: 0% 100%;
+    }
+
+    to {
+        background-size: 100% 100%;
+    }
+}
+
+
+
+
 /* 
 ###############################################
 ########### M E D I A  Q U E R I E S ##########
@@ -118,7 +68,7 @@
 
     /* Add styles for large desktops here */
     .footer {
-        padding: 0 6em;
+        padding: 6em 6em;
     }
 }
 
@@ -127,27 +77,27 @@
 
     /* Add styles for laptops here */
     .footer {
-        padding: 0 5em;
+        padding: 2em 5em;
     }
 }
 
 /* Tablet */
 @media (min-width: 768px) and (max-width: 991px) {
     .footer {
-        padding: 0 4em;
+        padding: 1em 4em;
     }
 }
 
 /* Mobile Landscape */
 @media (min-width: 576px) and (max-width: 767px) {
     .footer {
-        padding: 0 3em;
+        padding: 1em 3em;
     }
 }
 
 /* Mobile Portrait */
 @media (max-width: 575px) {
     .footer {
-        padding: 0 1em;
+        padding: 1em 1em;
     }
 }
