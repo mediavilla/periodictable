@@ -56,7 +56,10 @@ a.bottomLink:hover {
 }
 
 
-
+.footerLogo {
+    text-align: center;
+    padding: 100px 10px 50px 10px;
+}
 
 /* 
 ###############################################
