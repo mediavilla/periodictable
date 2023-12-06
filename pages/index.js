@@ -1,6 +1,6 @@
 // index.js
 
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import KeyboardArrowsNav from '../utils/KeyboardArrowsNav.js'

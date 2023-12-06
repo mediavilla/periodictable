@@ -1,15 +1,7 @@
-import { useEffect } from 'react';
 import NavTop from '../components/NavTop';
 import Footer from '../components/Footer'
 
-export default function elements() {
-    useEffect(() => {
-        document.documentElement.classList.add('elementsSolid');
-
-        return () => {
-            document.documentElement.classList.remove('elementsSolid');
-        };
-    }, []);
+export default function Elements() {
 
     return (
         <>
