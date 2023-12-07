@@ -1,7 +1,7 @@
 import NavTop from '../components/NavTop';
 import Footer from '../components/Footer'
 
-export default function elements() {
+export default function Elements() {
 
     return (
         <>

@@ -8,7 +8,7 @@ import TimelineSidebar from '../components/TimelineSidebar';
 import TimelineContent from '../components/TimelineContent';
 import Footer from '../components/Footer'
 
-export default function timeline() {
+export default function Timeline() {
 
     const sortedTimeline = timelineData.sort((a, b) => b.year - a.year);
 
