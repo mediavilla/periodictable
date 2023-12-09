@@ -10,7 +10,7 @@ export default function Footer() {
         <footer className={footerStyles.footer}>
             <div className={footerStyles.footerContainer}>
                 <div><Link href="#" className={footerStyles.bottomLink}>Design</Link></div >
-                <div><Link href="#" className={footerStyles.bottomLink}>Info / About</Link></div>
+                <div><Link href="/about" className={footerStyles.bottomLink}>Info / About</Link></div>
                 <div><Link href="#" className={footerStyles.bottomLink}>Apple Store</Link></div >
                 <div><Link href="#" className={footerStyles.bottomLink}>Timeline</Link></div>
                 <div><Link href="#" className={footerStyles.bottomLink}>Sponsor</Link></div>

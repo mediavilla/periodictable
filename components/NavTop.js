@@ -6,8 +6,8 @@ export default function NavTop() {
     return (
         <ul className={navTopStyles.navTop}>
             <li><Link href="/">DESIGNS</Link></li>
-            <li><Link className="timelineNav" href="/Timeline">TIMELINE</Link></li>
-            <li><Link href="/Elements">ELEMENTS</Link></li>
+            <li><Link className="timelineNav" href="/timeline">TIMELINE</Link></li>
+            <li><Link href="/elements">ELEMENTS</Link></li>
         </ul>
     );
 }

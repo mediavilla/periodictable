@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import NavTop from '../components/NavTop';
 import Footer from '../components/Footer'
 
@@ -5,6 +6,17 @@ export default function Elements() {
 
     return (
         <>
+            <Head>
+                <title>Create Next App</title>
+                <meta
+                    name="description"
+                    content="The evolution of the periodic table and discovery of each element"
+                />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+
+
             <main>
 
                 <div id="content">

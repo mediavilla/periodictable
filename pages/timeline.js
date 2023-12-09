@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Head from 'next/head';
 import elements from '../public/elements.json';
 import timelineData from '../public/timeline.json';
 import styles from '../styles/timeline.module.css';
@@ -75,7 +76,10 @@ export default function Timeline() {
 
     return (
         <>
+            <Head>
+                <title>Designs of The Periodic Table</title>
 
+            </Head>
 
             <main>
 
