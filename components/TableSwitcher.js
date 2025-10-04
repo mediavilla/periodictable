@@ -11,7 +11,7 @@ export default function TableSwitcher() {
     const getButtonClass = (type) => {
         return tableType === type ? switcherStyles.selected : '';
     };
-
+ 
     return (
         <div className={switcherStyles.pager}>
             <button className={getButtonClass("table18")} onClick={() => setTableType("table18")}>
