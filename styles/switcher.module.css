@@ -103,14 +103,8 @@
     color: #000;
 }
 
-.iconTable18 {
-    background-image: url("/images/icon-18.svg");
-}
 
-.iconTable32 {
-    background-image: url("/images/icon-32.svg");
-}
 
-.iconTableRT {
-    background-image: url("/images/icon-RT.svg");
-}
+.iconTable18 { background-image: var(--icon-18); }
+.iconTable32 { background-image: var(--icon-32); }
+.iconTableRT  { background-image: var(--icon-rt); }
