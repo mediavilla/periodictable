@@ -15,6 +15,38 @@ import NavTop from '../components/NavTop';
 import NavMiniTableRaceTrack from '@/components/NavMiniTableRaceTrack';
 import TableRenderer from '../components/TableRenderer';
 
+
+export const getStaticPaths = async () => {
+    const paths = elementsData.map((el) => ({
+      params: { element: el.name.toLowerCase() }, // e.g. /hydrogen
+    }));
+  
+    return {
+      paths,
+      // Required for `next export`: all paths must be known at build time
+      fallback: false,
+    };
+  };
+  
+  export const getStaticProps = async ({ params }) => {
+    const slug = String(params?.element || '').toLowerCase();
+  
+    const elementData =
+      elementsData.find((el) => el.name.toLowerCase() === slug) || null;
+  
+    if (!elementData) {
+      return { notFound: true };
+    }
+  
+    return {
+      props: {
+        element: elementData,
+        // keep sending the full list if you use it on the page
+        elements: elementsData,
+      },
+    };
+  };
+  
 export default function Element({ element, currentElement }) {
 
     const { setCurrentElement, tableType } = useContext(TableContext);
@@ -57,7 +89,7 @@ export default function Element({ element, currentElement }) {
     );
 }
 
-
+/* 
 export async function getServerSideProps({ params }) {
     const elementData = elementsData.find(el => el.name.toLowerCase() === params.element.toLowerCase());
 
@@ -74,3 +106,4 @@ export async function getServerSideProps({ params }) {
         },
     };
 }
+*/
