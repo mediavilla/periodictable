@@ -1,109 +1,60 @@
-import React, { useContext, useEffect } from 'react';
-import { TableContext } from '../utils/TableProvider';
-import elementsData from '../public/elements.json';
-import getCategoryClassName from '../utils/getCategoryClassName';
-import CustomElementContent from '../components/CustomElementContent';
-import elementStyles from '../styles/element.module.css';
-import ElementCard from '../components/ElementCard';
-import NavElement from '../components/NavElement';
-import Borh from '../components/Bohr';
-import Orbitals from '../components/Orbitals';
-import TableSwitcher from '../components/TableSwitcher';
-import NavMiniTable18 from '@/components/NavMiniTable18';
-import NavMiniTable32 from '@/components/NavMiniTable32';
-import NavTop from '../components/NavTop';
-import NavMiniTableRaceTrack from '@/components/NavMiniTableRaceTrack';
-import TableRenderer from '../components/TableRenderer';
+import Head from "next/head";
+import Link from "next/link";
+import FooterViewport from "../components/explorer/FooterViewport";
+import ExplorerNavigation from "../components/explorer/ExplorerNavigation";
+import ElementDetail from "../components/explorer/ElementDetail";
+import elements from "../public/elements.json";
+import { getElementContent } from "../data/element-content";
 
-
-export const getStaticPaths = async () => {
-    const paths = elementsData.map((el) => ({
-      params: { element: el.name.toLowerCase() }, // e.g. /hydrogen
-    }));
-  
-    return {
-      paths,
-      // Required for `next export`: all paths must be known at build time
-      fallback: false,
-    };
+export function getStaticPaths() {
+  return {
+    paths: elements.map((element) => ({
+      params: { element: element.name.toLowerCase() },
+    })),
+    fallback: false,
   };
-  
-  export const getStaticProps = async ({ params }) => {
-    const slug = String(params?.element || '').toLowerCase();
-  
-    const elementData =
-      elementsData.find((el) => el.name.toLowerCase() === slug) || null;
-  
-    if (!elementData) {
-      return { notFound: true };
-    }
-  
-    return {
-      props: {
-        element: elementData,
-        // keep sending the full list if you use it on the page
-        elements: elementsData,
-      },
-    };
-  };
-  
-export default function Element({ element, currentElement }) {
-
-    const { setCurrentElement, tableType } = useContext(TableContext);
-
-
-    useEffect(() => {
-        setCurrentElement(element);
-    }, [element]);
-
-
-    return (
-        <main>
-            <NavElement />
-            <nav>
-                <NavTop />
-                <TableSwitcher
-                    elements={elementsData}
-                    TableComponent18={NavMiniTable18}
-                    TableComponent32={NavMiniTable32}
-                    TableComponentRaceTrack={NavMiniTableRaceTrack}
-                />
-            </nav>
-            <div id="content">
-
-                <TableRenderer
-                    currentElement={currentElement}
-                    TableComponent18={NavMiniTable18}
-                    TableComponent32={NavMiniTable32}
-                    TableComponentRaceTrack={NavMiniTableRaceTrack}
-                    setCurrentElement={setCurrentElement} // Pass setCurrentElement to TableSwitcher
-                />
-                <section className={elementStyles.cardBorhOrbitals}>
-                    <ElementCard element={element} getCategoryClassName={getCategoryClassName} />
-                    <Borh element={element} getCategoryClassName={getCategoryClassName} />
-                    <Orbitals element={element} />
-                </section>
-                <CustomElementContent element={element.name} />
-            </div>
-        </main>
-    );
 }
 
-/* 
-export async function getServerSideProps({ params }) {
-    const elementData = elementsData.find(el => el.name.toLowerCase() === params.element.toLowerCase());
-
-    if (!elementData) {
-        return {
-            notFound: true,
-        };
-    }
-
-    return {
-        props: {
-            element: elementData,
-            elements: elementsData // pass the entire elementsData array as the elements prop
-        },
-    };
+export function getStaticProps({ params }) {
+  const slug = String(params?.element || "").toLowerCase();
+  const element = elements.find((item) => item.name.toLowerCase() === slug);
+  if (!element) return { notFound: true };
+  return { props: { element } };
 }
-*/
+
+export default function ElementPage({ element }) {
+  const content = getElementContent(element);
+  return (
+    <>
+      <Head>
+        <title>
+          {element.name} ({element.symbol}) · Element {element.number}
+        </title>
+        <meta name="description" content={content.summary} />
+      </Head>
+      <main className="explorerPage">
+        <ExplorerNavigation />
+        <div className="explorerStandalonePage">
+          <nav
+            className="explorerElementBreadcrumb"
+            aria-label="Element navigation"
+          >
+            <Link href="/elements/" className="breadcrumbLinkAllElements">
+              ← All elements
+            </Link>
+            <Link
+              href={{
+                pathname: "/",
+                query: { element: element.name.toLowerCase() },
+              }}
+            >
+              View in the table ↗
+            </Link>
+          </nav>
+          <ElementDetail element={element} />
+        </div>
+      </main>
+      <FooterViewport />
+    </>
+  );
+}

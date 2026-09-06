@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import footerStyles from '../styles/footer.module.css';
 
-export default function Footer() {
+export default function Footer() { 
 
     return (
 

@@ -1,0 +1,324 @@
+{
+  "id": "giguere",
+  "title": "Giguère’s periodic system",
+  "creator": "Paul A. Giguère",
+  "originYear": 1965,
+  "publicationYear": 1966,
+  "edition": "Historical arrangement pictured in 1966, using current element names",
+  "sources": [
+    {
+      "title": "Paul A. Giguère, The “New Look” for the Periodic System",
+      "url": "https://raw.githubusercontent.com/groverlab/giguere-3D-periodic-table/main/giguere-1966.pdf",
+      "kind": "primary",
+      "citation": "Chemistry in Canada 18 (12), 36–39, December 1966; figure on p. 37"
+    },
+    {
+      "title": "Giguère’s Periodic Table — Internet Database of Periodic Tables",
+      "url": "https://www.meta-synthesis.com/webbook/35_pt/pt_database.php?PT_id=525",
+      "kind": "catalogue"
+    },
+    {
+      "title": "Grover Lab 3D-printable reconstruction",
+      "url": "https://github.com/groverlab/giguere-3D-periodic-table",
+      "kind": "construction-reference"
+    }
+  ],
+  "membership": {
+    "count": 103,
+    "minAtomicNumber": 1,
+    "maxAtomicNumber": 103,
+    "numbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103
+    ],
+    "wingCounts": {
+      "s": 14,
+      "p": 30,
+      "d": 31,
+      "f": 28
+    }
+  },
+  "geometry": {
+    "cellWidth": 1,
+    "cellHeight": 1,
+    "cellDepth": 0.07,
+    "cellSpacing": 1.05,
+    "spineGap": 0.3,
+    "coordinates": "y is vertical; s and d wings lie in the xy plane, p and f in the yz plane. The s wing extends toward negative x; d toward positive x; p toward negative z; f toward positive z.",
+    "faceConvention": "Each record is a single outward-facing plane at ±0.035 from the physical tile center. Rotate its local +z normal by the supplied XYZ Euler rotation. Paired front/back records represent different elements; do not add back-facing text to the same record.",
+    "physicalTileCount": 59,
+    "occupiedTileCount": 52,
+    "blankTiles": [
+      {
+        "tile": "d-0-1",
+        "wing": "d",
+        "position": [
+          1.7,
+          -3.15,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "tile": "d-0-2",
+        "wing": "d",
+        "position": [
+          2.75,
+          -3.15,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "tile": "d-0-3",
+        "wing": "d",
+        "position": [
+          3.8,
+          -3.15,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "tile": "d-0-4",
+        "wing": "d",
+        "position": [
+          4.85,
+          -3.15,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "tile": "p-0-0",
+        "wing": "p",
+        "position": [
+          0,
+          -3.15,
+          -0.65
+        ],
+        "rotation": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      {
+        "tile": "p-0-1",
+        "wing": "p",
+        "position": [
+          0,
+          -3.15,
+          -1.7
+        ],
+        "rotation": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      },
+      {
+        "tile": "p-0-2",
+        "wing": "p",
+        "position": [
+          0,
+          -3.15,
+          -2.75
+        ],
+        "rotation": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      }
+    ]
+  },
+  "notes": [
+    "The dated placard on the model reads ©1965. The source article’s footer states December 1966. The catalogue uses 1965, whereas the repository cites the 1966 publication.",
+    "All three photographs on the original article’s figure page were inspected. The last labeled cell is 103, printed Lw. It is represented here as lawrencium (Lr), without adding subsequent elements.",
+    "The photographed design has empty lower-row panels for future elements. Seven wholly unlabelled tiles are provided separately as structural blanks. The tile bearing 103 has an unlabelled opposite face.",
+    "Helium is opposite hydrogen in the s wing, above beryllium. Lutetium and lawrencium occupy the first d-wing position; lanthanum and actinium begin the f wing.",
+    "The Grover Lab reconstruction helps explain the facing panels. Its additional modern elements are excluded, and its Pr entry opposite Fm is corrected to Pa (91) using the original photograph.",
+    "Cell proportions, spacing, and thickness are normalized for interactive display. Original printed masses, period markers, and blank title placards are not transcribed."
+  ],
+  "verification": {
+    "figure": "The three photographs on original article p. 37",
+    "firstDRowFront": [
+      21,
+      22,
+      23,
+      24,
+      25
+    ],
+    "firstDRowBack": [
+      30,
+      29,
+      28,
+      27,
+      26
+    ],
+    "firstPRowFront": [
+      5,
+      6,
+      7
+    ],
+    "firstPRowBack": [
+      10,
+      9,
+      8
+    ],
+    "lanthanidesFront": [
+      70,
+      69,
+      68,
+      67,
+      66,
+      65,
+      64
+    ],
+    "lanthanidesBack": [
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "actinidesFront": [
+      102,
+      101,
+      100,
+      99,
+      98,
+      97,
+      96
+    ],
+    "actinidesBack": [
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95
+    ]
+  }
+}

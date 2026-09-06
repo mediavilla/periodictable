@@ -4,11 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "preview": "node scripts/serve-static.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "verify:export": "node scripts/verify-export.mjs"
   },
   "dependencies": {
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "@vercel/analytics": "^1.0.1",
     "animejs": "^3.2.1",
     "cheerio": "^1.0.0-rc.12",
@@ -22,6 +27,12 @@
     "react-dom": "18.2.0",
     "react-inlinesvg": "^3.0.2",
     "sass": "^1.63.6",
+    "three": "^0.170.0",
     "xml2js": "^0.6.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "agent-browser": "^0.27.0",
+    "prettier": "^3.9.6"
   }
 }

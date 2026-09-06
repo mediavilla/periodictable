@@ -1,0 +1,9 @@
+{
+  "note": "Local copies of the original NASA images. Captions, alternative text, source pages, and credits live in data/element-content.js.",
+  "usageGuidelines": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+  "originalImageURLs": {
+    "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/Sun_Features_Solar_Prominence-800x600-1.jpg?fit=clip&w=800": "/images/stories/hydrogen-sun.jpg",
+    "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/1/1-bluemarble_west-1.jpg?fit=clip&w=800": "/images/stories/carbon-earth.jpg",
+    "https://science.nasa.gov/wp-content/uploads/2023/09/26407128930-326592754e-k.jpg?w=1024": "/images/stories/gold-webb.jpg"
+  }
+}

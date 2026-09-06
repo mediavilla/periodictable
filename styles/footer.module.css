@@ -4,7 +4,7 @@
     background-color: #333;
 }
 
-.footerContainer {
+.footerContainer { 
     display: grid;
     box-sizing: border-box;
     grid-template-columns: 1fr 1fr 1fr;

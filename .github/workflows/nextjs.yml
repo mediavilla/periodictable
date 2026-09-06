@@ -27,7 +27,6 @@ jobs:
 
       - run: npm ci
       - run: npm run build
-      - run: npx next export -o out
 
       # Make sure Pages serves the _next folder
       - run: touch out/.nojekyll
