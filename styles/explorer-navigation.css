@@ -75,6 +75,9 @@
   text-transform: uppercase;
   text-decoration: none;
 }
+.explorerDestinationTabs a + a {
+  border-inline-start: 1px solid var(--nav-line);
+}
 .explorerDestinationTabs a[aria-current="page"] {
   background: var(--nav-line);
   color: white;
