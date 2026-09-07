@@ -107,7 +107,7 @@ npm install
 npm run dev -- --port 3017
 ```
 
-Open `http://localhost:3017/`. Development output goes to `.next-development`; production output goes to `.next-production`, allowing a development server and a production build to use separate generated directories.
+Open `http://localhost:3017/`. Development output goes to `.next-development`; production output goes to the standard `.next` directory expected by Vercel, allowing a development server and a production build to use separate generated directories. The static export remains in `out`. On Vercel, use the Next.js framework preset and leave the Output Directory override disabled.
 
 Run the focused checks and production export:
 
