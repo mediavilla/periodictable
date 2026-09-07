@@ -47,8 +47,8 @@ export function ExplorerProvider({ children }) {
   const slotFromKey = (key) =>
     key?.design === design.id ? findSlot(design.id, key.id) : null;
   const activeSlot =
-    detailSlot ||
     slotFromKey(hoveredSlotKey) ||
+    detailSlot ||
     (!hovered && slotFromKey(selectedSlotKey));
   const [command, setCommand] = useState({ type: "reset", serial: 0 });
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -103,7 +103,7 @@ export function ExplorerProvider({ children }) {
     setSelected,
     hovered,
     setHovered,
-    active: panel ? detailElement || selected : hovered || selected,
+    active: hovered || (panel ? detailElement || selected : selected),
     activeSlot,
     detailSlot,
     hoverSlot: (slot) => {

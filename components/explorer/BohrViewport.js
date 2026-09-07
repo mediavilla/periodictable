@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from "react";
+import { Pause, Play } from "lucide-react";
 import { View, OrthographicCamera } from "@react-three/drei";
 import BohrModel from "./BohrModel";
 import { useExplorer } from "./ExplorerProvider";
@@ -62,6 +63,11 @@ export function BohrViewport({ element, illustration = false }) {
           style={{ position: "relative", zIndex: 3 }}
           aria-pressed={paused || reducedMotion}
         >
+          {paused || reducedMotion ? (
+            <Play aria-hidden="true" />
+          ) : (
+            <Pause aria-hidden="true" />
+          )}
           {reducedMotion
             ? "Orbit paused · reduced motion"
             : paused

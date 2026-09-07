@@ -11,6 +11,14 @@ import elements from "../../public/elements.json";
 import { categoryColor, tableSlots } from "../../data/table-registry";
 import { slotLabel, slotNumbers } from "../../data/model-slots.mjs";
 import FooterViewport from "./FooterViewport";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ExternalLink,
+  Minus,
+  Plus,
+  RotateCcw,
+} from "lucide-react";
 
 export default function TableExperience({ timeline = false }) {
   const {
@@ -48,7 +56,8 @@ export default function TableExperience({ timeline = false }) {
     return () => observer.disconnect();
   }, []);
   useEffect(() => {
-    if (panel) panelRef.current?.focus({ preventScroll: true });
+    if (panel && document.activeElement !== viewRef.current)
+      panelRef.current?.focus({ preventScroll: true });
   }, [panel, detailElement?.number]);
   useEffect(() => {
     const onKey = (e) => {
@@ -57,7 +66,7 @@ export default function TableExperience({ timeline = false }) {
         return;
       }
       if (
-        panel ||
+        (panel && document.activeElement !== viewRef.current) ||
         document.activeElement?.closest(".explorerNav") ||
         ["INPUT", "TEXTAREA", "SELECT", "BUTTON", "A"].includes(
           document.activeElement?.tagName,
@@ -73,9 +82,10 @@ export default function TableExperience({ timeline = false }) {
             ? slot.id === activeSlot.id
             : slotNumbers(slot).includes(selected.number),
         );
-        selectSlot(
-          slots[(Math.max(0, index) + next + slots.length) % slots.length],
-        );
+        const slot =
+          slots[(Math.max(0, index) + next + slots.length) % slots.length];
+        if (panel) openSlot(slot);
+        else selectSlot(slot);
       }
       if (e.key === "Enter")
         activeSlot ? openSlot(activeSlot) : openElement(selected);
@@ -112,16 +122,15 @@ export default function TableExperience({ timeline = false }) {
             </span>
             <h1>{design.name}</h1>
           </div>
-          <button
-            className="explorerTextButton"
-            onClick={panel === "history" ? closePanel : openHistory}
-          >
-            {panel === "history" ? "← Back to table" : "About this design"}
-          </button>
+          {!panel && (
+            <button className="explorerTextButton" onClick={openHistory}>
+              About this design
+            </button>
+          )}
         </div>
         {timeline && <p className="explorerIntro">{design.introduction}</p>}
         <div
-          className={`explorerStage ${panel ? "explorerPanelOpen" : ""} ${panel === "history" ? "explorerHistoryOpen" : ""} ${!panel && !activeSlot && !design.membership.includes(selected.number) ? "explorerHasNotice" : ""}`}
+          className={`explorerStage ${panel ? "explorerPanelOpen" : ""} ${!panel && !activeSlot && !design.membership.includes(selected.number) ? "explorerHasNotice" : ""}`}
         >
           {!webglFailed && (
             <View
@@ -136,13 +145,18 @@ export default function TableExperience({ timeline = false }) {
           )}
           {panel ? (
             <>
-              <button
-                className="explorerReturn"
-                onClick={closePanel}
-                aria-label="Return to table and restore camera"
-              >
-                <span>↗ Return to table</span>
-              </button>
+              <div className="explorerPreviewActions">
+                <button
+                  className="explorerReturn"
+                  onClick={closePanel}
+                  aria-label="Return to table and restore camera"
+                >
+                  <ArrowLeft aria-hidden="true" /> Back to table
+                </button>
+                {!webglFailed && (
+                  <TableCameraControls design={design} issue={issue} compact />
+                )}
+              </div>
               <div
                 className="explorerPanel"
                 ref={panelRef}
@@ -163,15 +177,6 @@ export default function TableExperience({ timeline = false }) {
                       arrangement.
                     </p>
                   )}
-                {panel !== "history" && (
-                  <button
-                    className="explorerClose"
-                    onClick={closePanel}
-                    aria-label="Close details"
-                  >
-                    ← Back to table
-                  </button>
-                )}
                 {panel === "element" ? (
                   <>
                     {detailSlot &&
@@ -185,7 +190,8 @@ export default function TableExperience({ timeline = false }) {
                       className="explorerStandalone"
                       href={`/${detailElement.name.toLowerCase()}/`}
                     >
-                      Open {detailElement.name} page ↗
+                      Open {detailElement.name} page{" "}
+                      <ArrowRight aria-hidden="true" />
                     </Link>
                   </>
                 ) : panel === "entry" ? (
@@ -231,8 +237,9 @@ export default function TableExperience({ timeline = false }) {
                   }
                 >
                   {activeSlot && !activeSlot.number
-                    ? "Explore entry ↗"
-                    : "Explore element ↗"}
+                    ? "Explore entry"
+                    : "Explore element"}{" "}
+                  <ArrowRight aria-hidden="true" />
                 </button>
               </div>
               {!activeSlot && !design.membership.includes(selected.number) && (
@@ -241,28 +248,7 @@ export default function TableExperience({ timeline = false }) {
                   arrangement. Its detail is still available.
                 </p>
               )}
-              <div
-                className="explorerControls"
-                aria-label="Table camera controls"
-              >
-                <span>
-                  {design.camera.orbit
-                    ? "Drag to orbit · pinch to zoom"
-                    : "Drag to move · pinch to zoom"}
-                </span>
-                <button onClick={() => issue("out")} aria-label="Zoom out">
-                  −
-                </button>
-                <button onClick={() => issue("in")} aria-label="Zoom in">
-                  +
-                </button>
-                <button
-                  onClick={() => issue("reset")}
-                  aria-label="Reset camera"
-                >
-                  Reset
-                </button>
-              </div>
+              <TableCameraControls design={design} issue={issue} />
             </div>
           )}
           {webglFailed && (
@@ -272,7 +258,9 @@ export default function TableExperience({ timeline = false }) {
                 The 3D view is unavailable on this device. Search and element
                 stories remain available below.
               </p>
-              <Link href="/elements/">Browse all elements ↗</Link>
+              <Link href="/elements/">
+                Browse all elements <ArrowRight aria-hidden="true" />
+              </Link>
             </div>
           )}
         </div>
@@ -369,7 +357,7 @@ function HistoricalEntry({ slot, design, openElement }) {
                 key={number}
                 onClick={() => openElement(elements[number - 1])}
               >
-                {elements[number - 1].name} ↗
+                {elements[number - 1].name} <ArrowRight aria-hidden="true" />
               </button>
             ))}
           </div>
@@ -382,7 +370,7 @@ function HistoricalEntry({ slot, design, openElement }) {
         {design.sources.map((source) => (
           <li key={source.url}>
             <a href={source.url} target="_blank" rel="noreferrer">
-              {source.label} ↗
+              {source.label} <ExternalLink aria-hidden="true" />
             </a>
           </li>
         ))}
@@ -422,11 +410,47 @@ function DesignHistory({ design }) {
         {design.sources.map((s) => (
           <li key={s.url}>
             <a href={s.url} target="_blank" rel="noreferrer">
-              {s.label} ↗
+              {s.label} <ExternalLink aria-hidden="true" />
             </a>
           </li>
         ))}
       </ul>
     </article>
+  );
+}
+
+function TableCameraControls({ design, issue, compact = false }) {
+  return (
+    <div
+      className="explorerControls"
+      role="group"
+      aria-label="Table camera controls"
+    >
+      {!compact && (
+        <span>
+          {design.camera.orbit
+            ? "Drag to orbit · pinch to zoom"
+            : "Drag to move · pinch to zoom"}
+        </span>
+      )}
+      <button
+        onClick={() => issue("out")}
+        aria-label="Zoom out"
+        title="Zoom out"
+      >
+        <Minus aria-hidden="true" />
+      </button>
+      <button onClick={() => issue("in")} aria-label="Zoom in" title="Zoom in">
+        <Plus aria-hidden="true" />
+      </button>
+      <button
+        onClick={() => issue("reset")}
+        aria-label="Reset camera"
+        title="Reset camera"
+      >
+        <RotateCcw aria-hidden="true" />
+        {!compact && " Reset"}
+      </button>
+    </div>
   );
 }

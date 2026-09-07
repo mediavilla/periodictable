@@ -1,4 +1,5 @@
 import ElementFinder from "../components/explorer/ElementFinder";
+import { ArrowRight } from "lucide-react";
 import Head from "next/head";
 import Link from "next/link";
 import FooterViewport from "../components/explorer/FooterViewport";
@@ -102,7 +103,7 @@ export default function Elements() {
                   <p>{feature.description}</p>
                   <span>
                     Explore {element.name.toLowerCase()}{" "}
-                    <span aria-hidden="true">↗</span>
+                    <ArrowRight aria-hidden="true" />
                   </span>
                 </Link>
               );

@@ -392,7 +392,6 @@ export default function TableScene({ viewRef, visible = true }) {
     if (moving) applyCameraMotion(cameraMotion.current.progress);
     if (controls.current) {
       controls.current.enabled =
-        !panel &&
         displayed === design.id &&
         visible &&
         !moving &&
@@ -429,8 +428,7 @@ export default function TableScene({ viewRef, visible = true }) {
       controls.current &&
       actual.camera.orbit &&
       (!moving ||
-        (!panel &&
-          displayed === design.id &&
+        (displayed === design.id &&
           Math.abs(transition.current.amount) < 0.002))
     ) {
       const t = controls.current.target;
@@ -537,13 +535,13 @@ export default function TableScene({ viewRef, visible = true }) {
     }
   });
   const choose = (cell, pointerType) => {
-    if (
-      panel ||
-      displayed !== design.id ||
-      Math.abs(transition.current.amount) > 0.02
-    )
+    if (displayed !== design.id || Math.abs(transition.current.amount) > 0.02)
       return;
-    if (pointerType === "touch" && touchSelection.current !== cell.id) {
+    if (
+      !panel &&
+      pointerType === "touch" &&
+      touchSelection.current !== cell.id
+    ) {
       touchSelection.current = cell.id;
       selectSlot(cell);
     } else {
@@ -565,7 +563,7 @@ export default function TableScene({ viewRef, visible = true }) {
       <OrbitControls
         ref={controls}
         makeDefault
-        enabled={!panel && visible}
+        enabled={visible}
         enableDamping
         dampingFactor={0.12}
         enablePan
@@ -645,7 +643,7 @@ export default function TableScene({ viewRef, visible = true }) {
           cells={cells}
           activeNumber={active.number}
           activeSlotId={activeSlot?.id}
-          disabled={!!panel}
+          disabled={false}
           visible={visible}
         />
         {cells.map((cell) => (
@@ -656,7 +654,7 @@ export default function TableScene({ viewRef, visible = true }) {
             active={active.number === cell.number}
             onHover={hoverSlot}
             onSelect={choose}
-            disabled={!!panel || displayed !== design.id}
+            disabled={displayed !== design.id}
           />
         ))}
       </group>

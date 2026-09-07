@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import FooterViewport from "../components/explorer/FooterViewport";
 import ExplorerNavigation from "../components/explorer/ExplorerNavigation";
@@ -40,7 +41,7 @@ export default function ElementPage({ element }) {
             aria-label="Element navigation"
           >
             <Link href="/elements/" className="breadcrumbLinkAllElements">
-              ← All elements
+              <ArrowLeft aria-hidden="true" /> All elements
             </Link>
             <Link
               href={{
@@ -48,7 +49,7 @@ export default function ElementPage({ element }) {
                 query: { element: element.name.toLowerCase() },
               }}
             >
-              View in the table ↗
+              View in the table <ArrowRight aria-hidden="true" />
             </Link>
           </nav>
           <ElementDetail element={element} />

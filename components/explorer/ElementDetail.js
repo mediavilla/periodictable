@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ExternalLink, Play } from "lucide-react";
 import { useRouter } from "next/router";
 import { assetPath } from "../../utils/assetPath";
 import { getElementContent } from "../../data/element-content";
@@ -13,7 +14,7 @@ function SourceLink({ source }) {
       target="_blank"
       rel="noreferrer"
     >
-      {source.title} <span aria-hidden="true">↗</span>
+      {source.title} <ExternalLink aria-hidden="true" />
     </a>
   ) : null;
 }
@@ -25,7 +26,10 @@ function ImageBlock({ block }) {
     <figure className={`${styles.card} ${styles.imageCard}`}>
       {failed ? (
         <div className={styles.imageFallback}>
-          Image unavailable. <a href={block.source}>View it at the source ↗</a>
+          Image unavailable.{" "}
+          <a href={block.source}>
+            View it at the source <ExternalLink aria-hidden="true" />
+          </a>
         </div>
       ) : (
         // Native lazy loading preserves static export and avoids a second image server.
@@ -49,7 +53,7 @@ function ImageBlock({ block }) {
           target="_blank"
           rel="noreferrer"
         >
-          Image: {block.credit} ↗
+          Image: {block.credit} <ExternalLink aria-hidden="true" />
         </a>
       </figcaption>
     </figure>
@@ -86,7 +90,7 @@ function VideoBlock({ block }) {
           className={styles.mediaButton}
           onClick={() => setPlaying(true)}
         >
-          Play video <span aria-hidden="true">↗</span>
+          <Play aria-hidden="true" /> Play video
         </button>
       )}
       <p>{block.caption}</p>

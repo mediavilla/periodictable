@@ -207,7 +207,7 @@ export async function runBrowserChecks(browser, baseURL = 'http://localhost:3017
     await step('Selected Oganesson remains available but absent from historical models', desktop, async () => {
       await load(desktop, '/?element=oganesson');
       await desktop.getByRole('region', { name: 'Oganesson detail', exact: true }).waitFor();
-      await desktop.getByRole('button', { name: 'Close details', exact: true }).click();
+      await desktop.getByRole('button', { name: 'Return to table and restore camera', exact: true }).click();
       for (const id of ['racetrack', 'giguere']) {
         await choose(desktop, id);
         assert.match(await desktop.locator('.explorerAbsent').innerText(), /Oganesson is not included/);
