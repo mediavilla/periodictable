@@ -229,19 +229,19 @@ export async function runBrowserChecks(browser, baseURL = 'http://localhost:3017
     await step('Elements discovery searches all 118 and standalone Carbon uses shared content', desktop, async () => {
       await load(desktop); await canvasCount(desktop);
       await desktop.getByRole('navigation', { name: 'Periodic table navigation' }).getByRole('link', { name: 'Elements', exact: true }).click();
-      await desktop.locator('.explorerElementLink').first().waitFor();
-      assert.equal(await desktop.locator('.explorerElementLink').count(), 118);
+      await desktop.locator('.explorerFinderCell').first().waitFor();
+      assert.equal(await desktop.locator('.explorerFinderCell').count(), 118);
       await canvasCount(desktop, true);
       const search = desktop.getByRole('searchbox', { name: 'Search all elements', exact: true });
       for (const query of ['79', ' au ', 'GOLD']) {
-        await search.fill(query); assert.equal(await desktop.locator('.explorerElementLink').count(), 1);
-        assert.match(await desktop.locator('.explorerElementLink').innerText(), /Gold/);
+        await search.fill(query); assert.equal(await desktop.locator('.explorerFinderCell').count(), 1);
+        assert.match(await desktop.locator('.explorerFinderCell').innerText(), /Gold/);
       }
-      await search.fill('not-an-element'); assert.equal(await desktop.locator('.explorerElementLink').count(), 0);
+      await search.fill('not-an-element'); assert.equal(await desktop.locator('.explorerFinderCell').count(), 0);
       await desktop.getByText(/No elements match this search/).waitFor();
       await search.fill(''); await screenshot(desktop, 'desktop-elements');
       await search.fill('carbon');
-      await desktop.locator('.explorerElementLink').click();
+      await desktop.locator('.explorerFinderCell').click();
       await desktop.getByRole('article', { name: 'Carbon details', exact: true }).waitFor();
       assert.ok(new URL(desktop.url()).pathname.endsWith('/carbon/'));
       await desktop.getByRole('button', { name: 'Diamond', exact: true }).click();
@@ -304,8 +304,8 @@ export async function runBrowserChecks(browser, baseURL = 'http://localhost:3017
     await step('Mobile Elements search and standalone details remain readable', mobile, async () => {
       await mobile.goto(url('/elements/'), { waitUntil: 'domcontentloaded' });
       const search = mobile.getByRole('searchbox', { name: 'Search all elements', exact: true });
-      await search.fill('1'); assert.equal(await mobile.locator('.explorerElementLink').count(), 1);
-      await mobile.locator('.explorerElementLink').tap();
+      await search.fill('1'); assert.equal(await mobile.locator('.explorerFinderCell').count(), 1);
+      await mobile.locator('.explorerFinderCell').tap();
       await mobile.getByRole('article', { name: 'Hydrogen details', exact: true }).waitFor();
       await noHorizontalOverflow(mobile); await screenshot(mobile, 'mobile-element-page', true);
     });
@@ -326,7 +326,7 @@ export async function runBrowserChecks(browser, baseURL = 'http://localhost:3017
       await load(desktop);const before=await scene(desktop);
       await desktop.getByRole('button',{name:'Zoom in',exact:true}).click();
       await desktop.getByRole('navigation',{name:'Periodic table navigation'}).getByRole('link',{name:'Elements',exact:true}).click();
-      await desktop.locator('.explorerElementLink').first().waitFor();
+      await desktop.locator('.explorerFinderCell').first().waitFor();
       await desktop.getByRole('navigation',{name:'Periodic table navigation'}).getByRole('link',{name:'Designs',exact:true}).click();
       const after=await scene(desktop);assert.ok(vectorDistance(before.camera,after.camera)<.05,'An old zoom command was replayed on the new scene');
     });
@@ -346,10 +346,10 @@ export async function runBrowserChecks(browser, baseURL = 'http://localhost:3017
         HTMLCanvasElement.prototype.getContext = function(type, ...args) { return /webgl/i.test(type) ? null : original.call(this, type, ...args); };
       });
       await fallback.goto(url('/elements/'), { waitUntil: 'domcontentloaded' });
-      await fallback.locator('.explorerElementLink').first().waitFor();
-      assert.equal(await fallback.locator('.explorerElementLink').count(), 118);
+      await fallback.locator('.explorerFinderCell').first().waitFor();
+      assert.equal(await fallback.locator('.explorerFinderCell').count(), 118);
       await fallback.getByRole('searchbox', { name: 'Search all elements', exact: true }).fill('carbon');
-      await fallback.locator('.explorerElementLink').click();
+      await fallback.locator('.explorerFinderCell').click();
       await fallback.getByRole('article', { name: 'Carbon details', exact: true }).waitFor();
       await screenshot(fallback, 'webgl-fallback-carbon');
     });
@@ -457,10 +457,11 @@ export async function runTouchGestureChecks(browser, baseURL = 'http://localhost
         return { beforeRadius, zoomedRadius, outRadius };
       });
     }
-    await check('Flat 18-column table does not pan during two-finger translation', async () => {
+    await check('Flat 18-column table pans without tilting during two-finger translation', async () => {
       await page.locator('.explorerDesigns').getByRole('button', { name: '18 columns', exact: true }).click(); await settled();
-      const before = await reset(); const after = await gesture({ dx: 85, dy: -30 });
-      assert.ok(distance(before.target, after.target) < .05, `Flat table panned: ${before.target} → ${after.target}`);
+      await reset(); await page.getByRole('button', { name: 'Zoom in', exact: true }).click(); await page.waitForTimeout(600); await settled(); const before = await read(); const after = await gesture({ dx: 85, dy: -30 });
+      assert.ok(distance(before.target, after.target) > .05, `Flat table did not pan: ${before.target} → ${after.target}`);
+      assert.ok(Math.abs(after.camera[0] - after.target[0]) < .001 && Math.abs(after.camera[1] - after.target[1]) < .001, 'Flat camera tilted');
       return { beforeTarget: before.target, afterTarget: after.target };
     });
     await check('Giguère two-finger panning stays bounded and outside the model', async () => {

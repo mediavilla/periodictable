@@ -50,6 +50,51 @@ export async function runExportBrowserChecks(
       /Racetrack/,
     );
     checks.push("Exported query state and design controls");
+    for (const [id, route] of [
+      ["32", ""],
+      ["dobereiner", "timeline/"],
+      ["mendeleev", "timeline/"],
+      ["janet", ""],
+      ["stowe", ""],
+      ["telluric", "timeline/"],
+      ["benfey", ""],
+      ["chemical-galaxy", ""],
+    ]) {
+      await page.goto(`${base}/${route}?design=${id}`);
+      await page.locator("canvas").waitFor();
+      await page.waitForTimeout(1000);
+      assert.equal(await page.locator("canvas").count(), 1);
+      assert.equal(
+        await page.locator(".explorerFallback").count(),
+        0,
+        `${id}: rendering failed`,
+      );
+      assert.equal(
+        await page
+          .locator('.explorerDesigns button[aria-pressed="true"]')
+          .count(),
+        1,
+      );
+      await page
+        .getByRole("button", { name: "About this design", exact: true })
+        .click();
+      await page
+        .getByRole("region", { name: "Design history", exact: true })
+        .waitFor();
+      assert.ok((await page.locator(".explorerHistory a").count()) > 0);
+    }
+    checks.push(
+      "All eight additional models and lazy geometry load under the production prefix",
+    );
+    await page.goto(`${base}/?design=janet&slot=janet-120&panel=entry`);
+    await page.reload();
+    await page
+      .getByRole("region", { name: "Historical entry", exact: true })
+      .waitFor();
+    assert.match(await page.locator(".explorerHistory").innerText(), /120/);
+    checks.push(
+      "Exported unknown historical entry survives a direct-link refresh",
+    );
     for (const photo of ["hydrogen-sun", "carbon-earth", "gold-webb"]) {
       const response = await page.request.get(
         `${base}/images/stories/${photo}.jpg`,
@@ -94,8 +139,8 @@ export async function runExportBrowserChecks(
     await page
       .getByRole("searchbox", { name: "Search all elements" })
       .fill("79");
-    assert.equal(await page.locator(".explorerElementLink").count(), 1);
-    await page.locator(".explorerElementLink").click();
+    assert.equal(await page.locator(".explorerFinderCell").count(), 1);
+    await page.locator(".explorerFinderCell").click();
     await page.reload();
     await page
       .getByRole("article", { name: "Gold details", exact: true })

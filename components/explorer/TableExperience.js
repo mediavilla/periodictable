@@ -5,9 +5,11 @@ import { View } from "@react-three/drei";
 import TableScene from "./TableScene";
 import ExplorerNavigation from "./ExplorerNavigation";
 import ElementDetail from "./ElementDetail";
+import ElementFinder from "./ElementFinder";
 import { useExplorer } from "./ExplorerProvider";
 import elements from "../../public/elements.json";
-import { categoryColor } from "../../data/table-registry";
+import { categoryColor, tableSlots } from "../../data/table-registry";
+import { slotLabel, slotNumbers } from "../../data/model-slots.mjs";
 import FooterViewport from "./FooterViewport";
 
 export default function TableExperience({ timeline = false }) {
@@ -17,9 +19,14 @@ export default function TableExperience({ timeline = false }) {
     setSelected,
     setHovered,
     active,
+    activeSlot,
     panel,
     detailElement,
+    detailSlot,
     openElement,
+    openSlot,
+    selectSlot,
+    hoverSlot,
     openHistory,
     closePanel,
     issue,
@@ -29,12 +36,6 @@ export default function TableExperience({ timeline = false }) {
   const viewRef = useRef();
   const panelRef = useRef();
   const [visible, setVisible] = useState(true);
-  const [search, setSearch] = useState("");
-  const matches = elements.filter((e) =>
-    `${e.number} ${e.name} ${e.symbol}`
-      .toLowerCase()
-      .includes(search.toLowerCase()),
-  );
   useEffect(() => {
     registerViewport("table", visible);
     return () => registerViewport("table", false);
@@ -57,6 +58,7 @@ export default function TableExperience({ timeline = false }) {
       }
       if (
         panel ||
+        document.activeElement?.closest(".explorerNav") ||
         ["INPUT", "TEXTAREA", "SELECT", "BUTTON", "A"].includes(
           document.activeElement?.tagName,
         )
@@ -65,20 +67,38 @@ export default function TableExperience({ timeline = false }) {
       const next = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
       if (next) {
         e.preventDefault();
-        setSelected(elements[(selected.number - 1 + next + 118) % 118]);
+        const slots = tableSlots(design.id);
+        const index = slots.findIndex((slot) =>
+          activeSlot
+            ? slot.id === activeSlot.id
+            : slotNumbers(slot).includes(selected.number),
+        );
+        selectSlot(
+          slots[(Math.max(0, index) + next + slots.length) % slots.length],
+        );
       }
-      if (e.key === "Enter") openElement(selected);
+      if (e.key === "Enter")
+        activeSlot ? openSlot(activeSlot) : openElement(selected);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [panel, selected, closePanel, openElement, setSelected]);
+  }, [
+    panel,
+    selected,
+    activeSlot,
+    design.id,
+    closePanel,
+    openElement,
+    openSlot,
+    selectSlot,
+  ]);
   return (
     <>
       <Head>
         <title>{`${timeline ? "Timeline" : "Designs"} · The Periodic Table`}</title>
         <meta
           name="description"
-          content="Explore the periodic table through three designs, their history, and the stories of 118 elements."
+          content="Explore historical and contemporary periodic table designs, their history, and the stories of 118 elements."
         />
       </Head>
       <main className="explorerPage">
@@ -92,25 +112,24 @@ export default function TableExperience({ timeline = false }) {
             </span>
             <h1>{design.name}</h1>
           </div>
-          <button className="explorerTextButton" onClick={openHistory}>
-            About this design ↗
+          <button
+            className="explorerTextButton"
+            onClick={panel === "history" ? closePanel : openHistory}
+          >
+            {panel === "history" ? "← Back to table" : "About this design"}
           </button>
         </div>
-        {timeline && (
-          <p className="explorerIntro">
-            {design.introduction}{" "}
-            <button className="explorerInline" onClick={openHistory}>
-              Read its history
-            </button>
-          </p>
-        )}
-        <div className={`explorerStage ${panel ? "explorerPanelOpen" : ""}`}>
+        {timeline && <p className="explorerIntro">{design.introduction}</p>}
+        <div
+          className={`explorerStage ${panel ? "explorerPanelOpen" : ""} ${panel === "history" ? "explorerHistoryOpen" : ""} ${!panel && !activeSlot && !design.membership.includes(selected.number) ? "explorerHasNotice" : ""}`}
+        >
           {!webglFailed && (
             <View
               ref={viewRef}
               className="explorerTableView"
               visible={visible}
-              aria-label={`${design.name} interactive 3D table`}
+              tabIndex={0}
+              aria-label={`${design.name} interactive 3D table. Arrow keys select entries; Enter opens details.`}
             >
               <TableScene viewRef={viewRef} visible={visible} />
             </View>
@@ -132,7 +151,9 @@ export default function TableExperience({ timeline = false }) {
                 aria-label={
                   panel === "history"
                     ? "Design history"
-                    : `${detailElement?.name} detail`
+                    : panel === "entry"
+                      ? "Historical entry"
+                      : `${detailElement?.name} detail`
                 }
               >
                 {panel === "element" &&
@@ -142,15 +163,23 @@ export default function TableExperience({ timeline = false }) {
                       arrangement.
                     </p>
                   )}
-                <button
-                  className="explorerClose"
-                  onClick={closePanel}
-                  aria-label="Close details"
-                >
-                  ← Back to table
-                </button>
+                {panel !== "history" && (
+                  <button
+                    className="explorerClose"
+                    onClick={closePanel}
+                    aria-label="Close details"
+                  >
+                    ← Back to table
+                  </button>
+                )}
                 {panel === "element" ? (
                   <>
+                    {detailSlot &&
+                      (detailSlot.historical ||
+                        detailSlot.note ||
+                        detailSlot.mass != null) && (
+                        <HistoricalContext slot={detailSlot} />
+                      )}
                     <ElementDetail element={detailElement} compact />
                     <Link
                       className="explorerStandalone"
@@ -159,6 +188,12 @@ export default function TableExperience({ timeline = false }) {
                       Open {detailElement.name} page ↗
                     </Link>
                   </>
+                ) : panel === "entry" ? (
+                  <HistoricalEntry
+                    slot={detailSlot}
+                    design={design}
+                    openElement={openElement}
+                  />
                 ) : (
                   <DesignHistory design={design} />
                 )}
@@ -168,20 +203,39 @@ export default function TableExperience({ timeline = false }) {
             <div className="explorerTools">
               <div
                 className="explorerSelection"
-                style={{ "--element-color": categoryColor(active.category) }}
+                style={{
+                  "--element-color":
+                    activeSlot?.color || categoryColor(active.category),
+                }}
               >
-                <span className="explorerSymbol">{active.symbol}</span>
+                <span className="explorerSymbol">
+                  {activeSlot
+                    ? slotLabel(activeSlot, elements).symbol
+                    : active.symbol}
+                </span>
                 <div>
-                  <strong>{active.name}</strong>
+                  <strong>
+                    {activeSlot
+                      ? slotLabel(activeSlot, elements).name
+                      : active.name}
+                  </strong>
                   <span>
-                    {active.number} · {active.category}
+                    {activeSlot && !activeSlot.number
+                      ? "Historical entry"
+                      : `${active.number} · ${active.category}`}
                   </span>
                 </div>
-                <button onClick={() => openElement(active)}>
-                  Explore element ↗
+                <button
+                  onClick={() =>
+                    activeSlot ? openSlot(activeSlot) : openElement(active)
+                  }
+                >
+                  {activeSlot && !activeSlot.number
+                    ? "Explore entry ↗"
+                    : "Explore element ↗"}
                 </button>
               </div>
-              {!design.membership.includes(selected.number) && (
+              {!activeSlot && !design.membership.includes(selected.number) && (
                 <p className="explorerAbsent">
                   {selected.name} is not included in this historical
                   arrangement. Its detail is still available.
@@ -194,7 +248,7 @@ export default function TableExperience({ timeline = false }) {
                 <span>
                   {design.camera.orbit
                     ? "Drag to orbit · pinch to zoom"
-                    : "Drag to tilt · pinch to zoom"}
+                    : "Drag to move · pinch to zoom"}
                 </span>
                 <button onClick={() => issue("out")} aria-label="Zoom out">
                   −
@@ -222,40 +276,118 @@ export default function TableExperience({ timeline = false }) {
             </div>
           )}
         </div>
-        <details className="explorerKeyboard" open={webglFailed || undefined}>
-          <summary>
-            Find an element <span>Search or use ← → then Enter</span>
-          </summary>
-          <label htmlFor="table-element-search">
-            Name, symbol or atomic number
-          </label>
-          <input
-            id="table-element-search"
-            type="search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Try carbon, Au, or 79"
-          />
-          <div className="explorerSearchResults">
-            {matches.map((e) => (
-              <button
-                key={e.number}
-                onFocus={() => {
-                  setSelected(e);
-                  setHovered(e);
-                }}
-                onBlur={() => setHovered(null)}
-                onClick={() => openElement(e)}
-              >
-                <b>{e.symbol}</b> {e.name} <small>{e.number}</small>
-              </button>
-            ))}
-          </div>
-          {!matches.length && <p>No elements found.</p>}
-        </details>
+        {tableSlots(design.id).some((slot) => !slot.number) && (
+          <details className="explorerKeyboard explorerSourceEntries">
+            <summary>
+              Entries in this edition{" "}
+              <span>
+                Original labels, including historical and unknown entries
+              </span>
+            </summary>
+            <div className="explorerSearchResults">
+              {tableSlots(design.id).map((slot) => {
+                const label = slotLabel(slot, elements);
+                return (
+                  <button
+                    key={slot.id}
+                    className="explorerFinderCell"
+                    style={{ "--tile-color": slot.color || "#eee9dc" }}
+                    onFocus={() => hoverSlot(slot)}
+                    onBlur={() => hoverSlot(null)}
+                    onClick={() => openSlot(slot)}
+                    aria-label={`${label.symbol}, ${label.name}${slot.mass != null ? `, historical weight ${slot.mass}` : ""}`}
+                  >
+                    <b>{label.symbol}</b>
+                    <span>{label.name}</span>
+                    <small>{slot.sourceNumber ?? slot.mass ?? ""}</small>
+                  </button>
+                );
+              })}
+            </div>
+          </details>
+        )}
+        <ElementFinder
+          expanded={webglFailed}
+          onChoose={openElement}
+          onFocus={(e) => {
+            setSelected(e);
+            setHovered(e);
+          }}
+          onBlur={() => setHovered(null)}
+        />
       </main>
       <FooterViewport />
     </>
+  );
+}
+function HistoricalContext({ slot }) {
+  const label = slotLabel(slot, elements);
+  return (
+    <aside className="explorerAbsent">
+      <strong>
+        In this edition: {label.symbol}
+        {slot.mass != null ? ` = ${slot.mass}` : ""}.
+      </strong>{" "}
+      {slot.note ||
+        "The table retains its original notation. The element details below use current names and properties."}
+      {slot.mass != null &&
+        " Weights marked ‘source’ reproduce historical values and are not current atomic weights."}
+    </aside>
+  );
+}
+function HistoricalEntry({ slot, design, openElement }) {
+  const label = slotLabel(slot, elements);
+  return (
+    <article className="explorerHistory">
+      <span className="explorerEyebrow">An entry in {design.name}</span>
+      <h2>
+        {label.symbol} · {label.name}
+      </h2>
+      <p className="explorerHistoryLead">
+        {slot.note ||
+          "This position is retained from the source figure. It is not a separately identified modern element."}
+      </p>
+      {slot.sourceNumber != null && (
+        <p>
+          Printed position: {slot.sourceNumber}. A numbered position does not
+          imply that an element was known when this table was drawn.
+        </p>
+      )}
+      {slot.mass != null && (
+        <p>
+          Historical weight: {slot.mass}. This is the value printed in the
+          source, not a modern atomic weight.
+        </p>
+      )}
+      {!!slotNumbers(slot).length && (
+        <>
+          <h3>Related modern elements</h3>
+          <div className="explorerEntryLinks">
+            {slotNumbers(slot).map((number) => (
+              <button
+                className="explorerTextButton"
+                key={number}
+                onClick={() => openElement(elements[number - 1])}
+              >
+                {elements[number - 1].name} ↗
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+      <h3>Displayed edition</h3>
+      <p>{design.edition}</p>
+      <h3>Sources</h3>
+      <ul>
+        {design.sources.map((source) => (
+          <li key={source.url}>
+            <a href={source.url} target="_blank" rel="noreferrer">
+              {source.label} ↗
+            </a>
+          </li>
+        ))}
+      </ul>
+    </article>
   );
 }
 function DesignHistory({ design }) {

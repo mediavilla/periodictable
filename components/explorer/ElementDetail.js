@@ -155,7 +155,7 @@ function BondComparison({ block }) {
                 textAnchor="middle"
                 fill="white"
                 fontSize="13"
-                fontFamily="sans-serif"
+                fontFamily="Geist, sans-serif"
               >
                 C
               </text>

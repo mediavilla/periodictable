@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import elements from "../../public/elements.json";
 
 export const cellBox = new THREE.BoxGeometry(0.985, 0.985, 0.075);
 export const facePlane = new THREE.PlaneGeometry(0.985, 0.985);
@@ -18,19 +17,19 @@ const pickingMaterial = new THREE.MeshBasicMaterial({
  * There are no per-cell frame callbacks or independently allocated resources.
  */
 export default function ElementCell({ cell, onHover, onSelect, disabled }) {
-  const element = elements[cell.number - 1];
   return (
     <mesh
-      geometry={cell.geometry || cellBox}
+      geometry={cell.pickingGeometry || cell.geometry || cellBox}
       material={pickingMaterial}
       position={cell.position}
       rotation={cell.rotation || [0, 0, 0]}
+      scale={cell.scale || [1, 1, 1]}
       onPointerOver={
         disabled
           ? undefined
           : (event) => {
               event.stopPropagation();
-              if (event.pointerType !== "touch") onHover(element);
+              if (event.pointerType !== "touch") onHover(cell);
             }
       }
       onPointerOut={disabled ? undefined : () => onHover(null)}
@@ -41,7 +40,7 @@ export default function ElementCell({ cell, onHover, onSelect, disabled }) {
               event.stopPropagation();
               if (event.delta > 7) return;
               onSelect(
-                element,
+                cell,
                 event.nativeEvent?.pointerType || event.pointerType,
               );
             }

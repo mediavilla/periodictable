@@ -1,4 +1,9 @@
-import { EdgesGeometry, ExtrudeGeometry, ShapeUtils } from "three";
+import {
+  BufferGeometry,
+  Float32BufferAttribute,
+  ExtrudeGeometry,
+  ShapeUtils,
+} from "three";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
 import racetrack from "../../data/racetrack-layout.json";
 
@@ -131,6 +136,162 @@ function boxFits(anchor, halfWidth, halfHeight, polygon) {
   return true;
 }
 
+// Curved portions of the original track; the linking panels stay horizontal.
+const curvedCells = new Set([
+  ...Array.from({ length: 20 }, (_, i) => i + 1),
+  25,
+  26,
+  27,
+  28,
+  29,
+  34,
+  35,
+  36,
+  37,
+  38,
+  43,
+  44,
+  45,
+  46,
+  47,
+  52,
+  53,
+  54,
+  55,
+  56,
+  57,
+  58,
+  65,
+  75,
+  76,
+  77,
+  78,
+  79,
+  84,
+  85,
+  86,
+  87,
+  88,
+  89,
+  90,
+  97,
+]);
+
+function tangentAngle(polygon, number) {
+  if (!curvedCells.has(number)) return 0;
+  // Area moments avoid bias from SVG curves with uneven sampling density.
+  let area = 0,
+    x = 0,
+    y = 0,
+    xx = 0,
+    yy = 0,
+    xy = 0;
+  const ring = polygon[0];
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const a = ring[j],
+      b = ring[i];
+    const cross = a.x * b.y - b.x * a.y;
+    area += cross;
+    x += (a.x + b.x) * cross;
+    y += (a.y + b.y) * cross;
+    xx += (a.x * a.x + a.x * b.x + b.x * b.x) * cross;
+    yy += (a.y * a.y + a.y * b.y + b.y * b.y) * cross;
+    xy += (2 * a.x * a.y + a.x * b.y + b.x * a.y + 2 * b.x * b.y) * cross;
+  }
+  x /= 3 * area;
+  y /= 3 * area;
+  let angle =
+    0.5 *
+    Math.atan2(
+      2 * (xy / (12 * area) - x * y),
+      xx / (6 * area) - x * x - yy / (6 * area) + y * y,
+    );
+  if ([20, 38, 56, 57, 88, 89].includes(number))
+    angle = Math.atan2(y - 625, x - 625) + Math.PI / 2;
+  // These narrow cells continue across the top of the track, not down it.
+  if (
+    [57, 58, 65, 89, 90, 97].includes(number) &&
+    Math.abs(angle) > Math.PI / 4
+  )
+    angle += angle > 0 ? -Math.PI / 2 : Math.PI / 2;
+  // Keep near-vertical text reading down the left and up the right.
+  if (Math.abs(angle) > Math.PI / 3) {
+    if (x < (number <= 18 ? 554 : 1042) && angle < 0) angle += Math.PI;
+    if (x > (number <= 18 ? 554 : 1042) && angle > 0) angle -= Math.PI;
+  }
+  return angle;
+}
+
+export function racetrackLabel(shape, number) {
+  const polygon = polygonFor(shape);
+  const angle = tangentAngle(polygon, number);
+  const cos = Math.cos(angle),
+    sin = Math.sin(angle);
+  const rotated = polygon.map((ring) =>
+    ring.map(({ x, y }) => ({
+      x: x * cos + y * sin,
+      y: -x * sin + y * cos,
+    })),
+  );
+  const bounds = boundsFor(rotated);
+  // The label's horizontal centre is the middle of its tangential span.
+  const x = (bounds.minX + bounds.maxX) / 2;
+  const crossings = [];
+  for (const ring of rotated) {
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      const a = ring[j],
+        b = ring[i];
+      if (a.x > x !== b.x > x)
+        crossings.push(a.y + ((b.y - a.y) * (x - a.x)) / (b.x - a.x));
+    }
+  }
+  crossings.sort((a, b) => a - b);
+  let anchor,
+    thickness = 0;
+  for (let i = 0; i + 1 < crossings.length; i += 2) {
+    if (crossings[i + 1] - crossings[i] > thickness) {
+      thickness = crossings[i + 1] - crossings[i];
+      anchor = { x, y: (crossings[i] + crossings[i + 1]) / 2 };
+    }
+  }
+  if (!anchor) anchor = interiorAnchor(rotated, bounds);
+  const box = labelBox(anchor, rotated, bounds);
+  return {
+    x: anchor.x * cos - anchor.y * sin,
+    y: anchor.x * sin + anchor.y * cos,
+    width: box.width,
+    height: box.height,
+    angle,
+  };
+}
+
+// Extrusion edge extraction can expose triangulation seams at tiny SVG joins.
+// Draw only the source contours, on the front face, to retain real boundaries.
+function contourOutline(shapes, anchor) {
+  const positions = [];
+  for (const shape of shapes) {
+    for (const ring of polygonFor(shape)) {
+      for (let i = 0; i < ring.length; i++) {
+        const a = ring[i],
+          b = ring[(i + 1) % ring.length];
+        if (Math.hypot(a.x - b.x, a.y - b.y) < 0.00001) continue;
+        positions.push(
+          (a.x - anchor.x) / SCALE,
+          (anchor.y - a.y) / SCALE,
+          DEPTH + 0.001,
+          (b.x - anchor.x) / SCALE,
+          (anchor.y - b.y) / SCALE,
+          DEPTH + 0.001,
+        );
+      }
+    }
+  }
+  const geometry = new BufferGeometry();
+  geometry.setAttribute("position", new Float32BufferAttribute(positions, 3));
+  geometry.computeBoundingSphere();
+  return geometry;
+}
+
 function labelBox(anchor, polygon, bounds) {
   let best = { width: 0, height: 0, score: 0 };
   // Prefer a landscape label without wasting the thin radial width of cells.
@@ -174,47 +335,50 @@ export function createRacetrackCells() {
       SVGLoader.createShapes(path),
     ]),
   );
-  cachedCells = racetrack.regions.map(({ number, label: recordedLabel }) => {
-    const shapes = shapesByNumber.get(number);
-    let anchor = recordedLabel;
-    let label = recordedLabel;
-    if (!recordedLabel) {
-      const mainShape = shapes.reduce((largest, shape) => {
-        const area = Math.abs(ShapeUtils.area(shape.getPoints(32)));
-        return !largest || area > largest.area ? { shape, area } : largest;
-      }, null).shape;
-      const polygon = polygonFor(mainShape);
-      const bounds = boundsFor(polygon);
-      anchor = interiorAnchor(polygon, bounds);
-      label = labelBox(anchor, polygon, bounds);
-    }
-    const geometry = new ExtrudeGeometry(shapes, {
-      depth: DEPTH * SCALE,
-      bevelEnabled: false,
-      curveSegments: 32,
-      steps: 1,
-    });
-    // Flipping Y alone reverses winding. Rotating the SVG plane instead flips
-    // Y and Z together, retaining front-face winding and correct hit testing.
-    geometry.translate(-anchor.x, -anchor.y, -DEPTH * SCALE);
-    geometry.rotateX(Math.PI);
-    geometry.scale(1 / SCALE, 1 / SCALE, 1 / SCALE);
-    geometry.computeBoundingBox();
-    geometry.computeBoundingSphere();
-    const size = geometry.boundingBox;
-    return {
-      number,
-      position: [(anchor.x - 1042) / SCALE, (625 - anchor.y) / SCALE, 0],
-      rotation: [0, 0, 0],
-      geometry,
-      outline: new EdgesGeometry(geometry, 20),
-      width: size.max.x - size.min.x,
-      height: size.max.y - size.min.y,
-      labelWidth: label.width / SCALE,
-      labelHeight: label.height / SCALE,
-      labelPosition: [0, 0, DEPTH + 0.01],
-    };
-  });
+  cachedCells = racetrack.regions.map(
+    ({ number, label: recordedLabel, color }) => {
+      const shapes = shapesByNumber.get(number);
+      let anchor = recordedLabel;
+      let label = recordedLabel;
+      if (recordedLabel?.angle === undefined) {
+        const mainShape = shapes.reduce((largest, shape) => {
+          const area = Math.abs(ShapeUtils.area(shape.getPoints(32)));
+          return !largest || area > largest.area ? { shape, area } : largest;
+        }, null).shape;
+        label = racetrackLabel(mainShape, number);
+        anchor = label;
+      }
+      const geometry = new ExtrudeGeometry(shapes, {
+        depth: DEPTH * SCALE,
+        bevelEnabled: false,
+        curveSegments: 32,
+        steps: 1,
+      });
+      // Flipping Y alone reverses winding. Rotating the SVG plane instead flips
+      // Y and Z together, retaining front-face winding and correct hit testing.
+      geometry.translate(-anchor.x, -anchor.y, -DEPTH * SCALE);
+      geometry.rotateX(Math.PI);
+      geometry.scale(1 / SCALE, 1 / SCALE, 1 / SCALE);
+      geometry.computeBoundingBox();
+      geometry.computeBoundingSphere();
+      const size = geometry.boundingBox;
+      return {
+        number,
+        position: [(anchor.x - 1042) / SCALE, (625 - anchor.y) / SCALE, 0],
+        rotation: [0, 0, 0],
+        geometry,
+        outline: contourOutline(shapes, anchor),
+        color,
+        labelStyle: "racetrack",
+        labelRotation: -label.angle,
+        width: size.max.x - size.min.x,
+        height: size.max.y - size.min.y,
+        labelWidth: label.width / SCALE,
+        labelHeight: label.height / SCALE,
+        labelPosition: [0, 0, DEPTH + 0.01],
+      };
+    },
+  );
   return cachedCells;
 }
 

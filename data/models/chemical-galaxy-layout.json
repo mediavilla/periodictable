@@ -1,0 +1,1682 @@
+{
+  "source": {
+    "url": "https://www.meta-synthesis.com/webbook/35_pt/stew.jpg",
+    "creatorURL": "https://www.chemicalgalaxy.co.uk/page3_page3.html",
+    "figure": "Chemical Galaxy II, creator edition described in 2006",
+    "imageSize": [703, 522],
+    "method": "Disk centres and radii measured individually from the reproduced creator diagram; no generated spiral coordinates.",
+    "scale": 28,
+    "center": [352, 281]
+  },
+  "slots": [
+    {
+      "number": 1,
+      "sourceNumber": 1,
+      "kind": "element",
+      "sourceCenter": [423, 274],
+      "radius": 8,
+      "color": "#eeebae",
+      "label": {
+        "x": 423,
+        "y": 274,
+        "width": 10.4,
+        "height": 9.28
+      }
+    },
+    {
+      "number": 2,
+      "sourceNumber": 2,
+      "kind": "element",
+      "sourceCenter": [410, 229],
+      "radius": 6.6,
+      "color": "#e9e8df",
+      "label": {
+        "x": 410,
+        "y": 229,
+        "width": 8.58,
+        "height": 7.656
+      }
+    },
+    {
+      "number": 3,
+      "sourceNumber": 3,
+      "kind": "element",
+      "sourceCenter": [384, 233],
+      "radius": 7.9,
+      "color": "#e4cce5",
+      "label": {
+        "x": 384,
+        "y": 233,
+        "width": 10.27,
+        "height": 9.164
+      }
+    },
+    {
+      "number": 4,
+      "sourceNumber": 4,
+      "kind": "element",
+      "sourceCenter": [360, 245],
+      "radius": 7.4,
+      "color": "#d5cce5",
+      "label": {
+        "x": 360,
+        "y": 245,
+        "width": 9.62,
+        "height": 8.584
+      }
+    },
+    {
+      "number": 5,
+      "sourceNumber": 5,
+      "kind": "element",
+      "sourceCenter": [405, 306],
+      "radius": 7.1,
+      "color": "#cee4e5",
+      "label": {
+        "x": 405,
+        "y": 306,
+        "width": 9.23,
+        "height": 8.236
+      }
+    },
+    {
+      "number": 6,
+      "sourceNumber": 6,
+      "kind": "element",
+      "sourceCenter": [433, 293],
+      "radius": 7.7,
+      "color": "#d2e6c1",
+      "label": {
+        "x": 433,
+        "y": 293,
+        "width": 10.01,
+        "height": 8.932
+      }
+    },
+    {
+      "number": 7,
+      "sourceNumber": 7,
+      "kind": "element",
+      "sourceCenter": [460, 275],
+      "radius": 8.2,
+      "color": "#eeebae",
+      "label": {
+        "x": 460,
+        "y": 275,
+        "width": 10.66,
+        "height": 9.512
+      }
+    },
+    {
+      "number": 8,
+      "sourceNumber": 8,
+      "kind": "element",
+      "sourceCenter": [480, 248],
+      "radius": 8.1,
+      "color": "#f4dea7",
+      "label": {
+        "x": 480,
+        "y": 248,
+        "width": 10.53,
+        "height": 9.396
+      }
+    },
+    {
+      "number": 9,
+      "sourceNumber": 9,
+      "kind": "element",
+      "sourceCenter": [446, 204],
+      "radius": 8,
+      "color": "#edc8c2",
+      "label": {
+        "x": 446,
+        "y": 204,
+        "width": 10.4,
+        "height": 9.28
+      }
+    },
+    {
+      "number": 10,
+      "sourceNumber": 10,
+      "kind": "element",
+      "sourceCenter": [410, 206],
+      "radius": 7,
+      "color": "#e9e8df",
+      "label": {
+        "x": 410,
+        "y": 206,
+        "width": 9.1,
+        "height": 8.12
+      }
+    },
+    {
+      "number": 11,
+      "sourceNumber": 11,
+      "kind": "element",
+      "sourceCenter": [373, 214],
+      "radius": 7.8,
+      "color": "#e4cce5",
+      "label": {
+        "x": 373,
+        "y": 214,
+        "width": 10.14,
+        "height": 9.048
+      }
+    },
+    {
+      "number": 12,
+      "sourceNumber": 12,
+      "kind": "element",
+      "sourceCenter": [339, 232],
+      "radius": 7.2,
+      "color": "#d5cce5",
+      "label": {
+        "x": 339,
+        "y": 232,
+        "width": 9.36,
+        "height": 8.352
+      }
+    },
+    {
+      "number": 13,
+      "sourceNumber": 13,
+      "kind": "element",
+      "sourceCenter": [411, 326],
+      "radius": 7.1,
+      "color": "#cee4e5",
+      "label": {
+        "x": 411,
+        "y": 326,
+        "width": 9.23,
+        "height": 8.236
+      }
+    },
+    {
+      "number": 14,
+      "sourceNumber": 14,
+      "kind": "element",
+      "sourceCenter": [449, 310],
+      "radius": 7.8,
+      "color": "#d2e6c1",
+      "label": {
+        "x": 449,
+        "y": 310,
+        "width": 10.14,
+        "height": 9.048
+      }
+    },
+    {
+      "number": 15,
+      "sourceNumber": 15,
+      "kind": "element",
+      "sourceCenter": [487, 281],
+      "radius": 8.2,
+      "color": "#eeebae",
+      "label": {
+        "x": 487,
+        "y": 281,
+        "width": 10.66,
+        "height": 9.512
+      }
+    },
+    {
+      "number": 16,
+      "sourceNumber": 16,
+      "kind": "element",
+      "sourceCenter": [514, 243],
+      "radius": 8.2,
+      "color": "#f4dea7",
+      "label": {
+        "x": 514,
+        "y": 243,
+        "width": 10.66,
+        "height": 9.512
+      }
+    },
+    {
+      "number": 17,
+      "sourceNumber": 17,
+      "kind": "element",
+      "sourceCenter": [473, 179],
+      "radius": 8.2,
+      "color": "#edc8c2",
+      "label": {
+        "x": 473,
+        "y": 179,
+        "width": 10.66,
+        "height": 9.512
+      }
+    },
+    {
+      "number": 18,
+      "sourceNumber": 18,
+      "kind": "element",
+      "sourceCenter": [414, 181],
+      "radius": 7.4,
+      "color": "#e9e8df",
+      "label": {
+        "x": 414,
+        "y": 181,
+        "width": 9.62,
+        "height": 8.584
+      }
+    },
+    {
+      "number": 19,
+      "sourceNumber": 19,
+      "kind": "element",
+      "sourceCenter": [362, 193],
+      "radius": 7.7,
+      "color": "#e4cce5",
+      "label": {
+        "x": 362,
+        "y": 193,
+        "width": 10.01,
+        "height": 8.932
+      }
+    },
+    {
+      "number": 20,
+      "sourceNumber": 20,
+      "kind": "element",
+      "sourceCenter": [320, 214],
+      "radius": 7.8,
+      "color": "#d5cce5",
+      "label": {
+        "x": 320,
+        "y": 214,
+        "width": 10.14,
+        "height": 9.048
+      }
+    },
+    {
+      "number": 21,
+      "sourceNumber": 21,
+      "kind": "element",
+      "sourceCenter": [214, 341],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 214,
+        "y": 341,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 22,
+      "sourceNumber": 22,
+      "kind": "element",
+      "sourceCenter": [229, 365],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 229,
+        "y": 365,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 23,
+      "sourceNumber": 23,
+      "kind": "element",
+      "sourceCenter": [253, 377],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 253,
+        "y": 377,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 24,
+      "sourceNumber": 24,
+      "kind": "element",
+      "sourceCenter": [278, 382],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 278,
+        "y": 382,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 25,
+      "sourceNumber": 25,
+      "kind": "element",
+      "sourceCenter": [301, 383],
+      "radius": 8.3,
+      "color": "#e6c6c0",
+      "label": {
+        "x": 301,
+        "y": 383,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 26,
+      "sourceNumber": 26,
+      "kind": "element",
+      "sourceCenter": [322, 383],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 322,
+        "y": 383,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 27,
+      "sourceNumber": 27,
+      "kind": "element",
+      "sourceCenter": [344, 380],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 344,
+        "y": 380,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 28,
+      "sourceNumber": 28,
+      "kind": "element",
+      "sourceCenter": [364, 375],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 364,
+        "y": 375,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 29,
+      "sourceNumber": 29,
+      "kind": "element",
+      "sourceCenter": [382, 368],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 382,
+        "y": 368,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 30,
+      "sourceNumber": 30,
+      "kind": "element",
+      "sourceCenter": [398, 361],
+      "radius": 8.3,
+      "color": "#dad4e4",
+      "label": {
+        "x": 398,
+        "y": 361,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 31,
+      "sourceNumber": 31,
+      "kind": "element",
+      "sourceCenter": [424, 349],
+      "radius": 8.3,
+      "color": "#cee4e5",
+      "label": {
+        "x": 424,
+        "y": 349,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 32,
+      "sourceNumber": 32,
+      "kind": "element",
+      "sourceCenter": [469, 325],
+      "radius": 8.3,
+      "color": "#d2e6c1",
+      "label": {
+        "x": 469,
+        "y": 325,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 33,
+      "sourceNumber": 33,
+      "kind": "element",
+      "sourceCenter": [518, 284],
+      "radius": 8.3,
+      "color": "#eeebae",
+      "label": {
+        "x": 518,
+        "y": 284,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 34,
+      "sourceNumber": 34,
+      "kind": "element",
+      "sourceCenter": [554, 232],
+      "radius": 8.3,
+      "color": "#f4dea7",
+      "label": {
+        "x": 554,
+        "y": 232,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 35,
+      "sourceNumber": 35,
+      "kind": "element",
+      "sourceCenter": [503, 154],
+      "radius": 8.3,
+      "color": "#edc8c2",
+      "label": {
+        "x": 503,
+        "y": 154,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 36,
+      "sourceNumber": 36,
+      "kind": "element",
+      "sourceCenter": [423, 155],
+      "radius": 8.3,
+      "color": "#e9e8df",
+      "label": {
+        "x": 423,
+        "y": 155,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 37,
+      "sourceNumber": 37,
+      "kind": "element",
+      "sourceCenter": [357, 171],
+      "radius": 8.3,
+      "color": "#e4cce5",
+      "label": {
+        "x": 357,
+        "y": 171,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 38,
+      "sourceNumber": 38,
+      "kind": "element",
+      "sourceCenter": [306, 191],
+      "radius": 8.3,
+      "color": "#d5cce5",
+      "label": {
+        "x": 306,
+        "y": 191,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 39,
+      "sourceNumber": 39,
+      "kind": "element",
+      "sourceCenter": [161, 370],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 161,
+        "y": 370,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 40,
+      "sourceNumber": 40,
+      "kind": "element",
+      "sourceCenter": [182, 394],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 182,
+        "y": 394,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 41,
+      "sourceNumber": 41,
+      "kind": "element",
+      "sourceCenter": [211, 413],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 211,
+        "y": 413,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 42,
+      "sourceNumber": 42,
+      "kind": "element",
+      "sourceCenter": [247, 421],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 247,
+        "y": 421,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 43,
+      "sourceNumber": 43,
+      "kind": "element",
+      "sourceCenter": [280, 420],
+      "radius": 8.3,
+      "color": "#e6c6c0",
+      "label": {
+        "x": 280,
+        "y": 420,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 44,
+      "sourceNumber": 44,
+      "kind": "element",
+      "sourceCenter": [313, 418],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 313,
+        "y": 418,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 45,
+      "sourceNumber": 45,
+      "kind": "element",
+      "sourceCenter": [344, 411],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 344,
+        "y": 411,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 46,
+      "sourceNumber": 46,
+      "kind": "element",
+      "sourceCenter": [369, 403],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 369,
+        "y": 403,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 47,
+      "sourceNumber": 47,
+      "kind": "element",
+      "sourceCenter": [392, 393],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 392,
+        "y": 393,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 48,
+      "sourceNumber": 48,
+      "kind": "element",
+      "sourceCenter": [413, 384],
+      "radius": 8.3,
+      "color": "#dad4e4",
+      "label": {
+        "x": 413,
+        "y": 384,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 49,
+      "sourceNumber": 49,
+      "kind": "element",
+      "sourceCenter": [442, 368],
+      "radius": 8.3,
+      "color": "#cee4e5",
+      "label": {
+        "x": 442,
+        "y": 368,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 50,
+      "sourceNumber": 50,
+      "kind": "element",
+      "sourceCenter": [494, 338],
+      "radius": 8.3,
+      "color": "#d2e6c1",
+      "label": {
+        "x": 494,
+        "y": 338,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 51,
+      "sourceNumber": 51,
+      "kind": "element",
+      "sourceCenter": [553, 286],
+      "radius": 8.3,
+      "color": "#eeebae",
+      "label": {
+        "x": 553,
+        "y": 286,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 52,
+      "sourceNumber": 52,
+      "kind": "element",
+      "sourceCenter": [594, 218],
+      "radius": 8.3,
+      "color": "#f4dea7",
+      "label": {
+        "x": 594,
+        "y": 218,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 53,
+      "sourceNumber": 53,
+      "kind": "element",
+      "sourceCenter": [537, 131],
+      "radius": 8.3,
+      "color": "#edc8c2",
+      "label": {
+        "x": 537,
+        "y": 131,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 54,
+      "sourceNumber": 54,
+      "kind": "element",
+      "sourceCenter": [438, 128],
+      "radius": 8.3,
+      "color": "#e9e8df",
+      "label": {
+        "x": 438,
+        "y": 128,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 55,
+      "sourceNumber": 55,
+      "kind": "element",
+      "sourceCenter": [357, 144],
+      "radius": 8.3,
+      "color": "#e4cce5",
+      "label": {
+        "x": 357,
+        "y": 144,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 56,
+      "sourceNumber": 56,
+      "kind": "element",
+      "sourceCenter": [302, 165],
+      "radius": 8.3,
+      "color": "#d5cce5",
+      "label": {
+        "x": 302,
+        "y": 165,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 57,
+      "sourceNumber": 57,
+      "kind": "element",
+      "sourceCenter": [277, 175],
+      "radius": 8.3,
+      "color": "#d2e4dd",
+      "label": {
+        "x": 277,
+        "y": 175,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 58,
+      "sourceNumber": 58,
+      "kind": "element",
+      "sourceCenter": [260, 182],
+      "radius": 8.3,
+      "color": "#d7e7bb",
+      "label": {
+        "x": 260,
+        "y": 182,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 59,
+      "sourceNumber": 59,
+      "kind": "element",
+      "sourceCenter": [244, 191],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 244,
+        "y": 191,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 60,
+      "sourceNumber": 60,
+      "kind": "element",
+      "sourceCenter": [227, 200],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 227,
+        "y": 200,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 61,
+      "sourceNumber": 61,
+      "kind": "element",
+      "sourceCenter": [211, 210],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 211,
+        "y": 210,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 62,
+      "sourceNumber": 62,
+      "kind": "element",
+      "sourceCenter": [193, 220],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 193,
+        "y": 220,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 63,
+      "sourceNumber": 63,
+      "kind": "element",
+      "sourceCenter": [177, 236],
+      "radius": 8.3,
+      "color": "#d7d2e6",
+      "label": {
+        "x": 177,
+        "y": 236,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 64,
+      "sourceNumber": 64,
+      "kind": "element",
+      "sourceCenter": [160, 247],
+      "radius": 8.3,
+      "color": "#d2e4dd",
+      "label": {
+        "x": 160,
+        "y": 247,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 65,
+      "sourceNumber": 65,
+      "kind": "element",
+      "sourceCenter": [144, 263],
+      "radius": 8.3,
+      "color": "#d7e7bb",
+      "label": {
+        "x": 144,
+        "y": 263,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 66,
+      "sourceNumber": 66,
+      "kind": "element",
+      "sourceCenter": [128, 279],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 128,
+        "y": 279,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 67,
+      "sourceNumber": 67,
+      "kind": "element",
+      "sourceCenter": [112, 297],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 112,
+        "y": 297,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 68,
+      "sourceNumber": 68,
+      "kind": "element",
+      "sourceCenter": [100, 315],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 100,
+        "y": 315,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 69,
+      "sourceNumber": 69,
+      "kind": "element",
+      "sourceCenter": [91, 344],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 91,
+        "y": 344,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 70,
+      "sourceNumber": 70,
+      "kind": "element",
+      "sourceCenter": [88, 370],
+      "radius": 8.3,
+      "color": "#d7d2e6",
+      "label": {
+        "x": 88,
+        "y": 370,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 71,
+      "sourceNumber": 71,
+      "kind": "element",
+      "sourceCenter": [96, 395],
+      "radius": 8.3,
+      "color": "#d2e4dd",
+      "label": {
+        "x": 96,
+        "y": 395,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 72,
+      "sourceNumber": 72,
+      "kind": "element",
+      "sourceCenter": [126, 431],
+      "radius": 8.3,
+      "color": "#d7e7bb",
+      "label": {
+        "x": 126,
+        "y": 431,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 73,
+      "sourceNumber": 73,
+      "kind": "element",
+      "sourceCenter": [166, 450],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 166,
+        "y": 450,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 74,
+      "sourceNumber": 74,
+      "kind": "element",
+      "sourceCenter": [215, 457],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 215,
+        "y": 457,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 75,
+      "sourceNumber": 75,
+      "kind": "element",
+      "sourceCenter": [264, 456],
+      "radius": 8.3,
+      "color": "#e6c6c0",
+      "label": {
+        "x": 264,
+        "y": 456,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 76,
+      "sourceNumber": 76,
+      "kind": "element",
+      "sourceCenter": [306, 450],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 306,
+        "y": 450,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 77,
+      "sourceNumber": 77,
+      "kind": "element",
+      "sourceCenter": [345, 440],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 345,
+        "y": 440,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 78,
+      "sourceNumber": 78,
+      "kind": "element",
+      "sourceCenter": [377, 430],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 377,
+        "y": 430,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 79,
+      "sourceNumber": 79,
+      "kind": "element",
+      "sourceCenter": [407, 417],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 407,
+        "y": 417,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 80,
+      "sourceNumber": 80,
+      "kind": "element",
+      "sourceCenter": [430, 404],
+      "radius": 8.3,
+      "color": "#dad4e4",
+      "label": {
+        "x": 430,
+        "y": 404,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 81,
+      "sourceNumber": 81,
+      "kind": "element",
+      "sourceCenter": [467, 389],
+      "radius": 8.3,
+      "color": "#cee4e5",
+      "label": {
+        "x": 467,
+        "y": 389,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 82,
+      "sourceNumber": 82,
+      "kind": "element",
+      "sourceCenter": [525, 347],
+      "radius": 8.3,
+      "color": "#d2e6c1",
+      "label": {
+        "x": 525,
+        "y": 347,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 83,
+      "sourceNumber": 83,
+      "kind": "element",
+      "sourceCenter": [592, 284],
+      "radius": 8.3,
+      "color": "#eeebae",
+      "label": {
+        "x": 592,
+        "y": 284,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 84,
+      "sourceNumber": 84,
+      "kind": "element",
+      "sourceCenter": [633, 204],
+      "radius": 8.3,
+      "color": "#f4dea7",
+      "label": {
+        "x": 633,
+        "y": 204,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 85,
+      "sourceNumber": 85,
+      "kind": "element",
+      "sourceCenter": [574, 107],
+      "radius": 8.3,
+      "color": "#edc8c2",
+      "label": {
+        "x": 574,
+        "y": 107,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 86,
+      "sourceNumber": 86,
+      "kind": "element",
+      "sourceCenter": [458, 98],
+      "radius": 8.3,
+      "color": "#e9e8df",
+      "label": {
+        "x": 458,
+        "y": 98,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 87,
+      "sourceNumber": 87,
+      "kind": "element",
+      "sourceCenter": [367, 114],
+      "radius": 8.3,
+      "color": "#e4cce5",
+      "label": {
+        "x": 367,
+        "y": 114,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 88,
+      "sourceNumber": 88,
+      "kind": "element",
+      "sourceCenter": [302, 134],
+      "radius": 8.3,
+      "color": "#d7d2e6",
+      "label": {
+        "x": 302,
+        "y": 134,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 89,
+      "sourceNumber": 89,
+      "kind": "element",
+      "sourceCenter": [273, 147],
+      "radius": 8.3,
+      "color": "#d2e4dd",
+      "label": {
+        "x": 273,
+        "y": 147,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 90,
+      "sourceNumber": 90,
+      "kind": "element",
+      "sourceCenter": [255, 153],
+      "radius": 8.3,
+      "color": "#d7e7bb",
+      "label": {
+        "x": 255,
+        "y": 153,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 91,
+      "sourceNumber": 91,
+      "kind": "element",
+      "sourceCenter": [237, 162],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 237,
+        "y": 162,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 92,
+      "sourceNumber": 92,
+      "kind": "element",
+      "sourceCenter": [219, 170],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 219,
+        "y": 170,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 93,
+      "sourceNumber": 93,
+      "kind": "element",
+      "sourceCenter": [201, 182],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 201,
+        "y": 182,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 94,
+      "sourceNumber": 94,
+      "kind": "element",
+      "sourceCenter": [183, 193],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 183,
+        "y": 193,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 95,
+      "sourceNumber": 95,
+      "kind": "element",
+      "sourceCenter": [162, 206],
+      "radius": 8.3,
+      "color": "#d7d2e6",
+      "label": {
+        "x": 162,
+        "y": 206,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 96,
+      "sourceNumber": 96,
+      "kind": "element",
+      "sourceCenter": [144, 218],
+      "radius": 8.3,
+      "color": "#d2e4dd",
+      "label": {
+        "x": 144,
+        "y": 218,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 97,
+      "sourceNumber": 97,
+      "kind": "element",
+      "sourceCenter": [120, 237],
+      "radius": 8.3,
+      "color": "#d7e7bb",
+      "label": {
+        "x": 120,
+        "y": 237,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 98,
+      "sourceNumber": 98,
+      "kind": "element",
+      "sourceCenter": [98, 253],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 98,
+        "y": 253,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 99,
+      "sourceNumber": 99,
+      "kind": "element",
+      "sourceCenter": [75, 282],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 75,
+        "y": 282,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 100,
+      "sourceNumber": 100,
+      "kind": "element",
+      "sourceCenter": [54, 300],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 54,
+        "y": 300,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 101,
+      "sourceNumber": 101,
+      "kind": "element",
+      "sourceCenter": [38, 342],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 38,
+        "y": 342,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 102,
+      "sourceNumber": 102,
+      "kind": "element",
+      "sourceCenter": [30, 378],
+      "radius": 8.3,
+      "color": "#d7d2e6",
+      "label": {
+        "x": 30,
+        "y": 378,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 103,
+      "sourceNumber": 103,
+      "kind": "element",
+      "sourceCenter": [34, 420],
+      "radius": 8.3,
+      "color": "#d2e4dd",
+      "label": {
+        "x": 34,
+        "y": 420,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 104,
+      "sourceNumber": 104,
+      "kind": "element",
+      "sourceCenter": [67, 472],
+      "radius": 8.3,
+      "color": "#d7e7bb",
+      "label": {
+        "x": 67,
+        "y": 472,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 105,
+      "sourceNumber": 105,
+      "kind": "element",
+      "sourceCenter": [130, 495],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 130,
+        "y": 495,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 106,
+      "sourceNumber": 106,
+      "kind": "element",
+      "sourceCenter": [192, 499],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 192,
+        "y": 499,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 107,
+      "sourceNumber": 107,
+      "kind": "element",
+      "sourceCenter": [252, 491],
+      "radius": 8.3,
+      "color": "#e6c6c0",
+      "label": {
+        "x": 252,
+        "y": 491,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 108,
+      "sourceNumber": 108,
+      "kind": "element",
+      "sourceCenter": [303, 483],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 303,
+        "y": 483,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 109,
+      "sourceNumber": 109,
+      "kind": "element",
+      "sourceCenter": [349, 470],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 349,
+        "y": 470,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 110,
+      "sourceNumber": 110,
+      "kind": "element",
+      "sourceCenter": [388, 455],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 388,
+        "y": 455,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 111,
+      "sourceNumber": 111,
+      "kind": "element",
+      "sourceCenter": [422, 440],
+      "radius": 8.3,
+      "color": "#eee0ae",
+      "label": {
+        "x": 422,
+        "y": 440,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 112,
+      "sourceNumber": 112,
+      "kind": "element",
+      "sourceCenter": [451, 425],
+      "radius": 8.3,
+      "color": "#dad4e4",
+      "sourceSymbol": "Uub",
+      "label": {
+        "x": 451,
+        "y": 425,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": null,
+      "sourceNumber": 113,
+      "kind": "prediction",
+      "sourceCenter": [495, 401],
+      "radius": 8.3,
+      "color": "#cee4e5",
+      "label": {
+        "x": 495,
+        "y": 401,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": 114,
+      "sourceNumber": 114,
+      "kind": "element",
+      "sourceCenter": [564, 354],
+      "radius": 8.3,
+      "color": "#d2e6c1",
+      "sourceSymbol": "Uuq",
+      "label": {
+        "x": 564,
+        "y": 354,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": null,
+      "sourceNumber": 115,
+      "kind": "prediction",
+      "sourceCenter": [640, 276],
+      "radius": 8.3,
+      "color": "#eeebae",
+      "label": {
+        "x": 640,
+        "y": 276,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": null,
+      "sourceNumber": 116,
+      "kind": "prediction",
+      "sourceCenter": [676, 181],
+      "radius": 8.3,
+      "color": "#f4dea7",
+      "label": {
+        "x": 676,
+        "y": 181,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": null,
+      "sourceNumber": 117,
+      "kind": "prediction",
+      "sourceCenter": [617, 85],
+      "radius": 8.3,
+      "color": "#edc8c2",
+      "label": {
+        "x": 617,
+        "y": 85,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": null,
+      "sourceNumber": 118,
+      "kind": "prediction",
+      "sourceCenter": [498, 63],
+      "radius": 8.3,
+      "color": "#e9e8df",
+      "label": {
+        "x": 498,
+        "y": 63,
+        "width": 10.79,
+        "height": 9.628
+      }
+    },
+    {
+      "number": null,
+      "sourceNumber": 0,
+      "kind": "annotation",
+      "sourceCenter": [413, 252],
+      "radius": 8.2,
+      "color": "#ecebe4",
+      "sourceSymbol": "?",
+      "label": {
+        "x": 413,
+        "y": 252,
+        "width": 10.66,
+        "height": 9.512
+      }
+    }
+  ]
+}

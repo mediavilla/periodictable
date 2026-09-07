@@ -5,6 +5,7 @@ import Head from "next/head";
 import { ExplorerProvider } from "../components/explorer/ExplorerProvider";
 import "../styles/globals.css";
 import "../styles/explorer.css";
+import "../styles/explorer-navigation.css";
 const SceneCanvas = dynamic(
   () => import("../components/explorer/SceneCanvas"),
   { ssr: false },

@@ -28,7 +28,7 @@ export default function SceneCanvas({ eventSource }) {
         frameloop={sceneActive ? "always" : "demand"}
         eventSource={eventSource}
         eventPrefix="client"
-        dpr={[1, 1.5]}
+        dpr={[1, 2]}
         gl={{
           alpha: true,
           antialias: true,

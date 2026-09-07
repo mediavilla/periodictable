@@ -1,8 +1,17 @@
 import elements from "../public/elements.json";
+import { modernModels, modernLayouts } from "./models/modern-models";
+import {
+  historicalModels,
+  historicalLayouts,
+} from "./models/historical-models";
+import { spatialModels, spatialLayouts } from "./models/spatial-models";
+import { planarModels, planarLayouts } from "./models/planar-models";
+import { DESIGN_IDS, TIMELINE_IDS, slotNumbers } from "./model-slots.mjs";
 
-export const TABLES = [
+const coreTables = [
   {
     id: "18",
+    renderer: "grid",
     name: "18 columns",
     shortName: "18 columns",
     year: null,
@@ -31,6 +40,7 @@ export const TABLES = [
   },
   {
     id: "racetrack",
+    renderer: "racetrack",
     name: "Racetrack",
     shortName: "Race Track",
     year: 1933,
@@ -64,6 +74,7 @@ export const TABLES = [
   },
   {
     id: "giguere",
+    renderer: "giguere",
     name: "Giguère",
     shortName: "Giguère",
     year: 1965,
@@ -96,10 +107,44 @@ export const TABLES = [
     ],
   },
 ];
+export const MODEL_LAYOUTS = {
+  ...modernLayouts,
+  ...historicalLayouts,
+  ...spatialLayouts,
+  ...planarLayouts,
+};
+export const TABLES = [
+  ...coreTables,
+  ...modernModels,
+  ...historicalModels,
+  ...spatialModels.map((table) => ({ ...table, renderer: "spatial" })),
+  ...planarModels.map((table) => ({ ...table, renderer: "planar" })),
+].map((table) => ({
+  renderer: "grid",
+  ...table,
+  membership:
+    table.membership ||
+    [...new Set((MODEL_LAYOUTS[table.id] || []).flatMap(slotNumbers))].sort(
+      (a, b) => a - b,
+    ),
+}));
 export const tableById = (id) => TABLES.find((t) => t.id === id) || TABLES[0];
-export const chronologicalTables = [...TABLES].sort(
-  (a, b) => (a.year ?? Infinity) - (b.year ?? Infinity),
+export const designTables = DESIGN_IDS.map((id) =>
+  TABLES.find((table) => table.id === id),
+).filter(Boolean);
+export const chronologicalTables = TIMELINE_IDS.map((id) =>
+  TABLES.find((table) => table.id === id),
+).filter(Boolean);
+const coreSlots = Object.fromEntries(
+  coreTables.map((table) => [
+    table.id,
+    table.membership.map((number) => ({ id: `${table.id}-${number}`, number })),
+  ]),
 );
+export const tableSlots = (id) =>
+  MODEL_LAYOUTS[id] || coreSlots[id] || coreSlots["18"];
+export const findSlot = (designId, slotId) =>
+  tableSlots(designId).find((slot) => slot.id === slotId);
 export const findElement = (value) =>
   elements.find(
     (e) =>
@@ -124,3 +169,21 @@ export const categoryColor = (category) => {
     }[category] || "#888888"
   );
 };
+
+// Canvas base colours: the category hue mixed with 55% white in linear sRGB.
+// Share the resulting swatches with HTML; CSS mixing in sRGB is more saturated.
+const pastelSwatches = {
+  "#454545": "#c8c8c8",
+  "#7a00ff": "#d1c4ff",
+  "#ff7500": "#ffd0c4",
+  "#ff00ff": "#ffc4ff",
+  "#cccccc": "#eaeaea",
+  "#05b6bb": "#c4e2e4",
+  "#dd201c": "#f0c5c5",
+  "#959339": "#d8d7c7",
+  "#15d905": "#c4efc4",
+  "#0070ff": "#c4cfff",
+  "#888888": "#d4d4d4",
+};
+export const categoryPastelColor = (category) =>
+  pastelSwatches[categoryColor(category)];

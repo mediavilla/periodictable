@@ -2,8 +2,9 @@ import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import elements from "../../public/elements.json";
-import { categoryColor } from "../../data/table-registry";
-import { getLabelAtlases } from "./labelAtlas";
+import { categoryPastelColor } from "../../data/table-registry";
+import { getLabelAtlases, labelAtlasRows } from "./labelAtlas";
+import { slotLabel, slotNumbers } from "../../data/model-slots.mjs";
 
 const defaultBody = new THREE.BoxGeometry(0.985, 0.985, 0.075);
 const defaultOutline = new THREE.EdgesGeometry(defaultBody);
@@ -13,7 +14,7 @@ const ACTIVE_BODY = new THREE.Color("#29292b");
 const OUTLINE = new THREE.Color("#34338b");
 const ACTIVE_OUTLINE = new THREE.Color("#ffe604");
 const NO_EMISSION = new THREE.Color("black");
-const thresholds = [40, 64, 100];
+const thresholds = [40, 64, 100, 150];
 const quadIndices = [0, 2, 1, 2, 3, 1];
 const noRaycast = () => null;
 
@@ -79,7 +80,7 @@ function mergeShapes(cells, transforms, sources, withNormals) {
 }
 
 function partitionLabels(batch) {
-  const counts = [0, 0, 0, 0];
+  const counts = [0, 0, 0, 0, 0];
   for (let cell = 0; cell < batch.levels.length; cell += 1) {
     const level = batch.levels[cell];
     const target = batch.labels[level].index.array;
@@ -89,7 +90,7 @@ function partitionLabels(batch) {
     }
     counts[level] += 6;
   }
-  for (let level = 0; level < 4; level += 1) {
+  for (let level = 0; level < 5; level += 1) {
     const geometry = batch.labels[level];
     geometry.setDrawRange(0, counts[level]);
     geometry.index.needsUpdate = true;
@@ -103,7 +104,7 @@ function buildBatch(cells) {
       new THREE.Quaternion().setFromEuler(
         new THREE.Euler(...(cell.rotation || [0, 0, 0])),
       ),
-      new THREE.Vector3(1, 1, 1),
+      new THREE.Vector3(...(cell.scale || [1, 1, 1])),
     ),
   );
   const body = mergeShapes(
@@ -128,13 +129,15 @@ function buildBatch(cells) {
   const labelColors = dynamicAttribute(cells.length * 12, 3);
   const anchors = [];
   const records = new Map();
+  const displayLabels = cells.map((cell) => slotLabel(cell, elements));
+  const atlasRows = labelAtlasRows(displayLabels.length);
   const corner = new THREE.Vector3();
 
   cells.forEach((cell, index) => {
     const element = elements[cell.number - 1];
-    const baseColor = new THREE.Color(categoryColor(element.category)).lerp(
-      WHITE,
-      0.55,
+    const baseColor = new THREE.Color(
+      cell.color ||
+        (element ? categoryPastelColor(element.category) : "#eee9dc"),
     );
     const bodyRange = body.ranges[index];
     const outlineRange = outline.ranges[index];
@@ -152,7 +155,8 @@ function buildBatch(cells) {
       OUTLINE,
     );
     fillColor(labelColors, index * 4, 4, BLACK);
-    records.set(cell.number, {
+    records.set(cell.id, {
+      numbers: slotNumbers(cell),
       baseColor,
       bodyRange,
       outlineRange,
@@ -164,51 +168,38 @@ function buildBatch(cells) {
     const size = Math.min(cell.labelWidth || 0.94, cell.labelHeight || 0.94);
     const half = size / 2;
     const offset = cell.labelPosition || [0, 0, 0.047];
-    const transform = transforms[index];
-    const atlasIndex = cell.number - 1;
+    const transform = new THREE.Matrix4()
+      .compose(
+        new THREE.Vector3(...cell.position),
+        new THREE.Quaternion().setFromEuler(
+          new THREE.Euler(...(cell.rotation || [0, 0, 0])),
+        ),
+        new THREE.Vector3(1, 1, 1),
+      )
+      .multiply(new THREE.Matrix4().makeTranslation(...offset))
+      .multiply(new THREE.Matrix4().makeRotationZ(cell.labelRotation || 0));
+    const atlasIndex = index;
     for (let vertex = 0; vertex < 4; vertex += 1) {
       const u = vertex % 2;
       const v = vertex < 2 ? 1 : 0;
-      corner
-        .set(
-          offset[0] + (u - 0.5) * size,
-          offset[1] + (v - 0.5) * size,
-          offset[2],
-        )
-        .applyMatrix4(transform);
+      corner.set((u - 0.5) * size, (v - 0.5) * size, 0).applyMatrix4(transform);
       corner.toArray(labelPositions, index * 12 + vertex * 3);
       labelUVs[index * 8 + vertex * 2] = ((atlasIndex % 16) + u) / 16;
       labelUVs[index * 8 + vertex * 2 + 1] =
-        (7 - Math.floor(atlasIndex / 16) + v) / 8;
+        (atlasRows - 1 - Math.floor(atlasIndex / 16) + v) / atlasRows;
     }
     anchors.push({
-      left: new THREE.Vector3(
-        offset[0] - half,
-        offset[1],
-        offset[2],
-      ).applyMatrix4(transform),
-      right: new THREE.Vector3(
-        offset[0] + half,
-        offset[1],
-        offset[2],
-      ).applyMatrix4(transform),
-      bottom: new THREE.Vector3(
-        offset[0],
-        offset[1] - half,
-        offset[2],
-      ).applyMatrix4(transform),
-      top: new THREE.Vector3(
-        offset[0],
-        offset[1] + half,
-        offset[2],
-      ).applyMatrix4(transform),
+      left: new THREE.Vector3(-half, 0, 0).applyMatrix4(transform),
+      right: new THREE.Vector3(half, 0, 0).applyMatrix4(transform),
+      bottom: new THREE.Vector3(0, -half, 0).applyMatrix4(transform),
+      top: new THREE.Vector3(0, half, 0).applyMatrix4(transform),
     });
   });
 
   const positionAttribute = new THREE.BufferAttribute(labelPositions, 3);
   const uvAttribute = new THREE.BufferAttribute(labelUVs, 2);
   const IndexArray = cells.length * 4 > 65535 ? Uint32Array : Uint16Array;
-  const labels = Array.from({ length: 4 }, () => {
+  const labels = Array.from({ length: 5 }, () => {
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute("position", positionAttribute);
     geometry.setAttribute("uv", uvAttribute);
@@ -228,16 +219,22 @@ function buildBatch(cells) {
     labelColors,
     anchors,
     records,
+    displayLabels,
     levels: new Uint8Array(cells.length),
     activeNumber: null,
+    activeSlotId: null,
     lastCheck: -Infinity,
   };
   partitionLabels(batch);
   return batch;
 }
 
-function activate(batch, activeNumber) {
-  if (batch.activeNumber === activeNumber) return;
+function activate(batch, activeNumber, activeSlotId) {
+  if (
+    batch.activeNumber === activeNumber &&
+    batch.activeSlotId === activeSlotId
+  )
+    return;
   const colors = batch.body.attributes.color;
   const emission = batch.body.attributes.batchEmissive;
   const outlines = batch.outline.attributes.color;
@@ -245,10 +242,14 @@ function activate(batch, activeNumber) {
   const attributes = [colors, emission, outlines, labels];
   // Accumulate until Three uploads and clears these ranges. Clearing here
   // could drop an earlier hover update when two selections land in one frame.
-  for (const number of [batch.activeNumber, activeNumber]) {
-    const record = batch.records.get(number);
-    if (!record) continue;
-    const active = number === activeNumber;
+  for (const [id, record] of batch.records) {
+    const wasActive =
+      batch.activeSlotId === id ||
+      (!batch.activeSlotId && record.numbers.includes(batch.activeNumber));
+    const active =
+      activeSlotId === id ||
+      (!activeSlotId && record.numbers.includes(activeNumber));
+    if (wasActive === active) continue;
     const { bodyRange, outlineRange, labelStart, baseColor } = record;
     fillColor(
       colors,
@@ -278,6 +279,7 @@ function activate(batch, activeNumber) {
     attribute.needsUpdate = true;
   });
   batch.activeNumber = activeNumber;
+  batch.activeSlotId = activeSlotId;
 }
 
 // Standard lighting is retained. The extra varying gives each cell its own
@@ -310,12 +312,13 @@ const emissionProgramKey = () => "periodic-batch-emission-v1";
 export default function CellBatch({
   cells,
   activeNumber,
+  activeSlotId,
   disabled = false,
   visible = true,
 }) {
   const root = useRef();
   const batch = useMemo(() => buildBatch(cells), [cells]);
-  const atlases = useMemo(getLabelAtlases, []);
+  const atlases = useMemo(() => getLabelAtlases(batch.displayLabels), [batch]);
   const scratch = useMemo(
     () => ({
       projection: new THREE.Matrix4(),
@@ -337,8 +340,8 @@ export default function CellBatch({
   );
 
   useLayoutEffect(() => {
-    activate(batch, activeNumber);
-  }, [activeNumber, batch]);
+    activate(batch, activeNumber, activeSlotId);
+  }, [activeNumber, activeSlotId, batch]);
   useLayoutEffect(() => {
     batch.lastCheck = -Infinity;
     if (disabled) {
@@ -347,7 +350,7 @@ export default function CellBatch({
     }
   }, [batch, disabled]);
 
-  useFrame(({ camera, size, clock, events }) => {
+  useFrame(({ camera, size, clock, events, controls }) => {
     if (
       !visible ||
       disabled ||
@@ -385,8 +388,15 @@ export default function CellBatch({
         ),
       );
       let next = batch.levels[cell];
-      while (next < 3 && pixels > thresholds[next] + 3) next += 1;
+      while (next < 4 && pixels > thresholds[next] + 3) next += 1;
       while (next > 0 && pixels < thresholds[next - 1] - 3) next -= 1;
+      if (
+        controls &&
+        camera.position.distanceTo(controls.target) <=
+          controls.minDistance * 1.03 &&
+        pixels > 85
+      )
+        next = 4;
       if (next !== batch.levels[cell]) {
         batch.levels[cell] = next;
         changed = true;

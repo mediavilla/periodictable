@@ -18,20 +18,20 @@ This is a local, English-language prototype for exploring three periodic-table d
 | Shared rings/electrons and tracked illustration viewports | `components/explorer/BohrModel.js`, `components/explorer/BohrViewport.js` |
 | Shared element content and bento rendering | `data/element-content.js`, `components/explorer/ElementDetail.js`, `components/explorer/ElementDetail.module.css` |
 | Discovery and lowercase element pages | `pages/elements.js`, `pages/[element].js` |
-| HTML navigation and scoped explorer styling | `components/explorer/ExplorerNavigation.js`, `styles/explorer.css` |
+| HTML navigation and scoped explorer styling | `components/explorer/ExplorerNavigation.js`, `styles/explorer-navigation.css`, `styles/explorer.css` |
 | Phone overflow containment around the unchanged footer | `components/explorer/FooterViewport.js` |
 
 `SceneCanvas` mounts once in the application shell. It is loaded on the client because WebGL and canvas textures need browser APIs. Drei `View` components track the table and visible Bohr illustrations in the DOM; `View.Port` renders those viewports through the shared renderer. There is no separate WebGL canvas for every bento card. Navigation, controls, articles, search, and the footer remain HTML.
 
-`CellBatch` renders the visible table with one merged body mesh, one merged outline, and up to four label meshes: at most six draw calls for those parts, rather than separate draws for every element. It preserves each input geometry's triangles and face orientation. Per-element colors and label-detail partitions update the batch's buffer attributes. Backgrounds, Bohr illustrations, and Giguère's structural panels add their own draws.
+`CellBatch` renders the visible table with one merged body mesh, one merged outline, and up to five label meshes: at most seven draw calls for those parts, rather than separate draws for every element. It preserves each input geometry's triangles and face orientation. Per-element colors and label-detail partitions update the batch's buffer attributes. Backgrounds, Bohr illustrations, and Giguère's structural panels add their own draws.
 
 Each element still has an `ElementCell` instance with an invisible picking proxy. These proxies preserve the common hover and selection interface and the exact outward-facing geometry, including Giguère's different front/back elements. They add no visible draws or per-cell animation callbacks. Rectangular cells share a box; historical Giguère entries use outward-facing planes; racetrack cells receive their cached curved geometry.
 
-`labelAtlas.js` caches four canvas textures containing the labels for all 118 elements. It uses the existing Neue Haas Grotesk font, drawing a system fallback immediately and repainting the same textures when the web font is ready. `CellBatch` projects each label's usable width and height, using the narrower screen dimension to determine detail. Thresholds near 40, 64, and 100 pixels have a small hysteresis band. Names fit their atlas tile, and racetrack label size is constrained by an interior-safe box rather than the full curved cell's bounding box. A single periodic batch check replaces per-cell frame callbacks.
+`labelAtlas.js` caches five canvas textures containing the labels for all 118 elements. It uses bundled Geist for symbols/names and Geist Mono for properties, drawing a system fallback immediately and repainting the same textures when both fonts are ready. Symbols use weight 500. Close-detail atlases have twice the resolution of the overview atlases. `CellBatch` projects each label's usable width and height, using the narrower screen dimension to determine detail. Thresholds near 40, 64, 100, and 150 pixels have a small hysteresis band. Names fit their atlas tile, and racetrack label size is constrained by an interior-safe box rather than the full curved cell's bounding box. A single periodic batch check replaces per-cell frame callbacks.
 
 Transient animation values, camera objects, and orbital positions live in refs rather than React state updated every frame. `TableScene` coordinates outgoing/incoming designs and camera easing with animejs. Camera journeys interpolate orbital angles and distance, so an orbit reset travels around the model; a newer request retargets from the current pose. Controls pause during the journey and resume within the layout's angle/distance limits. The HTML panel and tracked table rectangle provide the expanding-panel/shrinking-preview layout. Opening follows the changing preview rectangle, while closing eases to a fixed saved camera position and target. The preview disables cell selection and camera controls. Reduced motion applies camera changes immediately while table/panel travel becomes a brief fade.
 
-The renderer caps pixel ratio at 1.5. Intersection observers track visible views, decorative motion pauses offscreen, and the renderer uses demand mode when no registered viewport is visible. Bohr electrons share geometry and use instancing; orbital rings and label textures are also shared. These resource choices are implementation measures, not a claim that performance has been validated on every device.
+The renderer caps pixel ratio at 2. Intersection observers track visible views, decorative motion pauses offscreen, and the renderer uses demand mode when no registered viewport is visible. Bohr electrons share geometry and use instancing; orbital rings and label textures are also shared. These resource choices are implementation measures, not a claim that performance has been validated on every device.
 
 ## Geometry and scientific provenance
 
@@ -41,7 +41,7 @@ The renderer caps pixel ratio at 1.5. Intersection observers track visible views
 | Racetrack | 104 original numbered regions, atomic numbers 1–104 | Exact numbered `d` strings extracted from the previous `components/TableRaceTrack.js`. It is the existing site's adaptation of [Clark's design](https://www.meta-synthesis.com/webbook/35_pt/pt_database.php?PT_id=86), not an exact reproduction of the 1933 print. |
 | Giguère | 103 element faces, atomic numbers 1–103 | Placements reconstructed from the three photographs on p. 37 of Giguère's original article. The pictured placard is dated 1965; the article appeared in December 1966. The [catalogue entry](https://www.meta-synthesis.com/webbook/35_pt/pt_database.php?PT_id=525) and the [original paper hosted by Grover Lab](https://raw.githubusercontent.com/groverlab/giguere-3D-periodic-table/main/giguere-1966.pdf) are recorded in the provenance file. |
 
-Racetrack conversion uses `SVGLoader` and shallow `ExtrudeGeometry`. Coordinates are scaled by 1/100, centered on the original 2084 × 1250 view box, and Y-flipped while preserving front-face winding. Precomputed interior label anchors and usable boxes avoid expensive label searches on each load. Meshes and `EdgesGeometry` outlines are cached for the browser session; consumers must not dispose of those shared resources on every layout change. The original paths are retained in JSON so the geometry can be audited or regenerated.
+Racetrack conversion uses `SVGLoader` and shallow `ExtrudeGeometry`. Coordinates are scaled by 1/100, centered on the original 2084 × 1250 view box, and Y-flipped while preserving front-face winding. Precomputed tangent-aligned label anchors and usable boxes centre text within each cell’s span and avoid expensive label searches on each load. Outlines trace only original SVG boundaries, excluding triangulation seams such as those previously visible across Li, Fe and Xe. The Racetrack palette is a pastel interpretation of the user-supplied historical reference, stored per region. Meshes and source-contour outlines are cached for the browser session; consumers must not dispose of those shared resources on every layout change. The original paths are retained in JSON so the geometry can be audited or regenerated.
 
 Each Giguère data record represents one element on one face. Its Euler rotation turns the local +Z normal outward. Opposing records on the same physical tile can carry different elements and have independent labels and hit targets. There are 52 occupied tiles with 103 labeled faces, plus seven entirely blank structural tiles. The back of the lawrencium tile is also blank. The four wings contain 14 s-block, 30 p-block, 31 d-block, and 28 f-block entries.
 
@@ -68,7 +68,7 @@ All 118 standalone element paths are generated from `element.name.toLowerCase()`
 
 ## Extending designs and element content
 
-To add a design, add its identity, date/edition distinction, sources, membership, camera settings, and lighting anchors to `TABLES` in `data/table-registry.js`. Add a geometry case to `layoutCells` in `TableScene.js`. Each cell provides an atomic `number`, `position`, optional `rotation`, and, where needed, `geometry`, `outline`, `labelPosition`, `labelWidth`, and `labelHeight`. Supply its icon in `ExplorerNavigation` and add source-based membership and placement checks. Designs and Timeline consume the same registry; chronological order comes from `year`, with the contemporary `null` year sorting last.
+To add a design, add its identity, date/edition distinction, sources, membership, camera settings, and lighting anchors to `TABLES` in `data/table-registry.js`. Add a geometry case to `layoutCells` in `TableScene.js`. Each cell provides an atomic `number`, `position`, optional `rotation`, and, where needed, `geometry`, `outline`, `labelPosition`, `labelWidth`, `labelHeight`, `labelRotation`, `labelStyle`, and design-specific `color`. Supply its icon in `ExplorerNavigation` and add source-based membership and placement checks. Designs and Timeline consume the same registry; chronological order comes from `year`, with the contemporary `null` year sorting last.
 
 Do not extend a historical model's membership just because more elements exist in the shared element dataset. Keep design origin and displayed edition separate, and record interpretation choices in provenance alongside the geometry.
 
@@ -134,11 +134,13 @@ The focused Node tests cover element identities and coordinates, all shell total
 
 | Check | Result |
 | --- | --- |
-| `npm test` | 11 tests passed. |
+| `npm test` | 13 tests passed, including source-contour and rotated-label Racetrack checks. |
 | `npm run lint` | Passed, with four pre-existing warnings in legacy `CanvasBackground` and `TimelineContent` components. |
 | Production build and static export | Completed through `next build && next export`. |
-| `npm run verify:export` | Passed: 124 HTML files, all 118 element pages, and 4,633 local references checked. |
-| Second full browser run | 23 checks passed; one reduced-motion check used a stale accessible button label. The locator has been corrected and focused re-verification is pending. This is not yet a claim that all 24 browser checks passed. |
+| `npm run verify:export` | Passed: 124 HTML files, all 118 element pages, and 18,677 local references checked. |
+| September 7 interface checks | Passed: full-width/scrolled navigation, Geist fonts, flat panning, fit-distance zoom limit, reversed history layout, shared search and phone width. |
+| September 7 touch checks | Six passed: eased reset, pinch on all three models, flat pan and bounded Giguère pan. |
+| September 7 exported browser checks | Seven passed, including direct queries, images, search, refresh and mobile detail return. |
 
 Run the commands again after subsequent changes; these results describe the recorded implementation pass rather than guaranteeing future edits.
 
@@ -154,9 +156,9 @@ console.log({ passed: report.passed, failed: report.failed, report: report.repor
 process.exitCode = report.failed ? 1 : 0;
 ```
 
-The harness creates and closes its own browser contexts and writes `artifacts/verification/browser-checks.json` plus screenshots. It exercises transitions, query state, selection/picking, camera return, responsive layouts, fallback content, and interaction-frame measurements. It uses the development-only scene diagnostics in `TableScene`; production prefix verification is a separate exported-site check. Review failures and browser diagnostics rather than treating the existence of an artifact as a passing result. The recorded second run's reduced-motion failure was a timeout finding the old “Resume orbit” button label after the UI label changed, and its corrected focused run still needs to be recorded.
+The harness creates and closes its own browser contexts and writes `artifacts/verification/browser-checks.json` plus screenshots. It exercises transitions, query state, selection/picking, camera return, responsive layouts, fallback content, and interaction-frame measurements. It uses the development-only scene diagnostics in `TableScene`; production prefix verification is a separate exported-site check. Review failures and browser diagnostics rather than treating the existence of an artifact as a passing result. The September 7 feedback results are recorded in `artifacts/verification/interface-feedback-summary.json` and `touch-gesture-checks.json`.
 
-After batching the visible cells, the recorded Headless Chromium samples were:
+After batching the visible cells, the September 5 Headless Chromium samples were (these predate the September 7 font and pixel-ratio changes):
 
 | Surface and sampling phase | Average frame rate | 95th-percentile frame interval |
 | --- | --- | --- |
@@ -171,4 +173,23 @@ Mobile measurements in the browser harness are **viewport/touch emulation**, inc
 
 `components/Footer.js` and `styles/footer.module.css` were left untouched. Their pre-existing one-line whitespace changes remain in the working tree; no implementation changes were added to either file. No pre-implementation hash baseline was captured, so a hash comparison is not claimed. `FooterViewport` wraps the existing footer in a keyboard-focusable overflow region, containing its intrinsic three-column grid on narrow phones without widening the whole page. Its wrapper styles do not override footer selectors or change the existing footer component.
 
-The prototype does not include the other researched layouts, discovery-by-year simulation, a CMS, a comprehensive audit/migration of all legacy prose, or publishing. The existing external web font still depends on its host, and source links point to their original publishers. This delivery is for local review. Remaining visual and performance findings should be recorded with their actual device/browser context before expanding the collection of designs.
+The prototype does not include the other researched layouts, discovery-by-year simulation, a CMS, a comprehensive audit/migration of all legacy prose, or publishing. Geist and Geist Mono are bundled locally; source links point to their original publishers. This delivery is for local review. Remaining visual and performance findings should be recorded with their actual device/browser context before expanding the collection of designs.
+
+
+## Interface feedback — 7 September 2026
+
+The full-width navigation has centered destinations with concave lower corners joining the divider. The left-aligned, keyboard-focusable second row uses contiguous flat rectangles, with all navigation dividers and selected backgrounds set to `#29292B`. Yellow hover uses black icons on white circles for inactive items; selected items retain their colours and use the default cursor. The corner cutouts include a solid baseline so the divider remains continuous, and horizontal scrollbars are hidden while scrolling stays enabled. Timeline preserves the design icons and aligns year, icon and name in that order; previews remain chronological, announce their unavailable state, and show “Coming later” on hover. Elements adds all 118 compact name/symbol links. Navigation styles live in `styles/explorer-navigation.css` to avoid conflicting legacy overrides.
+
+Flat tables now pan in the front plane instead of tilting. Camera zoom-out is capped at the layout's fit distance, and the HTML zoom-out action returns to centered framing at that limit. Close labels add the dataset's abbreviated electron configuration. Giguère retains its orbit and bounded pan.
+
+Design history places the preview on the left and article on the right (stacked on phones), with the heading action replaced by Back to table. Element details retain their original left-panel/right-preview arrangement.
+
+`ElementFinder` is shared by Designs, Timeline and Elements; it is initially expanded on Elements and collapsed on table pages. It supports exact atomic-number search. The canvas, element navigation and finder share `categoryPastelColor`, preserving the original canvas palette (55% white mixed in linear sRGB) rather than the more saturated HTML colour mix. Featured cards and finder tiles are lifted by a light-grey shadow and press down on hover. Content actions retain rounded buttons; only the navigation row uses flat rectangles.
+
+`tests/interface-feedback-checks.mjs` exports a focused desktop/phone-emulation runner for the revised interface. The touch runner in `tests/browser-checks.mjs` covers pinch in/out on all three models, front-plane pan, bounded Giguère pan and eased reset. No physical-device measurement is claimed by these tests.
+
+Navigation visual revision checks passed on desktop and emulated 390px portrait, 844px landscape and 768px tablet widths. Checks cover adjoining rectangles, hover icons, aligned Timeline fields and matching backgrounds for all 118 menu/finder entries. Screenshots and results are in `artifacts/verification/navigation-*.png` and `navigation-feedback.json`.
+
+Racetrack refinement: all 104 original paths remain unchanged. Labels and their projected-size anchors rotate together; the Racetrack style centres atomic numbers as well as symbols, names and properties. The five label atlases are repainted on style changes so each design does not retain another set of GPU textures.
+
+Racetrack browser verification passed for Li/Fe/Xe selection and detail return, two complete cycles through all models, zoomed labels, and a 390px phone viewport. The final scene reported 104 cells and five textures. Evidence is in `artifacts/verification/racetrack-refinement.json` and the accompanying screenshots.

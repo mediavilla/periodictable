@@ -1,0 +1,209 @@
+.explorerNav {
+  --nav-line: #29292b;
+  --nav-yellow: #ffe604;
+  position: relative;
+  z-index: 5;
+  display: block;
+  width: 100%;
+  margin: 0 0 26px;
+  border-radius: 0;
+  background: white;
+  font-size: 20px;
+}
+.explorerDestinations {
+  display: flex;
+  justify-content: center;
+}
+.explorerDestinationTabs {
+  --left-tab-bg: white;
+  --right-tab-bg: white;
+  position: relative;
+  display: flex;
+  width: min(720px, calc(100% - 24px));
+  border-inline: 1px solid var(--nav-line);
+}
+/* White quarter-circle cutouts join the tab container to the row divider. */
+.explorerDestinationTabs::before,
+.explorerDestinationTabs::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  bottom: -1px;
+  width: 12px;
+  height: 12px;
+  /* Keep the divider visible beneath the corner's opaque cutout. */
+  box-shadow: inset 0 -1px 0 var(--nav-line);
+  pointer-events: none;
+}
+.explorerDestinationTabs::before {
+  left: -12px;
+  background: radial-gradient(
+    circle at 0 0,
+    white 11px,
+    var(--nav-line) 11px,
+    var(--nav-line) 12px,
+    var(--left-tab-bg) 12px
+  );
+}
+.explorerDestinationTabs::after {
+  right: -12px;
+  background: radial-gradient(
+    circle at 100% 0,
+    white 11px,
+    var(--nav-line) 11px,
+    var(--nav-line) 12px,
+    var(--right-tab-bg) 12px
+  );
+}
+.explorerDestinationTabs:has(a:first-child[aria-current="page"]) {
+  --left-tab-bg: var(--nav-line);
+}
+.explorerDestinationTabs:has(a:last-child[aria-current="page"]) {
+  --right-tab-bg: var(--nav-line);
+}
+.explorerDestinationTabs a {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 17px 12px;
+  color: var(--nav-line);
+  background: white;
+  border-radius: 0;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.explorerDestinationTabs a[aria-current="page"] {
+  background: var(--nav-line);
+  color: white;
+  cursor: default;
+}
+.explorerDesigns {
+  display: flex;
+  justify-content: flex-start;
+  overflow-x: auto;
+  gap: 0;
+  padding: 0;
+  border-block: 1px solid var(--nav-line);
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.explorerDesigns::-webkit-scrollbar {
+  display: none;
+}
+.explorerDesigns > :is(button, a) {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  min-width: 190px;
+  height: 72px;
+  padding: 10px 16px;
+  border: 0;
+  border-right: 1px solid var(--nav-line);
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
+  background: var(--tile-color, white);
+  color: var(--nav-line);
+  text-decoration: none;
+  text-shadow: none;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 700;
+  scroll-snap-align: start;
+}
+.explorerDesignIcon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: black;
+}
+.explorerDesignIcon :is(img, svg) {
+  width: 34px;
+  height: 34px;
+  filter: none;
+}
+.explorerDesigns > :is([aria-pressed="true"], [aria-current="page"]) {
+  background: var(--nav-line);
+  color: white;
+  cursor: default;
+}
+.explorerDesigns
+  > :is([aria-pressed="true"], [aria-current="page"])
+  .explorerDesignIcon {
+  background: var(--nav-yellow);
+  color: black;
+}
+.explorerNavYear {
+  flex: 0 0 3.2em;
+  min-width: 0;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+.explorerNavPlaceholder[aria-disabled="true"] {
+  cursor: default;
+}
+.explorerNavPlaceholder .explorerDesignIcon {
+  color: #777;
+}
+.explorerElementNav .explorerDesignIcon {
+  font-size: 28px;
+  font-weight: 500;
+}
+@media (hover: hover) {
+  .explorerDestinationTabs a:not([aria-current="page"]):hover {
+    background: var(--nav-yellow);
+    color: black;
+  }
+  .explorerDestinationTabs:has(a:first-child:not([aria-current="page"]):hover) {
+    --left-tab-bg: var(--nav-yellow);
+  }
+  .explorerDestinationTabs:has(a:last-child:not([aria-current="page"]):hover) {
+    --right-tab-bg: var(--nav-yellow);
+  }
+  .explorerDesigns
+    > :is(button, a):not([aria-pressed="true"], [aria-current="page"]):hover {
+    background: var(--nav-yellow);
+    color: black;
+  }
+  .explorerDesigns
+    > :is(button, a):not([aria-pressed="true"], [aria-current="page"]):hover
+    .explorerDesignIcon {
+    background: white;
+    color: black;
+  }
+}
+.explorerNav :focus-visible {
+  outline-offset: -4px;
+}
+@media (max-width: 767px) {
+  .explorerDestinationTabs a {
+    padding: 16px 6px;
+    font-size: 14px;
+  }
+  .explorerDesigns > :is(button, a) {
+    height: 64px;
+    min-width: 170px;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  .explorerDesignIcon {
+    width: 40px;
+    height: 40px;
+  }
+  .explorerDesignIcon :is(img, svg) {
+    width: 30px;
+    height: 30px;
+  }
+  .explorerElementNav > a {
+    min-width: 150px;
+  }
+}

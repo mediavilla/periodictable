@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { PerspectiveCamera, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
@@ -13,7 +13,28 @@ import BohrModel from "./BohrModel";
 import GiguereStructure from "./GiguereStructure";
 import CellBatch from "./CellBatch";
 import SceneLights from "./SceneLights";
+import { loadAdditionalCells, normalizeCells } from "./modelGeometry";
+import { slotNumbers } from "../../data/model-slots.mjs";
+import { cylinderExitDistance, clearPanelRadius } from "./cameraLimits.mjs";
 const faceOutline = new THREE.EdgesGeometry(facePlane);
+const SpatialModelStructure = lazy(() => import("./SpatialModelStructure"));
+const PlanarModelStructure = lazy(() => import("./PlanarModelStructure"));
+const minimumDistance = (model, target, direction) => {
+  if (!model.camera.orbit) return model.camera.minDistance || 2;
+  const collision = model.camera.collision;
+  if (collision?.type === "cylinder")
+    return Math.max(
+      2,
+      cylinderExitDistance(
+        target.toArray(),
+        direction.toArray(),
+        collision.radius + collision.padding,
+        collision.halfHeight + collision.padding,
+      ),
+    );
+  if (collision?.type === "panels") return model.camera.minDistance || 2;
+  return (model.camera.minDistance || 12) + target.length();
+};
 
 export function layoutCells(id) {
   if (id === "racetrack") return createRacetrackCells();
@@ -25,6 +46,7 @@ export function layoutCells(id) {
       outline: faceOutline,
       labelPosition: [0, 0, 0.009],
     }));
+  if (id !== "18") return [];
   return elements.map((e) => ({
     number: e.number,
     position: [e.col18Xpos - 9.5, 5.5 - e.col18Ypos, 0],
@@ -41,16 +63,21 @@ export default function TableScene({ viewRef, visible = true }) {
   const {
     design,
     active,
+    activeSlot,
     selected,
-    setSelected,
-    setHovered,
+    hoverSlot,
+    selectSlot,
+    openSlot,
+    setWebglFailed,
     openElement,
     panel,
     reducedMotion,
     command,
   } = useExplorer();
   const [displayed, setDisplayed] = useState(design.id);
-  const cells = useMemo(() => layoutCells(displayed), [displayed]);
+  const [cells, setCells] = useState(() =>
+    normalizeCells(design.id, layoutCells(design.id)),
+  );
   const cameraRef = useRef();
   const controls = useRef();
   const group = useRef();
@@ -65,7 +92,7 @@ export default function TableScene({ viewRef, visible = true }) {
     orbit: new THREE.Spherical(),
     offset: new THREE.Vector3(),
   });
-  const lastDesign = useRef(design.id);
+  const initialized = useRef(false);
   const pending = useRef(design.id);
   const saved = useRef(null);
   const priorPanel = useRef(false);
@@ -88,10 +115,11 @@ export default function TableScene({ viewRef, visible = true }) {
     return {
       target: new THREE.Vector3(),
       position: new THREE.Vector3(
-        d.camera.orbit ? dist * 0.58 : 0,
-        d.camera.orbit ? dist * 0.18 : 0,
-        d.camera.orbit ? dist * 0.82 : dist,
-      ),
+        ...(d.camera.direction ||
+          (d.camera.orbit ? [0.58, 0.18, 0.82] : [0, 0, 1])),
+      )
+        .normalize()
+        .multiplyScalar(dist),
     };
   };
   const syncControls = () => {
@@ -199,31 +227,55 @@ export default function TableScene({ viewRef, visible = true }) {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     pending.current = design.id;
-    if (lastDesign.current === design.id) return;
-    lastDesign.current = design.id;
-    saved.current = null;
-    // One request coordinates both journeys. A newer request retargets from
-    // the currently visible camera pose, including during an incoming table.
-    fit(design.id, 870);
     anime.remove(transition.current);
     const motion = transition.current;
-    anime({
-      targets: motion,
-      amount: 1,
-      duration: latest.current.reducedMotion ? 90 : 320,
-      easing: "easeInQuad",
-      complete: () => {
-        setDisplayed(pending.current);
-        motion.amount = -1;
-        anime({
-          targets: motion,
-          amount: 0,
-          duration: latest.current.reducedMotion ? 100 : 550,
-          easing: "easeOutCubic",
-        });
-      },
+    let cancelled = false;
+    const prepare = async () => {
+      const raw = ["18", "racetrack", "giguere"].includes(design.id)
+        ? layoutCells(design.id)
+        : await loadAdditionalCells(design.id);
+      if (cancelled) return;
+      const nextCells = normalizeCells(design.id, raw);
+      if (!initialized.current) {
+        initialized.current = true;
+        setCells(nextCells);
+        setDisplayed(design.id);
+        fit(design.id, 0);
+        return;
+      }
+      saved.current = null;
+      // The latest request owns both camera and table motion. Wait for its
+      // geometry before sending the currently visible model out of the scene.
+      fit(design.id, 870);
+      anime({
+        targets: motion,
+        amount: 1,
+        duration: latest.current.reducedMotion ? 90 : 320,
+        easing: "easeInQuad",
+        complete: () => {
+          if (cancelled) return;
+          setDisplayed(design.id);
+          setCells(nextCells);
+          motion.amount = -1;
+          anime({
+            targets: motion,
+            amount: 0,
+            duration: latest.current.reducedMotion ? 100 : 550,
+            easing: "easeOutCubic",
+          });
+        },
+      });
+    };
+    prepare().catch((error) => {
+      if (!cancelled) {
+        console.error("Unable to prepare table geometry", error);
+        setWebglFailed(true);
+      }
     });
-    return () => anime.remove(motion);
+    return () => {
+      cancelled = true;
+      anime.remove(motion);
+    };
   }, [design.id]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     touchSelection.current = null;
@@ -284,14 +336,27 @@ export default function TableScene({ viewRef, visible = true }) {
     }
     if (Math.abs(transition.current.amount) > 0.02) return;
     const target = controls.current.target.clone();
-    if (!actual.camera.orbit) {
-      const found = cells.find((c) => c.number === selected.number);
+    if (
+      !actual.camera.orbit ||
+      (actual.camera.focusSelection && command.type === "in")
+    ) {
+      const found = cells.find((c) =>
+        activeSlot
+          ? c.id === activeSlot.id
+          : slotNumbers(c).includes(selected.number),
+      );
       if (found) {
-        target.x = found.position[0] * 0.7;
-        target.y = found.position[1] * 0.7;
+        target.x = found.position[0];
+        target.y = found.position[1];
+        if (actual.camera.orbit) target.z = found.position[2];
       }
-    } else {
-      target.clamp(new THREE.Vector3(-4, -3, -4), new THREE.Vector3(4, 3, 4));
+    }
+    if (actual.camera.orbit) {
+      const { panX = 4, panY = 3, panZ = 4 } = actual.camera;
+      target.clamp(
+        new THREE.Vector3(-panX, -panY, -panZ),
+        new THREE.Vector3(panX, panY, panZ),
+      );
     }
     const offset = cameraRef.current.position.clone().sub(target);
     const factor = command.type === "in" ? 0.72 : 1.38;
@@ -299,16 +364,23 @@ export default function TableScene({ viewRef, visible = true }) {
     const orbit = new THREE.Spherical().setFromVector3(offset);
     orbit.radius = THREE.MathUtils.clamp(
       orbit.radius,
-      actual.camera.orbit ? 12 + target.length() : 2,
-      160,
+      minimumDistance(actual, target, offset.clone().normalize()),
+      framePose(actual.id).position.length(),
     );
     orbit.phi = THREE.MathUtils.clamp(
       orbit.phi,
-      actual.camera.orbit ? 0.3 : Math.PI / 2 - 0.175,
-      actual.camera.orbit ? Math.PI - 0.3 : Math.PI / 2 + 0.175,
+      actual.camera.orbit ? 0.3 : Math.PI / 2,
+      actual.camera.orbit ? Math.PI - 0.3 : Math.PI / 2,
     );
     if (!actual.camera.orbit) {
-      orbit.theta = THREE.MathUtils.clamp(orbit.theta, -0.175, 0.175);
+      orbit.theta = 0;
+    }
+    if (
+      command.type === "out" &&
+      orbit.radius >= framePose(actual.id).position.length() - 0.001
+    ) {
+      fit();
+      return;
     }
     // End inside the same limits OrbitControls will apply when it resumes,
     // including a panned 3D target's larger collision-safe minimum distance.
@@ -321,6 +393,7 @@ export default function TableScene({ viewRef, visible = true }) {
     if (controls.current) {
       controls.current.enabled =
         !panel &&
+        displayed === design.id &&
         visible &&
         !moving &&
         Math.abs(transition.current.amount) < 0.002;
@@ -352,10 +425,61 @@ export default function TableScene({ viewRef, visible = true }) {
         fading.current = reducedMotion && Math.abs(t) > 0.001;
       }
     }
-    if (controls.current && actual.camera.orbit && !moving) {
+    if (
+      controls.current &&
+      actual.camera.orbit &&
+      (!moving ||
+        (!panel &&
+          displayed === design.id &&
+          Math.abs(transition.current.amount) < 0.002))
+    ) {
       const t = controls.current.target;
-      t.clamp(new THREE.Vector3(-4, -3, -4), new THREE.Vector3(4, 3, 4));
-      controls.current.minDistance = 12 + t.length();
+      const { panX = 4, panY = 3, panZ = 4 } = actual.camera;
+      const previousTarget = t.clone();
+      t.clamp(
+        new THREE.Vector3(-panX, -panY, -panZ),
+        new THREE.Vector3(panX, panY, panZ),
+      );
+      cameraRef.current.position.add(t.clone().sub(previousTarget));
+      const offset = cameraRef.current.position.clone().sub(t);
+      const radius = offset.length();
+      const direction = offset.normalize();
+      controls.current.minDistance = minimumDistance(actual, t, direction);
+      const clearRadius =
+        actual.camera.collision?.type === "panels"
+          ? clearPanelRadius(
+              t.toArray(),
+              direction.toArray(),
+              Math.max(radius, controls.current.minDistance),
+              cells,
+            )
+          : Math.max(radius, controls.current.minDistance);
+      if (clearRadius > radius)
+        cameraRef.current.position
+          .copy(t)
+          .addScaledVector(direction, clearRadius);
+    }
+    if (controls.current && !moving) {
+      controls.current.maxDistance = Math.max(
+        controls.current.minDistance,
+        framePose(actual.id).position.length(),
+      );
+      if (!actual.camera.orbit) {
+        const target = controls.current.target;
+        const x = THREE.MathUtils.clamp(
+          target.x,
+          -actual.camera.width / 2,
+          actual.camera.width / 2,
+        );
+        const y = THREE.MathUtils.clamp(
+          target.y,
+          -actual.camera.height / 2,
+          actual.camera.height / 2,
+        );
+        cameraRef.current.position.x += x - target.x;
+        cameraRef.current.position.y += y - target.y;
+        target.set(x, y, 0);
+      }
     }
     if (backdrop.current) {
       backdrop.current.position.copy(camera.position);
@@ -382,6 +506,8 @@ export default function TableScene({ viewRef, visible = true }) {
             position.project(camera);
             return {
               number: cell.number,
+              id: cell.id,
+              kind: cell.kind || "element",
               x: rect.left + ((position.x + 1) * rect.width) / 2,
               y: rect.top + ((1 - position.y) * rect.height) / 2,
               frontFacing,
@@ -395,6 +521,13 @@ export default function TableScene({ viewRef, visible = true }) {
         target: controls.current?.target.toArray(),
         transition: transition.current.amount,
         cameraMoving: cameraMotion.current.active,
+        commandSerial: command.serial,
+        panel,
+        activeSlot: activeSlot?.id || null,
+        limits: {
+          min: controls.current?.minDistance,
+          max: controls.current?.maxDistance,
+        },
         projectedCells,
         cells: projectedCells,
         coordinateSpace: "viewport",
@@ -403,15 +536,20 @@ export default function TableScene({ viewRef, visible = true }) {
       };
     }
   });
-  const choose = (element, pointerType) => {
-    if (panel || Math.abs(transition.current.amount) > 0.02) return;
-    if (pointerType === "touch" && touchSelection.current !== element.number) {
-      touchSelection.current = element.number;
-      setSelected(element);
-      setHovered(null);
+  const choose = (cell, pointerType) => {
+    if (
+      panel ||
+      displayed !== design.id ||
+      Math.abs(transition.current.amount) > 0.02
+    )
+      return;
+    if (pointerType === "touch" && touchSelection.current !== cell.id) {
+      touchSelection.current = cell.id;
+      selectSlot(cell);
     } else {
       touchSelection.current = null;
-      openElement(element);
+      if (cell.note || cell.historical || !cell.number) openSlot(cell);
+      else openElement(elements[cell.number - 1]);
     }
   };
   return (
@@ -430,22 +568,33 @@ export default function TableScene({ viewRef, visible = true }) {
         enabled={!panel && visible}
         enableDamping
         dampingFactor={0.12}
-        enablePan={actual.camera.orbit}
+        enablePan
+        enableRotate={actual.camera.orbit}
+        screenSpacePanning
+        mouseButtons={{
+          LEFT: actual.camera.orbit ? THREE.MOUSE.ROTATE : THREE.MOUSE.PAN,
+          MIDDLE: THREE.MOUSE.DOLLY,
+          RIGHT: THREE.MOUSE.PAN,
+        }}
         zoomToCursor={!actual.camera.orbit}
-        minDistance={actual.camera.orbit ? 12 : 2}
-        maxDistance={160}
-        minAzimuthAngle={actual.camera.orbit ? -Infinity : -0.175}
-        maxAzimuthAngle={actual.camera.orbit ? Infinity : 0.175}
-        minPolarAngle={actual.camera.orbit ? 0.3 : Math.PI / 2 - 0.175}
-        maxPolarAngle={
-          actual.camera.orbit ? Math.PI - 0.3 : Math.PI / 2 + 0.175
+        minDistance={
+          actual.camera.minDistance || (actual.camera.orbit ? 12 : 2)
         }
-        touches={{ ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN }}
+        maxDistance={framePose(actual.id).position.length()}
+        minAzimuthAngle={actual.camera.orbit ? -Infinity : 0}
+        maxAzimuthAngle={actual.camera.orbit ? Infinity : 0}
+        minPolarAngle={actual.camera.orbit ? 0.3 : Math.PI / 2}
+        maxPolarAngle={actual.camera.orbit ? Math.PI - 0.3 : Math.PI / 2}
+        touches={{
+          ONE: actual.camera.orbit ? THREE.TOUCH.ROTATE : THREE.TOUCH.PAN,
+          TWO: THREE.TOUCH.DOLLY_PAN,
+        }}
       />
       <ambientLight intensity={0.9} />
       <directionalLight position={[4, 8, 15]} intensity={1.2} />
       <SceneLights
         active={active}
+        activeSlot={activeSlot}
         cells={cells}
         anchors={actual.lightingAnchors}
         visible={visible}
@@ -457,6 +606,7 @@ export default function TableScene({ viewRef, visible = true }) {
         </mesh>
         <SceneLights
           active={active}
+          activeSlot={activeSlot}
           cells={cells}
           anchors={[
             [-20, 4, 14],
@@ -466,32 +616,47 @@ export default function TableScene({ viewRef, visible = true }) {
           backdrop
           visible={visible}
         />
-        <group position={[-36, -32, 0.2]} scale={15}>
+        <group
+          position={[-36, -32, 0.2]}
+          scale={15}
+          visible={!activeSlot || !!activeSlot.number}
+        >
           <BohrModel
             element={active}
             color="#555555"
             decorative
-            paused={reducedMotion || !visible}
+            paused={
+              reducedMotion || !visible || !!(activeSlot && !activeSlot.number)
+            }
           />
         </group>
       </group>
       <group ref={group}>
-        {displayed === "giguere" && <GiguereStructure />}
+        {actual.renderer === "giguere" && <GiguereStructure />}
+        <Suspense fallback={null}>
+          {actual.renderer === "spatial" && (
+            <SpatialModelStructure design={displayed} />
+          )}
+          {actual.renderer === "planar" && (
+            <PlanarModelStructure design={displayed} />
+          )}
+        </Suspense>
         <CellBatch
           cells={cells}
           activeNumber={active.number}
+          activeSlotId={activeSlot?.id}
           disabled={!!panel}
           visible={visible}
         />
         {cells.map((cell) => (
           <ElementCell
             batched
-            key={`${displayed}-${cell.number}`}
+            key={`${displayed}-${cell.id}`}
             cell={cell}
             active={active.number === cell.number}
-            onHover={setHovered}
+            onHover={hoverSlot}
             onSelect={choose}
-            disabled={!!panel}
+            disabled={!!panel || displayed !== design.id}
           />
         ))}
       </group>

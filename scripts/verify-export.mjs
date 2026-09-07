@@ -22,6 +22,8 @@ for (const file of files) {
     "https://preview.invalid",
   );
   for (const node of $("a[href],link[href],script[src],img[src]").toArray()) {
+    // Origin hints are not page/asset paths (Next emits a root preconnect for fonts).
+    if (["preconnect", "dns-prefetch"].includes($(node).attr("rel"))) continue;
     const ref = $(node).attr("href") || $(node).attr("src");
     if (!ref || ref.startsWith("#")) continue;
     const url = new URL(ref, base);

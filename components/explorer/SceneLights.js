@@ -23,18 +23,20 @@ function MovableLight({ color, position, intensity, visible }) {
 }
 export default function SceneLights({
   active,
+  activeSlot,
   cells,
   anchors,
   backdrop = false,
   visible = true,
 }) {
   const neighbors = useMemo(() => {
-    const origin = cells.find((cell) => cell.number === active.number)
-      ?.position || [0, 0, 0];
+    const origin = cells.find((cell) =>
+      activeSlot ? cell.id === activeSlot.id : cell.number === active.number,
+    )?.position || [0, 0, 0];
     return {
       origin,
       nearby: cells
-        .filter((cell) => cell.number !== active.number)
+        .filter((cell) => cell.number && cell.number !== active.number)
         .sort(
           (a, b) =>
             a.position.reduce(
@@ -48,9 +50,11 @@ export default function SceneLights({
         )
         .slice(0, 2),
     };
-  }, [active.number, cells]);
+  }, [active.number, activeSlot, cells]);
   const colors = [
-    categoryColor(active.category),
+    activeSlot && !activeSlot.number
+      ? activeSlot.color || "#b5b1a6"
+      : categoryColor(active.category),
     ...neighbors.nearby.map((cell) =>
       categoryColor(elements[cell.number - 1].category),
     ),

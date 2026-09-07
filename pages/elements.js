@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
+import ElementFinder from "../components/explorer/ElementFinder";
 import Head from "next/head";
 import Link from "next/link";
 import FooterViewport from "../components/explorer/FooterViewport";
 import ExplorerNavigation from "../components/explorer/ExplorerNavigation";
 import elements from "../public/elements.json";
-import { categoryColor } from "../data/table-registry";
+
 import { getElementContent } from "../data/element-content";
 import BohrViewport from "../components/explorer/BohrViewport";
 import { useRouter } from "next/router";
@@ -34,18 +34,6 @@ const features = [
 
 export default function Elements() {
   const { basePath } = useRouter();
-  const [query, setQuery] = useState("");
-  const filtered = useMemo(() => {
-    const term = query.trim().toLowerCase();
-    if (!term) return elements;
-    if (/^\d+$/.test(term))
-      return elements.filter((element) => element.number === Number(term));
-    return elements.filter(
-      (element) =>
-        element.name.toLowerCase().includes(term) ||
-        element.symbol.toLowerCase().includes(term),
-    );
-  }, [query]);
 
   return (
     <>
@@ -120,54 +108,7 @@ export default function Elements() {
               );
             })}
           </div>
-          <section aria-labelledby="all-elements-heading">
-            <div className="explorerSearchHeader">
-              <div>
-                <h2 id="all-elements-heading">Find your element.</h2>
-                <p id="element-search-hint">
-                  Search by name, symbol, or atomic number.
-                </p>
-              </div>
-              <label className="explorerSearchInput">
-                <span className="srOnly">Search all elements</span>
-                <input
-                  type="search"
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Hydrogen, Au, 79…"
-                  aria-describedby="element-search-hint"
-                  autoComplete="off"
-                  spellCheck="false"
-                />
-                <span aria-hidden="true">⌕</span>
-              </label>
-            </div>
-            <p className="explorerSearchCount" role="status" aria-live="polite">
-              {filtered.length} {filtered.length === 1 ? "element" : "elements"}
-              {query.trim() ? ` matching “${query.trim()}”` : " to discover"}
-            </p>
-            <div className="explorerElementGrid">
-              {filtered.map((element) => (
-                <Link
-                  key={element.number}
-                  href={`/${element.name.toLowerCase()}/`}
-                  className="explorerElementLink"
-                  style={{ "--tile-color": categoryColor(element.category) }}
-                  aria-label={`${element.number}. ${element.name}, ${element.symbol}`}
-                >
-                  <small>{element.number}</small>
-                  <b aria-hidden="true">{element.symbol}</b>
-                  <span>{element.name}</span>
-                </Link>
-              ))}
-            </div>
-            {filtered.length === 0 && (
-              <p className="explorerEmptySearch">
-                No elements match this search. Try a name such as carbon, a
-                symbol such as C, or a number from 1 to 118.
-              </p>
-            )}
-          </section>
+          <ElementFinder expanded />
         </div>
       </main>
       <FooterViewport />
