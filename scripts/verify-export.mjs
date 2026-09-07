@@ -3,6 +3,10 @@ import { readFile, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 import { load } from "cheerio";
 const root = path.resolve("out");
+const prefix =
+  load(await readFile(path.join(root, "index.html"), "utf8"))("base").attr(
+    "href",
+  ) || "/";
 const elements = JSON.parse(await readFile("public/elements.json", "utf8"));
 const files = [];
 async function walk(dir) {
@@ -18,7 +22,7 @@ let checked = 0;
 for (const file of files) {
   const $ = load(await readFile(file, "utf8"));
   const base = new URL(
-    $("base").attr("href") || "/periodictable/",
+    $("base").attr("href") || prefix,
     "https://preview.invalid",
   );
   for (const node of $("a[href],link[href],script[src],img[src]").toArray()) {
@@ -29,12 +33,12 @@ for (const file of files) {
     const url = new URL(ref, base);
     if (url.origin !== "https://preview.invalid") continue;
     assert.ok(
-      url.pathname.startsWith("/periodictable/"),
+      url.pathname.startsWith(prefix),
       `Unprefixed asset/link ${ref} in ${file}`,
     );
     const target = path.join(
       root,
-      decodeURIComponent(url.pathname.slice("/periodictable/".length)),
+      decodeURIComponent(url.pathname.slice(prefix.length)),
     );
     try {
       const info = await stat(target);
@@ -58,5 +62,5 @@ assert.equal(
   `Missing static targets:\n${[...missing].join("\n")}`,
 );
 console.log(
-  `Static export verified: ${files.length} HTML files, all 118 element pages, ${checked} local asset/link references under /periodictable.`,
+  `Static export verified: ${files.length} HTML files, all 118 element pages, ${checked} local asset/link references under ${prefix}.`,
 );

@@ -193,3 +193,9 @@ Navigation visual revision checks passed on desktop and emulated 390px portrait,
 Racetrack refinement: all 104 original paths remain unchanged. Labels and their projected-size anchors rotate together; the Racetrack style centres atomic numbers as well as symbols, names and properties. The five label atlases are repainted on style changes so each design does not retain another set of GPU textures.
 
 Racetrack browser verification passed for Li/Fe/Xe selection and detail return, two complete cycles through all models, zoomed labels, and a 390px phone viewport. The final scene reported 104 cells and five textures. Evidence is in `artifacts/verification/racetrack-refinement.json` and the accompanying screenshots.
+
+### Hosting paths
+
+Vercel builds (`VERCEL=1`) export at `/`, matching the Vercel domain root. Other production builds retain `/periodictable`. Set `SITE_BASE_PATH` at build time to explicitly choose another mount path (or an empty string for root hosting). Next.js derives its asset prefix from this base path; do not add a separate asset prefix for the same subdirectory.
+
+To reproduce Vercel locally, run `VERCEL=1 npm run build`, then `npm run verify:export` and `npm run preview`. The preview server and export checker read the mount path from the generated HTML, so they work with either hosting mode. After changing the hosting path, rebuild and redeploy; the path is embedded in the generated pages and JavaScript.

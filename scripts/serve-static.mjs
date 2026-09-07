@@ -1,10 +1,15 @@
 import http from "node:http";
 import { createReadStream } from "node:fs";
-import { stat } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
+import { load } from "cheerio";
 import path from "node:path";
 const root = path.resolve("out");
 const port = Number(process.env.PORT || 3019);
-const prefix = "/periodictable";
+const prefix = (
+  load(await readFile(path.join(root, "index.html"), "utf8"))("base").attr(
+    "href",
+  ) || "/"
+).replace(/\/$/, "");
 const types = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
@@ -24,7 +29,7 @@ http
       const pathname = decodeURIComponent(
         new URL(req.url, "http://localhost").pathname,
       );
-      if (pathname === "/" || pathname === prefix) {
+      if (prefix && (pathname === "/" || pathname === prefix)) {
         res.writeHead(302, { Location: prefix + "/" }).end();
         return;
       }
