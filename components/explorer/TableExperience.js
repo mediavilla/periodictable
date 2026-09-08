@@ -18,6 +18,7 @@ import {
   Minus,
   Plus,
   RotateCcw,
+  TriangleAlert,
 } from "lucide-react";
 
 export default function TableExperience({ timeline = false }) {
@@ -172,9 +173,12 @@ export default function TableExperience({ timeline = false }) {
               >
                 {panel === "element" &&
                   !design.membership.includes(detailElement.number) && (
-                    <p className="explorerAbsent">
-                      {detailElement.name} is not included in this historical
-                      arrangement.
+                    <p className="explorerAbsent explorerAbsenceNotice">
+                      <TriangleAlert aria-hidden="true" />
+                      <span>
+                        {detailElement.name} is not included in this historical
+                        arrangement.
+                      </span>
                     </p>
                   )}
                 {panel === "element" ? (
@@ -243,9 +247,12 @@ export default function TableExperience({ timeline = false }) {
                 </button>
               </div>
               {!activeSlot && !design.membership.includes(selected.number) && (
-                <p className="explorerAbsent">
-                  {selected.name} is not included in this historical
-                  arrangement. Its detail is still available.
+                <p className="explorerAbsent explorerAbsenceNotice">
+                  <TriangleAlert aria-hidden="true" />
+                  <span>
+                    {selected.name} is not included in this historical
+                    arrangement. Its detail is still available.
+                  </span>
                 </p>
               )}
               <TableCameraControls design={design} issue={issue} />

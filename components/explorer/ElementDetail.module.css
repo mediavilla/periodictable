@@ -1,5 +1,7 @@
 .detail {
   --detail-border: #292929;
+  --element-pill: color-mix(in srgb, var(--element-accent) 35%, white);
+  container-type: inline-size;
   color: #171717;
   font-size: 16px;
   line-height: 1.45;
@@ -47,31 +49,55 @@
 .hero {
   display: grid;
   grid-template-columns: 190px minmax(0, 1fr);
-  align-items: center;
+  align-items: start;
   gap: 32px;
-  padding: 8px 0 40px;
+  padding: 0 0 40px;
 }
 .identity {
-  border: 1.5px solid var(--detail-border);
-  background: #ffe604;
-  aspect-ratio: 1;
+  border: 1px solid var(--element-pill);
+  border-radius: 12px;
+  background: var(--element-pastel);
+  min-height: 270px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 14px 18px;
-  box-shadow: 4px 5px 0 #282828;
+  align-items: center;
+  padding: 14px;
+  box-shadow: 0 4px 0 #d1d1d1;
+  text-align: center;
+  font-weight: 400;
+  min-width: 0;
 }
 .number {
-  font-size: 21px;
+  align-self: flex-start;
+  font-size: 26px;
+  line-height: 1.2;
 }
 .symbol {
-  font-size: 82px;
-  font-weight: 700;
-  letter-spacing: normal;
+  margin-top: 20px;
+  font-size: 76px;
+  font-weight: 500;
   line-height: 1;
 }
+.elementName {
+  margin-top: 4px;
+  font-size: 22px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+.mass,
+.cardConfiguration {
+  font-family: "Geist Mono", monospace;
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
 .mass {
-  font-size: 13px;
+  margin-top: 14px;
+}
+.cardConfiguration {
+  margin-top: 6px;
 }
 .eyebrow,
 .cardEyebrow {
@@ -88,17 +114,22 @@
 .introduction > p {
   max-width: 720px;
   margin-top: 20px;
-  font-size: 18px;
-  font-weight: 500;
+  font-size: var(--explorer-lead-size, 20px);
+  font-weight: 400;
   line-height: 1.5;
 }
 .category {
   display: inline-block;
+  max-width: 100%;
+  font-family: "Geist Mono", monospace;
   font-size: 12px;
-  padding: 5px 10px;
-  border: 1px solid #777;
-  border-radius: 20px;
-  margin-top: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  padding: 5px 14px;
+  background: var(--element-pill);
+  color: #171717;
+  border-radius: 999px;
+  margin-bottom: 18px;
 }
 .grid {
   display: grid;
@@ -147,7 +178,8 @@
   font-variant-numeric: tabular-nums;
   letter-spacing: normal;
 }
-.shells span {
+.shells span,
+.structureConfiguration span {
   display: block;
   font-size: 11px;
   letter-spacing: normal;
@@ -224,6 +256,9 @@
   font-size: 22px !important;
   overflow-wrap: anywhere;
 }
+.structureConfiguration {
+  margin-top: 20px !important;
+}
 .comparisonCard {
   background: #e9edf7;
 }
@@ -290,25 +325,8 @@
   padding: 30px;
 }
 .compact .hero {
-  grid-template-columns: 130px minmax(0, 1fr);
-  gap: 22px;
-  padding-bottom: 28px;
-}
-.compact .identity {
-  padding: 10px 13px;
-}
-.compact .symbol {
-  font-size: 56px;
-}
-.compact .number {
-  font-size: 15px;
-}
-.compact .mass {
-  font-size: 10px;
-}
-.compact .introduction > p {
-  font-size: 16px;
-  margin-top: 14px;
+  gap: 28px;
+  padding-bottom: 32px;
 }
 .compact .card {
   padding: 20px;
@@ -339,41 +357,13 @@
     font-size: 15px;
     padding-bottom: 20px;
   }
-  .hero,
-  .compact .hero {
-    grid-template-columns: 88px minmax(0, 1fr);
-    gap: 18px;
-    align-items: start;
-    padding-bottom: 24px;
-  }
-  .identity,
-  .compact .identity {
-    padding: 7px 9px;
-    box-shadow: 3px 3px 0 #282828;
-  }
-  .symbol,
-  .compact .symbol {
-    font-size: 38px;
-  }
-  .number,
-  .compact .number {
-    font-size: 12px;
-  }
-  .mass,
-  .compact .mass {
-    font-size: 8px;
-  }
-  .eyebrow {
-    font-size: 9px;
-    margin-bottom: 8px;
-  }
   .detail h1,
   .detail h2 {
     font-size: 40px;
   }
   .introduction > p,
   .compact .introduction > p {
-    font-size: 15px;
+    font-size: var(--explorer-lead-size, 17px);
     margin-top: 14px;
   }
   .grid {
@@ -409,6 +399,31 @@
     font-size: 14px;
   }
 }
-.number, .mass, .facts, .shells, .configuration { font-family: "Geist Mono", monospace; }
-.detail * { letter-spacing: normal; }
-.symbol { font-weight: 500; }
+.number,
+.mass,
+.facts,
+.shells,
+.configuration {
+  font-family: "Geist Mono", monospace;
+}
+.detail * {
+  letter-spacing: normal;
+}
+.symbol {
+  font-weight: 500;
+}
+
+@container (max-width: 580px) {
+  .hero,
+  .compact .hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    padding-bottom: 28px;
+  }
+  .identity {
+    width: 180px;
+  }
+  .introduction > p {
+    max-width: none;
+  }
+}

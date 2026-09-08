@@ -61,7 +61,6 @@ export function BohrViewport({ element, illustration = false }) {
           onClick={() => setPaused((p) => !p)}
           disabled={reducedMotion}
           style={{ position: "relative", zIndex: 3 }}
-          aria-pressed={paused || reducedMotion}
         >
           {paused || reducedMotion ? (
             <Play aria-hidden="true" />

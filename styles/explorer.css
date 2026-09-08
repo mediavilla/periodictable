@@ -1,4 +1,5 @@
 .explorerPage {
+  --explorer-lead-size: 20px;
   display: block;
   position: relative;
   background: #fafafa;
@@ -177,6 +178,20 @@
   margin-top: 9px !important;
   max-width: 550px;
 }
+.explorerAbsenceNotice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: transparent;
+  padding: 0;
+  margin-bottom: 16px;
+}
+.explorerAbsenceNotice .lucide-triangle-alert {
+  margin-top: 1px;
+}
+.explorerAbsenceNotice .lucide-triangle-alert path:first-child {
+  stroke: #d32f2f;
+}
 .explorerPanelOpen {
   --preview-height: 280px;
   --preview-width: 38%;
@@ -253,7 +268,7 @@
   font-weight: 700;
 }
 .explorerHistory .explorerHistoryLead {
-  font-size: 22px;
+  font-size: var(--explorer-lead-size);
 }
 .explorerHistory dl {
   margin: 35px 0;
@@ -688,7 +703,7 @@
 }
 .explorerDiscoveryLead > p {
   max-width: 570px;
-  font-size: 20px;
+  font-size: var(--explorer-lead-size);
 }
 .explorerElementBreadcrumb {
   position: relative;
@@ -717,8 +732,8 @@
   .explorerFeature h2 {
     margin-top: 20px;
   }
-  .explorerDiscoveryLead > p {
-    font-size: 17px;
+  .explorerPage {
+    --explorer-lead-size: 17px;
   }
 }
 /* A vertical swipe scrolls the page; horizontal drags tilt/orbit the object. */

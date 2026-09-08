@@ -262,6 +262,10 @@ export function getElementContent(element) {
         type: "visualization",
         visualization: "bohr",
         title: "Inside a neutral atom",
+        configuration:
+          element.econfig_shorthand ||
+          element.electron_configuration ||
+          "Unavailable",
       },
       {
         id: "facts",
@@ -270,19 +274,6 @@ export function getElementContent(element) {
         items: getElementFacts(element),
       },
       ...(story?.blocks || []),
-      {
-        id: "configuration",
-        type: "text",
-        title: "Electron configuration",
-        body:
-          element.econfig_shorthand ||
-          element.electron_configuration ||
-          "Unavailable",
-        monospace: true,
-        note:
-          "Electrons by shell: " +
-          (element.shells?.join(" · ") || "Unavailable"),
-      },
     ],
   };
 }

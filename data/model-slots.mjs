@@ -32,9 +32,9 @@ export function slotLabel(slot, elements) {
 
 export const DESIGN_IDS = [
   "18",
+  "32",
   "racetrack",
   "giguere",
-  "32",
   "janet",
   "stowe",
   "benfey",

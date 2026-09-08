@@ -5,6 +5,7 @@ import { assetPath } from "../../utils/assetPath";
 import { getElementContent } from "../../data/element-content";
 import BohrViewport from "./BohrViewport";
 import styles from "./ElementDetail.module.css";
+import { categoryColor, categoryPastelColor } from "../../data/table-registry";
 
 function SourceLink({ source }) {
   return source?.url ? (
@@ -209,6 +210,12 @@ function ContentBlock({ block, element }) {
             <span className={styles.cardEyebrow}>Electronic structure</span>
             <h3>{block.title}</h3>
             <BohrViewport element={element} />
+            <p
+              className={`${styles.configuration} ${styles.structureConfiguration}`}
+            >
+              {block.configuration}
+              <span>Electron configuration</span>
+            </p>
             <p className={styles.shells}>
               {element.shells?.join(" · ") || "Unavailable"}{" "}
               <span>electrons by shell</span>
@@ -250,23 +257,48 @@ export default function ElementDetail({ element, compact = false }) {
     <article
       className={`${styles.detail} ${compact ? styles.compact : ""}`}
       aria-label={`${element.name} details`}
+      style={{
+        "--element-pastel": categoryPastelColor(element.category),
+        "--element-accent": categoryColor(element.category),
+        "--element-pill":
+          element.category === "noble gas"
+            ? categoryColor(element.category)
+            : undefined,
+      }}
     >
       <header className={styles.hero}>
         <div
           className={styles.identity}
-          aria-label={`Element ${element.number}, ${element.symbol}`}
+          role="group"
+          aria-label={`${element.name} element card`}
         >
-          <span className={styles.number}>{element.number}</span>
+          <span
+            className={styles.number}
+            aria-label={`Atomic number ${element.number}`}
+          >
+            {element.number}
+          </span>
           <span className={styles.symbol}>{element.symbol}</span>
-          <span className={styles.mass}>
+          <span className={styles.elementName}>{element.name}</span>
+          <span
+            className={styles.mass}
+            aria-label={`Atomic weight ${element.atomic_mass ?? "unavailable"}`}
+          >
             {element.atomic_mass ?? "Unavailable"}
+          </span>
+          <span
+            className={styles.cardConfiguration}
+            aria-label={`Electron configuration ${element.econfig_shorthand || element.electron_configuration || "unavailable"}`}
+          >
+            {element.econfig_shorthand ||
+              element.electron_configuration ||
+              "Unavailable"}
           </span>
         </div>
         <div className={styles.introduction}>
-          <span className={styles.eyebrow}>{content.eyebrow}</span>
+          <span className={styles.category}>{element.category}</span>
           <Title>{element.name}</Title>
           <p>{content.summary}</p>
-          <span className={styles.category}>{element.category}</span>
         </div>
       </header>
       <div className={styles.grid}>

@@ -16,27 +16,25 @@ const destinations = [
   { href: "/elements", label: "Elements" },
 ];
 
-function GiguereIcon() {
+const DESIGN_ICONS = {
+  18: "icon-18.svg",
+  racetrack: "icon-RT.svg",
+  giguere: "icon-giguere.svg",
+  32: "icon-32.svg",
+  janet: "icon-janet.svg",
+  stowe: "icon-stowe.svg",
+  benfey: "icon-spiral.svg",
+  "chemical-galaxy": "icon-galaxy.svg",
+  dobereiner: "icon-dobereiner.svg",
+  telluric: "icon-chancourtois.svg",
+  mendeleev: "icon-mendeleev.svg",
+};
+
+function DesignIcon({ id, basePath }) {
+  const file = DESIGN_ICONS[id];
+  if (!file) return "◇";
   return (
-    <svg
-      width="40"
-      height="40"
-      viewBox="0 0 48 48"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path d="M24 7 42 16v23l-18-9L6 39V16L24 7Z" fill="currentColor" />
-      <path
-        d="m6 16 18 9 18-9M24 7v36M6 39l18-9 18 9"
-        stroke="white"
-        strokeWidth="2"
-      />
-      <path
-        d="m24 7 18 9v23l-18-9L6 39V16L24 7Z"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-    </svg>
+    <Image src={`${basePath}/images/${file}`} width={40} height={40} alt="" />
   );
 }
 
@@ -136,18 +134,7 @@ export default function ExplorerNavigation({
                 </span>
               )}
               <span className="explorerDesignIcon" aria-hidden="true">
-                {!["18", "racetrack", "giguere"].includes(table.id) ? (
-                  "◇"
-                ) : table.id === "giguere" ? (
-                  <GiguereIcon />
-                ) : (
-                  <Image
-                    src={`${router.basePath}/images/${table.id === "racetrack" ? "icon-RT.svg" : "icon-18.svg"}`}
-                    width={40}
-                    height={40}
-                    alt=""
-                  />
-                )}
+                <DesignIcon id={table.id} basePath={router.basePath} />
               </span>
               <span>{table.shortName}</span>
             </button>
