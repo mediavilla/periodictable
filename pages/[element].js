@@ -17,7 +17,9 @@ export function getStaticPaths() {
 }
 
 export function getStaticProps({ params }) {
-  const slug = String(params?.element || "").toLowerCase();
+  const slug = String(params?.element || "")
+    .toLowerCase()
+    .replace(/\/+$/, "");
   const element = elements.find((item) => item.name.toLowerCase() === slug);
   if (!element) return { notFound: true };
   return { props: { element } };

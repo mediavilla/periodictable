@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }) {
     >
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <base href={`${basePath}/`} />
+        {basePath ? <base href={`${basePath}/`} /> : null}
       </Head>
       <ExplorerProvider>
         <Component {...pageProps} />
