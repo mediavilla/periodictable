@@ -28,9 +28,7 @@ export default function ElementPage({ element }) {
   return (
     <>
       <Head>
-        <title>
-          {element.name} ({element.symbol}) · Element {element.number}
-        </title>
+        <title>{`${element.name} (${element.symbol}) · Element ${element.number}`}</title>
         <meta name="description" content={content.summary} />
       </Head>
       <main className="explorerPage">

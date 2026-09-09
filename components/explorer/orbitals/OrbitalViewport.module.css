@@ -1,0 +1,196 @@
+.orbitals {
+  min-width: 0;
+}
+.selectors {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.selectors label {
+  display: grid;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.selectors select {
+  min-height: 42px;
+  min-width: 76px;
+  padding: 8px 28px 8px 10px;
+  border: 1px solid #a9a9a9;
+  border-radius: 6px;
+  background: #fff;
+  color: #29292b;
+  font:
+    14px "Geist Mono",
+    monospace;
+}
+.population {
+  margin-left: auto;
+  align-self: center;
+  font:
+    11px "Geist Mono",
+    monospace;
+}
+.plot {
+  position: relative;
+  background: #0b0f13;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.surface {
+  width: 100%;
+  height: 320px;
+  touch-action: pan-y;
+  cursor: grab;
+}
+.surface[data-touch-active="true"] {
+  touch-action: none;
+}
+.surface:active {
+  cursor: grabbing;
+}
+.surface:focus-visible {
+  outline: 3px solid #ffe604;
+  outline-offset: -4px;
+}
+.plotLabel {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  color: #fff;
+  font:
+    18px "Geist Mono",
+    monospace;
+  pointer-events: none;
+  z-index: 5;
+}
+.plotLabel small {
+  display: block;
+  font:
+    11px "Geist",
+    sans-serif;
+  color: #b4c0cd;
+  margin-top: 3px;
+}
+.axes {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 76px;
+  height: 76px;
+  color: #d5dce3;
+  pointer-events: none;
+  z-index: 5;
+}
+.axes line {
+  stroke: currentColor;
+  stroke-width: 1.2;
+}
+.axes text {
+  fill: currentColor;
+  font:
+    11px "Geist Mono",
+    monospace;
+}
+.axes circle {
+  fill: currentColor;
+}
+.legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 12px 0 8px;
+  color: #494949;
+  font-size: 11px;
+}
+.legend span {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+.legend i {
+  width: 9px;
+  height: 9px;
+  display: block;
+  border-radius: 50%;
+  border: 1px solid #555;
+}
+.positive {
+  background: #ff3059;
+}
+.negative {
+  background: #1fefe0;
+}
+.controls {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin: 8px 0 16px;
+}
+.orbitals .controls button {
+  min-width: 40px;
+  min-height: 40px;
+  padding: 8px;
+  border-radius: 6px;
+}
+.controls svg {
+  width: 18px;
+  height: 18px;
+}
+.cutaway {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+  cursor: pointer;
+  min-height: 36px;
+}
+.cutaway input {
+  width: 17px;
+  height: 17px;
+  accent-color: #29292b;
+}
+.orbitals .description {
+  font-size: 13px;
+  line-height: 1.5;
+  margin-top: 8px;
+}
+.orbitals .hint {
+  color: #616161;
+  font-size: 11px;
+  line-height: 1.5;
+  margin-top: 8px;
+}
+.fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: 26px;
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.orbitals .touchButton {
+  margin: 6px 0 10px;
+  min-height: 42px;
+  font-size: 12px;
+}
+.selectors select:focus-visible,
+.cutaway input:focus-visible {
+  outline: 3px solid #3f36ae;
+  outline-offset: 3px;
+}
+@media (max-width: 767px) {
+  .surface {
+    height: 290px;
+  }
+  .population {
+    margin-left: 0;
+  }
+  .controls {
+    gap: 6px;
+  }
+}

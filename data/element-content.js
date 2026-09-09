@@ -1,5 +1,7 @@
 // Editorial content is independent of the table geometry. Every element gets
 // the same baseline blocks; curated stories can add blocks without new pages.
+import { getOrbitalPreset } from "./orbital-presets.mjs";
+
 export const FEATURED_ELEMENT_NUMBERS = [1, 6, 79];
 
 const rsc = (number, name) => ({
@@ -266,6 +268,7 @@ export function getElementContent(element) {
           element.econfig_shorthand ||
           element.electron_configuration ||
           "Unavailable",
+        orbitals: getOrbitalPreset(element.number),
       },
       {
         id: "facts",

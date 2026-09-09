@@ -3,7 +3,7 @@ import { ExternalLink, Play } from "lucide-react";
 import { useRouter } from "next/router";
 import { assetPath } from "../../utils/assetPath";
 import { getElementContent } from "../../data/element-content";
-import BohrViewport from "./BohrViewport";
+import ElectronicStructure from "./ElectronicStructure";
 import styles from "./ElementDetail.module.css";
 import { categoryColor, categoryPastelColor } from "../../data/table-registry";
 
@@ -205,28 +205,7 @@ function ContentBlock({ block, element }) {
       if (block.visualization === "bond-comparison")
         return <BondComparison block={block} />;
       if (block.visualization === "bohr")
-        return (
-          <section className={`${styles.card} ${styles.bohrCard}`}>
-            <span className={styles.cardEyebrow}>Electronic structure</span>
-            <h3>{block.title}</h3>
-            <BohrViewport element={element} />
-            <p
-              className={`${styles.configuration} ${styles.structureConfiguration}`}
-            >
-              {block.configuration}
-              <span>Electron configuration</span>
-            </p>
-            <p className={styles.shells}>
-              {element.shells?.join(" · ") || "Unavailable"}{" "}
-              <span>electrons by shell</span>
-            </p>
-            <p className={styles.note}>
-              A stylized shell model. Electrons are quantum objects, not
-              particles following these literal paths. Sizes and motion are
-              illustrative.
-            </p>
-          </section>
-        );
+        return <ElectronicStructure block={block} element={element} />;
       return null;
     case "text":
       return (

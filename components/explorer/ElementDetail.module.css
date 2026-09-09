@@ -172,6 +172,68 @@
 .bohrCard {
   background: #efeee7;
 }
+.structureTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 24px;
+}
+.detail .structureTabs button[role="tab"] {
+  font-size: 13px;
+  cursor: pointer;
+}
+.detail .structureTabs button[role="tab"][aria-selected="true"] {
+  border-color: #a28b00;
+  box-shadow: 0 4px 0 #ffe604;
+  cursor: default;
+}
+.detail
+  .structureTabs
+  button[role="tab"][aria-selected="true"]:not(:active):hover {
+  background: white;
+  border-color: #a28b00;
+  box-shadow: 0 4px 0 #ffe604;
+  transform: none;
+}
+.detail .structureTabs button[role="tab"][aria-selected="true"]:active {
+  background: #2b2b2b;
+  border-color: #2b2b2b;
+  box-shadow: none;
+  transform: translateY(4px);
+}
+.structurePanel:focus-visible {
+  outline: 3px solid #3f36ae;
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+.structureFallback {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+  min-height: 280px;
+  padding: 24px;
+  border: 1px solid #d1d1d1;
+  border-radius: 12px;
+  background: #fafaf7;
+}
+.structureFallback p {
+  font-size: 15px;
+  line-height: 1.5;
+}
+.structureSources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+.detail .structureSources a {
+  min-width: 0;
+  margin-top: 0;
+  text-align: left;
+  font-size: 11px;
+}
 .shells {
   margin-top: 8px !important;
   font-size: 20px !important;

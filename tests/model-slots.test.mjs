@@ -16,9 +16,9 @@ const elements = JSON.parse(
 test("navigation collections preserve the approved independent order and shared models", () => {
   assert.deepEqual(DESIGN_IDS, [
     "18",
+    "32",
     "racetrack",
     "giguere",
-    "32",
     "janet",
     "stowe",
     "benfey",
