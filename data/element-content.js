@@ -268,7 +268,7 @@ export function getElementContent(element) {
           element.econfig_shorthand ||
           element.electron_configuration ||
           "Unavailable",
-        orbitals: getOrbitalPreset(element.number),
+        orbitals: getOrbitalPreset(element),
       },
       {
         id: "facts",

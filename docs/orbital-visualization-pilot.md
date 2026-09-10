@@ -1,5 +1,7 @@
 # Orbital visualization pilot
 
+For the current H/C/Og implementation, grouped configurations and simultaneous subshell representatives, see [Electronic structure pilot](electronic-structure-pilot.md). This document preserves the original two-element design and verification history; its single-orbital renderer and measurements describe that earlier implementation.
+
 Researched and implemented locally on 9 September 2026. The pilot is enabled for Hydrogen and Carbon in both standalone element pages and the shared table detail panel. The design rationale and original acceptance criteria follow; implementation results are recorded at the end. Wider rollout remains separate.
 
 ## Recommendation

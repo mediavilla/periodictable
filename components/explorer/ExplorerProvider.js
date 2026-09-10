@@ -70,9 +70,14 @@ export function ExplorerProvider({ children }) {
   }, [panel]);
   const registerViewport = useCallback(
     (id, visible) =>
-      setViewports((previous) =>
-        previous[id] === visible ? previous : { ...previous, [id]: visible },
-      ),
+      setViewports((previous) => {
+        if (visible)
+          return previous[id] ? previous : { ...previous, [id]: true };
+        if (!(id in previous)) return previous;
+        const remaining = { ...previous };
+        delete remaining[id];
+        return remaining;
+      }),
     [],
   );
   useEffect(() => {

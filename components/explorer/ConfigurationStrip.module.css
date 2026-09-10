@@ -1,0 +1,371 @@
+.strip {
+  --counts-height: 44px;
+  --heading-height: 28px;
+  position: relative;
+  min-width: 0;
+  margin: 18px 0;
+}
+.headingRow {
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.heading {
+  font-family: "Geist Mono", monospace;
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+.configurationHeading {
+  position: absolute;
+  left: 0;
+  top: calc(32px + var(--counts-height));
+  width: 100%;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 8px;
+  z-index: 1;
+}
+.scroller {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+  min-width: 0;
+  padding: 0 0 7px;
+}
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+.track {
+  display: grid;
+  grid-template-rows: var(--counts-height) var(--heading-height) auto;
+  grid-auto-columns: max-content;
+  column-gap: 6px;
+  width: max-content;
+  min-width: 100%;
+  padding: 0 3px 3px;
+}
+.group {
+  grid-row: 3;
+  min-width: 48px;
+}
+.countGroup {
+  grid-row: 1;
+  min-width: 48px;
+}
+.countRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: var(--counts-height);
+}
+.strip[data-mode] .count,
+.strip[data-mode] .count:disabled {
+  font:
+    14px "Geist Mono",
+    monospace;
+  width: 100%;
+  min-width: 44px;
+  min-height: 34px;
+  padding: 2px 10px;
+  border: 1px solid #bcbcb8;
+  border-radius: 6px;
+  background: white;
+  box-shadow: 0 3px 0 #d1d1d1;
+  line-height: 1.2;
+  color: #29292b !important;
+  transform: none;
+}
+.strip[data-mode] button.count:not(:disabled):hover,
+.strip[data-mode="shell"] .countGroup[data-highlighted="true"] .count,
+.strip[data-mode] button.count:not(:disabled):active {
+  background: #ffe604;
+  border-color: #29292b;
+  box-shadow: none;
+  color: #29292b !important;
+  transform: none;
+}
+.strip[data-mode] .passiveCount {
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e2e2de;
+  border-color: #d2d2cd;
+  box-shadow: none;
+}
+.strip[data-mode] .coreExplanation {
+  min-height: 3em;
+  font-size: 11px;
+  color: #616161;
+  line-height: 1.5;
+  margin-top: 9px;
+}
+.coreNote {
+  font:
+    9px "Geist",
+    sans-serif;
+  color: #666;
+  white-space: nowrap;
+}
+.entries {
+  grid-row: 3;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 3px 0;
+}
+.entry {
+  display: grid;
+  justify-items: stretch;
+  grid-template-rows: 46px;
+  min-width: 48px;
+  gap: 5px;
+}
+.strip[data-mode="orbitals"] .entry {
+  grid-template-rows: 54px 32px;
+}
+.strip[data-mode="orbitals"] .entry[data-orbital-type="p"] {
+  min-width: 104px;
+}
+.strip[data-mode] .chip,
+.strip[data-mode] .chip:not(:disabled)[aria-pressed="true"],
+.strip[data-mode] .chip:not(:disabled)[aria-pressed="false"] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: 46px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  border: 1px solid #bcbcb8;
+  background: #fff;
+  color: #29292b !important;
+  box-shadow: 0 3px 0 #d1d1d1;
+  font-family: "Geist Mono", monospace;
+  font-size: 14px;
+  font-weight: 400;
+  transform: none;
+}
+.chipLabel {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+.chipLabel sup {
+  font-size: 0.62em;
+  line-height: 0;
+}
+.strip[data-mode] .chip .disclosureIcon {
+  width: 17px;
+  height: 15px;
+}
+.collapseGlyph {
+  font:
+    11px "Geist Mono",
+    monospace;
+  white-space: nowrap;
+}
+.strip[data-mode] .passiveChip {
+  box-shadow: none;
+  background: #f7f7f3;
+}
+.strip[data-mode] button.chip:not(:disabled):hover,
+.strip[data-mode] .eye:not(:disabled):hover,
+.strip[data-mode] .axes button:not(:disabled):hover {
+  background: #ffe604;
+  border-color: #29292b;
+  box-shadow: none;
+  transform: translateY(3px);
+}
+.strip[data-mode] button.chip:not(:disabled):active,
+.strip[data-mode] .eye:not(:disabled):active,
+.strip[data-mode] .axes button:not(:disabled):active {
+  background: #29292b;
+  color: #fff !important;
+  border-color: #29292b;
+  box-shadow: none;
+  transform: translateY(3px);
+}
+.entry[data-visible="false"] .chipLabel {
+  color: #797979;
+}
+.group[data-highlighted="true"] .chip {
+  border-color: #29292b;
+  background: #fff7ab;
+}
+.strip[data-mode] .eye,
+.strip[data-mode] .eye:not(:disabled)[aria-pressed] {
+  min-height: 32px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #bcbcb8;
+  box-shadow: 0 2px 0 #d1d1d1;
+  color: #29292b !important;
+  transform: none;
+}
+.strip[data-mode] .eye svg {
+  width: 17px;
+  height: 17px;
+}
+.strip[data-mode] .eye[aria-pressed="mixed"] {
+  border-style: dashed;
+}
+.axisRow {
+  grid-row: 2;
+  min-height: 30px;
+}
+.axes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+}
+.strip[data-mode] .axes button,
+.strip[data-mode] .axes button:not(:disabled)[aria-pressed] {
+  min-width: 30px;
+  min-height: 30px;
+  padding: 2px;
+  border-radius: 5px;
+  border: 1px solid #bcbcb8;
+  box-shadow: none;
+  background: #fff;
+  color: #29292b !important;
+  font:
+    11px "Geist Mono",
+    monospace;
+  transform: none;
+}
+.strip[data-mode] .axes button:not(:disabled)[aria-pressed="true"] {
+  background: #fff5a4;
+  border-color: #827200;
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.strip[data-mode] .pagination button {
+  min-height: 28px;
+  min-width: 28px;
+  padding: 4px;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  transform: none;
+}
+.strip[data-mode] .pagination button:not(:disabled):is(:hover, :active) {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  color: #29292b !important;
+  transform: none;
+}
+.strip[data-mode] .pagination button:disabled {
+  opacity: 0.3;
+}
+.strip[data-mode] .pagination svg {
+  width: 15px;
+  height: 15px;
+}
+.dots {
+  display: flex;
+}
+.strip[data-mode] .dots button {
+  min-width: 15px;
+  padding: 3px;
+}
+.dots span {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #bcbcb8;
+}
+.dots button[aria-current="page"] span {
+  background: #29292b;
+}
+.strip button:focus-visible {
+  outline: 2px solid #3f36ae;
+  outline-offset: 2px;
+}
+@media (max-width: 480px) {
+  .track {
+    column-gap: 6px;
+  }
+  .heading {
+    font-size: 11px;
+  }
+  .strip[data-mode] .dots button {
+    min-width: 12px;
+  }
+}
+
+.strip[data-mode="orbitals"] .chip {
+  min-height: 54px;
+}
+.strip[data-mode] .inlineEye {
+  width: 16px;
+  height: 16px;
+  color: #8b8b8b;
+}
+.visibilityToggle {
+  display: flex;
+  flex-shrink: 0;
+  margin-left: auto;
+  padding-bottom: 3px;
+}
+.strip[data-mode] .visibilityToggle button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 30px;
+  padding: 5px 7px;
+  font:
+    11px "Geist",
+    sans-serif;
+  border: 1px solid #d1d1d1;
+  border-radius: 6px 0 0 6px;
+  background: white;
+  color: #29292b !important;
+  box-shadow: 0 3px 0 #d1d1d1;
+  transform: none;
+}
+.strip[data-mode] .visibilityToggle button + button {
+  border-radius: 0 6px 6px 0;
+  margin-left: -1px;
+}
+.strip[data-mode] .visibilityToggle button svg {
+  width: 14px;
+  height: 14px;
+}
+.strip[data-mode] .visibilityToggle button[aria-pressed="true"] {
+  background: #29292b;
+  color: white !important;
+  border-color: #29292b;
+  box-shadow: none;
+  transform: translateY(3px);
+  cursor: default;
+}
+.strip[data-mode] .visibilityToggle button[aria-pressed="false"]:hover {
+  background: #ffe604;
+  border-color: #29292b;
+  box-shadow: none;
+  transform: translateY(3px);
+}
+.strip[data-mode] .visibilityToggle button[aria-pressed="false"]:active {
+  background: #29292b;
+  color: white !important;
+}

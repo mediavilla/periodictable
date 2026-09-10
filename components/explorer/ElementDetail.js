@@ -3,6 +3,8 @@ import { ExternalLink, Play } from "lucide-react";
 import { useRouter } from "next/router";
 import { assetPath } from "../../utils/assetPath";
 import { getElementContent } from "../../data/element-content";
+import { configurationSuperscripts } from "../../data/electron-configuration.mjs";
+import { getOrbitalPreset } from "../../data/orbital-presets.mjs";
 import ElectronicStructure from "./ElectronicStructure";
 import styles from "./ElementDetail.module.css";
 import { categoryColor, categoryPastelColor } from "../../data/table-registry";
@@ -231,6 +233,13 @@ export default function ElementDetail({ element, compact = false }) {
       <p className={styles.empty}>Choose an element to explore its story.</p>
     );
   const content = getElementContent(element);
+  const configuration =
+    element.econfig_shorthand ||
+    element.electron_configuration ||
+    "Unavailable";
+  const identityConfiguration = getOrbitalPreset(element)
+    ? configurationSuperscripts(configuration)
+    : configuration;
   const Title = compact ? "h2" : "h1";
   return (
     <article
@@ -269,9 +278,7 @@ export default function ElementDetail({ element, compact = false }) {
             className={styles.cardConfiguration}
             aria-label={`Electron configuration ${element.econfig_shorthand || element.electron_configuration || "unavailable"}`}
           >
-            {element.econfig_shorthand ||
-              element.electron_configuration ||
-              "Unavailable"}
+            {identityConfiguration}
           </span>
         </div>
         <div className={styles.introduction}>

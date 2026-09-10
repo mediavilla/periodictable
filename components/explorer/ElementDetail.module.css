@@ -172,6 +172,62 @@
 .bohrCard {
   background: #efeee7;
 }
+.structureExplorer {
+  --structure-inset: 26px;
+}
+.compact .structureExplorer {
+  --structure-inset: 20px;
+}
+.structureExplorer .structureDescription {
+  font-size: 13px;
+  line-height: 1.55;
+  font-weight: 400;
+  color: #555;
+}
+.detail .structureExplorer .structureTabs {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 2px;
+  padding: 20px var(--structure-inset) 0;
+  margin: 0 calc(-1 * var(--structure-inset)) 12px;
+  border-bottom: 1px solid #29292b;
+}
+.detail .structureExplorer .structureTabs button[role="tab"] {
+  flex: 0 1 150px;
+  min-height: 48px;
+  padding: 12px 18px;
+  border: 1px solid #d1d1d1;
+  border-bottom: 0;
+  border-radius: 6px 6px 0 0;
+  box-shadow: none;
+  background: white;
+  color: #29292b !important;
+  transform: none;
+}
+.detail .structureExplorer .structureTabs button[role="tab"] + button {
+  border-left: 1px solid #d1d1d1;
+}
+.detail .structureExplorer .structureTabs button[role="tab"][aria-selected="true"],
+.detail
+  .structureExplorer
+  .structureTabs
+  button[role="tab"][aria-selected="true"]:not(:active):hover {
+  border-color: #29292b;
+  background: #29292b;
+  color: #fff !important;
+  box-shadow: none;
+  transform: none;
+}
+.detail
+  .structureExplorer
+  .structureTabs
+  button[role="tab"][aria-selected="false"]:hover {
+  background: #ffe604;
+  transform: none;
+}
+.detail .structureExplorer .structureTabs button[role="tab"]:focus-visible {
+  outline-offset: -4px;
+}
 .structureTabs {
   display: flex;
   flex-wrap: wrap;
@@ -415,6 +471,10 @@
   }
 }
 @media (max-width: 767px) {
+  .structureExplorer,
+  .compact .structureExplorer {
+    --structure-inset: 22px;
+  }
   .detail {
     font-size: 15px;
     padding-bottom: 20px;

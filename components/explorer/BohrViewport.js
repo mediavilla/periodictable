@@ -4,11 +4,20 @@ import { View, OrthographicCamera } from "@react-three/drei";
 import BohrModel from "./BohrModel";
 import { useExplorer } from "./ExplorerProvider";
 import { categoryColor } from "../../data/table-registry";
+const NO_HIGHLIGHT = [];
 
-export function BohrViewport({ element, illustration = false }) {
+export function BohrViewport({
+  element,
+  illustration = false,
+  paused: controlledPaused,
+  onPausedChange,
+  highlightShells = NO_HIGHLIGHT,
+}) {
   const { reducedMotion, webglFailed, registerViewport } = useExplorer();
   const id = useId();
-  const [paused, setPaused] = useState(false);
+  const [localPaused, setLocalPaused] = useState(false);
+  const paused = controlledPaused ?? localPaused;
+  const setPaused = onPausedChange || setLocalPaused;
   const [visible, setVisible] = useState(true);
   const holder = useRef();
   useEffect(() => {
@@ -24,7 +33,12 @@ export function BohrViewport({ element, illustration = false }) {
   }, []);
   const radius = 1 + (element.shells.length - 1) * 0.63;
   return (
-    <div ref={holder} style={{ position: "relative" }}>
+    <div
+      ref={holder}
+      style={{ position: "relative" }}
+      data-testid="bohr-viewport"
+      data-highlighted-shells={highlightShells.join(",")}
+    >
       <div
         role="img"
         aria-label={`${element.name}: ${element.shells.join(", ")} electrons in successive shells`}
@@ -47,6 +61,7 @@ export function BohrViewport({ element, illustration = false }) {
               element={element}
               color={illustration ? "#333333" : categoryColor(element.category)}
               paused={paused || reducedMotion || !visible}
+              highlightShells={highlightShells}
             />
           </View>
         ) : (
@@ -60,7 +75,12 @@ export function BohrViewport({ element, illustration = false }) {
           type="button"
           onClick={() => setPaused((p) => !p)}
           disabled={reducedMotion}
-          style={{ position: "relative", zIndex: 3 }}
+          style={{
+            position: "relative",
+            zIndex: 3,
+            display: onPausedChange ? "flex" : undefined,
+            margin: onPausedChange ? "0 auto" : undefined,
+          }}
         >
           {paused || reducedMotion ? (
             <Play aria-hidden="true" />

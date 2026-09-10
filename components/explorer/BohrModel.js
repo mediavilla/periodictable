@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 const MAX_ELECTRONS = 118;
+const NO_HIGHLIGHT = [];
 const electronGeometry = new THREE.SphereGeometry(1, 12, 8);
 const ringGeometries = Array.from({ length: 7 }, (_, shell) => {
   const radius = 1 + shell * 0.63;
@@ -14,10 +15,14 @@ export default function BohrModel({
   color = "#555555",
   decorative = false,
   paused = false,
+  highlightShells = NO_HIGHLIGHT,
 }) {
   const electrons = useRef();
   const angles = useRef(new Float64Array(7));
   const matrix = useMemo(() => new THREE.Matrix4(), []);
+  const highlight = useMemo(() => new Set(highlightShells), [highlightShells]);
+  const normalColour = useMemo(() => new THREE.Color(color), [color]);
+  const mutedColour = useMemo(() => new THREE.Color("#9a9a96"), []);
   const dotScale = decorative ? 0.058 : 0.075;
   const orbits = useMemo(
     () =>
@@ -39,8 +44,9 @@ export default function BohrModel({
     const mesh = electrons.current;
     if (!mesh) return;
     let index = 0;
-    matrix.makeScale(dotScale, dotScale, dotScale);
     orbits.forEach((orbit, shell) => {
+      const scale = dotScale * (highlight.has(shell) ? 1.22 : 1);
+      matrix.makeScale(scale, scale, scale);
       const cos = Math.cos(angles.current[shell]);
       const sin = Math.sin(angles.current[shell]);
       for (let electron = 0; electron < orbit.population; electron += 1) {
@@ -55,7 +61,7 @@ export default function BohrModel({
     });
     mesh.count = index;
     mesh.instanceMatrix.needsUpdate = true;
-  }, [dotScale, matrix, orbits]);
+  }, [dotScale, matrix, orbits, highlight]);
 
   useLayoutEffect(() => {
     const mesh = electrons.current;
@@ -67,7 +73,17 @@ export default function BohrModel({
     mesh.boundingSphere.radius =
       orbits[orbits.length - 1].radius + dotScale + 0.02;
     updateElectrons();
-  }, [dotScale, orbits, updateElectrons]);
+    let index = 0;
+    orbits.forEach((orbit, shell) => {
+      for (let electron = 0; electron < orbit.population; electron += 1) {
+        mesh.setColorAt(
+          index++,
+          highlight.size && !highlight.has(shell) ? mutedColour : normalColour,
+        );
+      }
+    });
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+  }, [dotScale, orbits, updateElectrons, highlight, normalColour, mutedColour]);
 
   useFrame((_, delta) => {
     if (paused) return;
@@ -88,7 +104,15 @@ export default function BohrModel({
           <meshBasicMaterial
             color={color}
             transparent
-            opacity={decorative ? 0.23 : 0.4}
+            opacity={
+              decorative
+                ? 0.23
+                : highlight.size
+                  ? highlight.has(shell)
+                    ? 0.9
+                    : 0.08
+                  : 0.4
+            }
           />
         </mesh>
       ))}
@@ -97,7 +121,7 @@ export default function BohrModel({
         args={[electronGeometry, null, MAX_ELECTRONS]}
       >
         <meshBasicMaterial
-          color={color}
+          color="#ffffff"
           transparent
           opacity={decorative ? 0.6 : 1}
         />

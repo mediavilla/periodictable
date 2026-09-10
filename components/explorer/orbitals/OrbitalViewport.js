@@ -18,8 +18,8 @@ import {
   Hand,
 } from "lucide-react";
 import { useExplorer } from "../ExplorerProvider";
-import { getOrbitalPreset } from "../../../data/orbital-presets.mjs";
 import OrbitalVolume from "./OrbitalVolume";
+import useOrbitalField from "./useOrbitalField";
 import styles from "./OrbitalViewport.module.css";
 
 class OrbitalBoundary extends Component {
@@ -38,27 +38,36 @@ class OrbitalBoundary extends Component {
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 const cameraDefaults = { yaw: 0.85, pitch: 0.32, zoom: 1 };
 
-export default function OrbitalViewport({ element }) {
-  const preset = getOrbitalPreset(element.number);
+export default function OrbitalViewport({
+  element,
+  preset,
+  visibleSubshells,
+  orientations,
+  sizeMode,
+  onSizeModeChange,
+  cameraRef,
+  cutaway,
+  onCutawayChange,
+}) {
   const { webglFailed, registerViewport } = useExplorer();
   const id = useId(),
     descriptionId = useId();
   const surface = useRef(),
     axes = useRef();
-  const [orbital, setOrbital] = useState(preset.defaultOrbital);
-  const [axis, setAxis] = useState(preset.defaultOrientation);
-  const [cutaway, setCutaway] = useState(false);
   const [visible, setVisible] = useState(false);
   const [failed, setFailed] = useState(false);
   const [coarse, setCoarse] = useState(false);
   const [touchAvailable, setTouchAvailable] = useState(false);
   const [touchActive, setTouchActive] = useState(false);
+  const isolated =
+    visibleSubshells.length === 1
+      ? preset.subshells.find(({ id }) => id === visibleSubshells[0])
+      : null;
   const pointers = useRef(new Map());
   const controller = useRef({
-    ...cameraDefaults,
-    orbital,
-    axis,
-    cutaway: false,
+    ...(cameraRef.current || cameraDefaults),
+    cutaway,
+    resetSerial: cameraRef.current ? 0 : 1,
     width: 0,
     height: 0,
     visible: false,
@@ -66,12 +75,37 @@ export default function OrbitalViewport({ element }) {
     interacting: false,
     invalidate: () => {},
   });
-  const subshell = preset.subshells.find((item) => item.id === orbital);
   const onFailure = useCallback(() => setFailed(true), []);
-  const update = useCallback((values) => {
-    Object.assign(controller.current, values);
-    controller.current.invalidate();
-  }, []);
+  const { field, loading } = useOrbitalField({
+    preset,
+    visibleSubshells,
+    orientations,
+    sizeMode,
+    active: visible && !failed && !webglFailed,
+    onFailure,
+  });
+  controller.current.cutaway = cutaway;
+  controller.current.pending = loading;
+  controller.current.saveCamera = (camera) => {
+    cameraRef.current = camera;
+  };
+  const update = useCallback(
+    (values) => {
+      Object.assign(controller.current, values);
+      const { yaw, pitch, zoom } = controller.current;
+      cameraRef.current = { yaw, pitch, zoom };
+      controller.current.invalidate();
+    },
+    [cameraRef],
+  );
+  useEffect(() => {
+    if (!surface.current) return;
+    const previous = JSON.parse(surface.current.dataset.orbitalState || "{}");
+    surface.current.dataset.orbitalState = JSON.stringify({
+      ...previous,
+      pending: loading,
+    });
+  }, [loading]);
   useEffect(() => {
     registerViewport(id, visible && !failed && !webglFailed);
     return () => registerViewport(id, false);
@@ -118,7 +152,7 @@ export default function OrbitalViewport({ element }) {
         zoom: clamp(
           controller.current.zoom * Math.exp(-event.deltaY * 0.002),
           1,
-          8,
+          4096,
         ),
       });
     };
@@ -126,20 +160,19 @@ export default function OrbitalViewport({ element }) {
     return () => holder.removeEventListener("wheel", wheel);
   }, [update]);
 
-  const reset = () => update(cameraDefaults);
+  const reset = () =>
+    update({
+      yaw: cameraDefaults.yaw,
+      pitch: cameraDefaults.pitch,
+      resetSerial: controller.current.resetSerial + 1,
+    });
   const rotate = (yaw, pitch) =>
     update({
       yaw: controller.current.yaw + yaw,
       pitch: clamp(controller.current.pitch + pitch, -1.4, 1.4),
     });
   const zoom = (factor) =>
-    update({ zoom: clamp(controller.current.zoom * factor, 1, 8) });
-  const selectOrbital = (value) => {
-    setOrbital(value);
-    setCutaway(false);
-    setAxis("z");
-    update({ ...cameraDefaults, orbital: value, axis: "z", cutaway: false });
-  };
+    update({ zoom: clamp(controller.current.zoom * factor, 1, 4096) });
   const down = (event) => {
     if (event.button !== 0 || (event.pointerType === "touch" && !touchActive))
       return;
@@ -202,46 +235,6 @@ export default function OrbitalViewport({ element }) {
   const unavailable = webglFailed || failed;
   return (
     <div className={styles.orbitals} data-testid="orbital-visualization">
-      <div className={styles.selectors}>
-        <label>
-          Subshell
-          <select
-            aria-label="Orbital subshell"
-            value={orbital}
-            onChange={(event) => selectOrbital(event.target.value)}
-          >
-            {preset.subshells.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.id}
-              </option>
-            ))}
-          </select>
-        </label>
-        {orbital === "2p" && (
-          <label>
-            Orientation
-            <select
-              aria-label="Orbital orientation"
-              value={axis}
-              onChange={(event) => {
-                setAxis(event.target.value);
-                update({ axis: event.target.value });
-              }}
-            >
-              {["x", "y", "z"].map((value) => (
-                <option key={value} value={value}>
-                  2p · {value}
-                </option>
-              ))}
-            </select>
-          </label>
-        )}
-        <span className={styles.population}>
-          {subshell.electrons}{" "}
-          {subshell.electrons === 1 ? "electron" : "electrons"} in {orbital}{" "}
-          subshell
-        </span>
-      </div>
       <div className={styles.plot}>
         <View
           ref={surface}
@@ -251,7 +244,7 @@ export default function OrbitalViewport({ element }) {
           data-touch-active={touchActive}
           tabIndex={unavailable ? -1 : 0}
           role="group"
-          aria-label={`${element.name} ${orbital} orbital, interactive 3D view`}
+          aria-label={`${element.name} representative orbitals, interactive 3D view`}
           aria-describedby={descriptionId}
           onPointerDown={down}
           onPointerMove={move}
@@ -266,6 +259,7 @@ export default function OrbitalViewport({ element }) {
                 controller={controller}
                 surface={surface}
                 axes={axes}
+                field={field}
                 onFailure={onFailure}
               />
             </OrbitalBoundary>
@@ -273,16 +267,19 @@ export default function OrbitalViewport({ element }) {
         </View>
         {unavailable ? (
           <div className={styles.fallback} role="status">
-            The 3D orbital view is unavailable. {subshell.description} You can
-            still explore the shell model and element properties.
+            The 3D orbital view is unavailable. You can still explore the shell
+            model and element properties.
           </div>
         ) : (
           <>
             <span className={styles.plotLabel}>
-              {orbital}
-              {orbital === "2p" ? ` · ${axis}` : ""}
+              {isolated
+                ? `${isolated.id}${isolated.l === 1 ? ` · ${orientations[isolated.id] || "z"}` : isolated.l === 2 ? " · d(z²)" : isolated.l === 3 ? " · f(z³)" : ""}`
+                : `${visibleSubshells.length} shapes shown`}
               <small>
-                {cutaway ? "Front half removed" : "Probability cloud"}
+                {cutaway
+                  ? "Front half removed"
+                  : "Representative orbital overlay"}
               </small>
             </span>
             <svg
@@ -304,8 +301,21 @@ export default function OrbitalViewport({ element }) {
             </svg>
           </>
         )}
+        {!unavailable && loading && (
+          <span className={styles.loading} role="status">
+            Updating shapes…
+          </span>
+        )}
+        {!unavailable && !loading && visibleSubshells.length === 0 && (
+          <div className={styles.empty} role="status">
+            All orbital shapes are hidden. Show all or select a subshell above.
+          </div>
+        )}
       </div>
-      <div className={styles.legend} aria-label="Wavefunction sign legend">
+      <div
+        className={styles.legend}
+        aria-label="Individual wavefunction sign colours"
+      >
         <span>
           <i className={styles.positive} />
           Positive sign
@@ -315,6 +325,16 @@ export default function OrbitalViewport({ element }) {
           Negative sign
         </span>
       </div>
+      <label className={styles.cutaway}>
+        <input
+          type="checkbox"
+          checked={sizeMode === "ratios"}
+          onChange={(event) =>
+            onSizeModeChange(event.target.checked ? "ratios" : "normalized")
+          }
+        />
+        Preserve model size ratios
+      </label>
       {!unavailable && (
         <>
           {touchAvailable && (
@@ -391,7 +411,7 @@ export default function OrbitalViewport({ element }) {
               type="checkbox"
               checked={cutaway}
               onChange={(event) => {
-                setCutaway(event.target.checked);
+                onCutawayChange(event.target.checked);
                 update({ cutaway: event.target.checked });
               }}
             />
@@ -400,7 +420,15 @@ export default function OrbitalViewport({ element }) {
         </>
       )}
       <p id={descriptionId} className={styles.description}>
-        {subshell.description}
+        {isolated && <>{isolated.description} </>}
+        One representative shape per visible subshell. Colours show the signs of
+        individual wavefunctions; overlapping colours do not describe an atomic
+        wavefunction.{" "}
+        {sizeMode === "ratios"
+          ? "Sizes preserve hydrogen-like model ratios, not measured atom sizes. Hide outer shapes and reset to inspect the centre."
+          : "Sizes are normalized to compare the shapes."}
+        {preset.subshells.some(({ l }) => l >= 2) &&
+          " The d and f subshells use d(z²) and f(z³) representatives."}
       </p>
       {!unavailable && (
         <p className={styles.hint}>

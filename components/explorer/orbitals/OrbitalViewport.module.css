@@ -1,37 +1,16 @@
 .orbitals {
   min-width: 0;
 }
-.selectors {
+.visibilityControls {
   display: flex;
   align-items: flex-end;
   flex-wrap: wrap;
   gap: 12px;
-  margin-bottom: 14px;
+  margin: 8px 0 14px;
 }
-.selectors label {
-  display: grid;
-  gap: 4px;
-  font-size: 11px;
-  font-weight: 600;
-}
-.selectors select {
+.orbitals .visibilityControls button {
   min-height: 42px;
-  min-width: 76px;
-  padding: 8px 28px 8px 10px;
-  border: 1px solid #a9a9a9;
-  border-radius: 6px;
-  background: #fff;
-  color: #29292b;
-  font:
-    14px "Geist Mono",
-    monospace;
-}
-.population {
-  margin-left: auto;
-  align-self: center;
-  font:
-    11px "Geist Mono",
-    monospace;
+  font-size: 13px;
 }
 .plot {
   position: relative;
@@ -172,13 +151,34 @@
   color: #fff;
   font-size: 15px;
   line-height: 1.6;
+  z-index: 5;
+}
+.loading {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  color: #fff;
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 5;
+}
+.empty {
+  position: absolute;
+  inset: 60px 28px;
+  display: grid;
+  align-content: center;
+  text-align: center;
+  color: #e0e5eb;
+  font-size: 14px;
+  line-height: 1.6;
+  pointer-events: none;
+  z-index: 5;
 }
 .orbitals .touchButton {
   margin: 6px 0 10px;
   min-height: 42px;
   font-size: 12px;
 }
-.selectors select:focus-visible,
 .cutaway input:focus-visible {
   outline: 3px solid #3f36ae;
   outline-offset: 3px;
@@ -186,9 +186,6 @@
 @media (max-width: 767px) {
   .surface {
     height: 290px;
-  }
-  .population {
-    margin-left: 0;
   }
   .controls {
     gap: 6px;
