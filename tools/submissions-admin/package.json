@@ -1,0 +1,16 @@
+{
+  "name": "submissions-admin",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "next dev -H 127.0.0.1 -p 3025",
+    "build": "next build",
+    "start": "next start -H 127.0.0.1 -p 3025"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "next": "^13.2.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}

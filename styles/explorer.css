@@ -186,6 +186,9 @@
   padding: 0;
   margin-bottom: 16px;
 }
+.explorerAbsenceNoticeHidden {
+  visibility: hidden;
+}
 .explorerAbsenceNotice .lucide-triangle-alert {
   margin-top: 1px;
 }
@@ -750,6 +753,19 @@
 .explorerFooterViewport:focus-visible {
   outline: 3px solid #ffe604;
   outline-offset: -3px;
+}
+.explorerContributionLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  padding: 12px 4% 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+.explorerContributionLinks a {
+  color: #f3f0dc;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 14px;
 }
 .explorerKeyboard summary {
   list-style: disclosure-closed;

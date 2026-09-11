@@ -61,6 +61,9 @@ assert.equal(
   0,
   `Missing static targets:\n${[...missing].join("\n")}`,
 );
+for (const page of ["faq", "roadmap", "feedback"]) {
+  await stat(path.join(root, page, "index.html"));
+}
 console.log(
-  `Static export verified: ${files.length} HTML files, all 118 element pages, ${checked} local asset/link references under ${prefix}.`,
+  `Static export verified: ${files.length} HTML files, all 118 element pages, contribution pages, ${checked} local asset/link references under ${prefix}.`,
 );

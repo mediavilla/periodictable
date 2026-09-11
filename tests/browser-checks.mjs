@@ -210,10 +210,61 @@ export async function runBrowserChecks(browser, baseURL = 'http://localhost:3017
       await desktop.getByRole('button', { name: 'Return to table and restore camera', exact: true }).click();
       for (const id of ['racetrack', 'giguere']) {
         await choose(desktop, id);
-        assert.match(await desktop.locator('.explorerAbsent').innerText(), /Oganesson is not included/);
+        const notice = desktop.locator('.explorerAbsenceNotice');
+        assert.match(await notice.innerText(), /Oganesson is not included/);
+        assert.equal(await notice.evaluate((node) => getComputedStyle(node).visibility), 'visible');
+        const before = {
+          table: await desktop.locator('.explorerTableView').boundingBox(),
+          selection: await desktop.locator('.explorerSelection').boundingBox(),
+        };
+        const hydrogen = await projectedPoint(desktop, 1);
+        await desktop.mouse.move(hydrogen.x, hydrogen.y);
+        await desktop.waitForTimeout(250);
+        assert.equal(await notice.evaluate((node) => getComputedStyle(node).visibility), 'hidden');
+        assert.match(await desktop.locator('.explorerSelection').innerText(), /Hydrogen/);
+        const during = {
+          table: await desktop.locator('.explorerTableView').boundingBox(),
+          selection: await desktop.locator('.explorerSelection').boundingBox(),
+        };
+        assert.ok(Math.abs(during.table.height - before.table.height) < 1, `${id} table height jumped on hover`);
+        assert.ok(Math.abs(during.table.width - before.table.width) < 1, `${id} table width jumped on hover`);
+        assert.ok(Math.abs(during.selection.y - before.selection.y) < 1, `${id} selection card jumped on hover`);
+        await desktop.mouse.move(5, 5);
+        await desktop.waitForTimeout(250);
+        assert.equal(await notice.evaluate((node) => getComputedStyle(node).visibility), 'visible');
+        assert.match(await notice.innerText(), /Oganesson is not included/);
+        const after = {
+          table: await desktop.locator('.explorerTableView').boundingBox(),
+          selection: await desktop.locator('.explorerSelection').boundingBox(),
+        };
+        assert.ok(Math.abs(after.table.height - before.table.height) < 1, `${id} table height drifted after hover`);
+        assert.ok(Math.abs(after.selection.y - before.selection.y) < 1, `${id} selection card drifted after hover`);
         const state = await scene(desktop, id);
         assert.ok(state.count < 118);
       }
+      await desktop.getByRole('button', { name: /Explore element/ }).click();
+      await desktop.getByRole('region', { name: 'Oganesson detail', exact: true }).waitFor();
+      assert.equal(new URL(desktop.url()).searchParams.get('element'), 'oganesson');
+      await desktop.getByRole('button', { name: 'Return to table and restore camera', exact: true }).click();
+      await scene(desktop, 'giguere');
+    });
+    await step('Absent-element hover stays layout-stable on Timeline', desktop, async () => {
+      await load(desktop, '/timeline/?design=racetrack&element=oganesson', 'racetrack');
+      await desktop.getByRole('region', { name: 'Oganesson detail', exact: true }).waitFor();
+      await desktop.getByRole('button', { name: 'Return to table and restore camera', exact: true }).click();
+      await scene(desktop, 'racetrack');
+      const notice = desktop.locator('.explorerAbsenceNotice');
+      assert.match(await notice.innerText(), /Oganesson is not included/);
+      const before = await desktop.locator('.explorerTableView').boundingBox();
+      const hydrogen = await projectedPoint(desktop, 1);
+      await desktop.mouse.move(hydrogen.x, hydrogen.y);
+      await desktop.waitForTimeout(250);
+      assert.equal(await notice.evaluate((node) => getComputedStyle(node).visibility), 'hidden');
+      const during = await desktop.locator('.explorerTableView').boundingBox();
+      assert.ok(Math.abs(during.height - before.height) < 1, 'Timeline table height jumped on hover');
+      await desktop.mouse.move(5, 5);
+      await desktop.waitForTimeout(250);
+      assert.equal(await notice.evaluate((node) => getComputedStyle(node).visibility), 'visible');
     });
     await step('History panel and Timeline use source-backed chronological designs', desktop, async () => {
       await load(desktop, '/timeline/');
@@ -258,6 +309,36 @@ export async function runBrowserChecks(browser, baseURL = 'http://localhost:3017
       const gold = await projectedPoint(desktop, 79); await desktop.mouse.move(gold.x, gold.y);
       await measureFrames(desktop, 'desktop 1440×1000', 'hover Gold');
     });
+    await step('FAQ, roadmap, and feedback forms expose accessible validation and success retry', desktop, async () => {
+      for (const route of ['/faq/', '/roadmap/', '/feedback/']) {
+        await desktop.goto(url(route), { waitUntil: 'domcontentloaded', timeout: 45000 });
+        const form = desktop.locator('form').first();
+        await form.waitFor();
+        const message = form.locator('textarea[name="message"]');
+        await message.fill('short');
+        await form.getByRole('button', { name: /Send/ }).click();
+        await desktop.getByRole('alert').waitFor();
+        assert.match(await desktop.getByRole('alert').innerText(), /fix|highlighted/i);
+        await message.fill('This is long enough to pass client-side validation checks.');
+        await form.getByRole('button', { name: /Send/ }).click();
+        // Without a live API the network path should surface a recoverable error or success.
+        await desktop.waitForFunction(() => {
+          const alert = document.querySelector('[role="alert"]');
+          const status = document.querySelector('[role="status"]');
+          return Boolean(alert || status);
+        }, null, { timeout: 10000 });
+        const success = desktop.getByRole('status');
+        if (await success.count()) {
+          await success.getByRole('button', { name: 'Send another' }).click();
+          await form.waitFor();
+        } else {
+          assert.match(await desktop.getByRole('alert').innerText(), /Could not|Network|Too many/i);
+        }
+        const related = desktop.getByRole('navigation', { name: 'Related contribution pages' });
+        assert.ok(await related.getByRole('link').count() >= 2);
+      }
+      await screenshot(desktop, 'desktop-feedback-form', true);
+    });
 
     const mobileContext = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
     contexts.push(mobileContext);
@@ -273,6 +354,32 @@ export async function runBrowserChecks(browser, baseURL = 'http://localhost:3017
       await screenshot(mobile, 'mobile-hydrogen-detail');
       await mobile.getByRole('button', { name: 'Return to table and restore camera', exact: true }).tap();
       await scene(mobile); await screenshot(mobile, 'mobile-18');
+    });
+    await step('Mobile absent-element notice keeps table height stable while hovering', mobile, async () => {
+      await load(mobile, '/?design=racetrack&element=oganesson', 'racetrack');
+      await mobile.getByRole('region', { name: 'Oganesson detail', exact: true }).waitFor();
+      await mobile.getByRole('button', { name: 'Return to table and restore camera', exact: true }).tap();
+      await scene(mobile, 'racetrack');
+      const notice = mobile.locator('.explorerAbsenceNotice');
+      assert.match(await notice.innerText(), /Oganesson is not included/);
+      const before = {
+        table: await mobile.locator('.explorerTableView').boundingBox(),
+        selection: await mobile.locator('.explorerSelection').boundingBox(),
+      };
+      assert.ok(Math.abs(before.table.height - 400) < 2, `Expected notice-safe mobile height near 400px, got ${before.table.height}`);
+      const hydrogen = await projectedPoint(mobile, 1);
+      await mobile.mouse.move(hydrogen.x, hydrogen.y);
+      await mobile.waitForTimeout(250);
+      assert.equal(await notice.evaluate((node) => getComputedStyle(node).visibility), 'hidden');
+      const during = {
+        table: await mobile.locator('.explorerTableView').boundingBox(),
+        selection: await mobile.locator('.explorerSelection').boundingBox(),
+      };
+      assert.ok(Math.abs(during.table.height - before.table.height) < 1, 'Mobile table height jumped on hover');
+      assert.ok(Math.abs(during.selection.y - before.selection.y) < 1, 'Mobile selection card jumped on hover');
+      await mobile.mouse.move(5, 5);
+      await mobile.waitForTimeout(250);
+      assert.equal(await notice.evaluate((node) => getComputedStyle(node).visibility), 'visible');
     });
     await step('Mobile portrait, landscape, and tablet breakpoints remain usable', mobile, async () => {
       for (const viewport of [{ width: 390, height: 844 }, { width: 844, height: 390 }, { width: 768, height: 1024 }]) {
@@ -298,6 +405,10 @@ export async function runBrowserChecks(browser, baseURL = 'http://localhost:3017
       const footer = await mobile.locator('footer').boundingBox();
       assert.ok(footer && footer.y < 844 && footer.y + footer.height > 0, 'Footer not in viewport after scrolling');
       assert.ok(await mobile.evaluate(() => scrollY > 0), 'Document did not scroll');
+      const contributions = mobile.getByRole('navigation', { name: 'Contribution pages' });
+      assert.equal(await contributions.getByRole('link', { name: 'FAQ' }).count(), 1);
+      assert.equal(await contributions.getByRole('link', { name: 'Roadmap' }).count(), 1);
+      assert.equal(await contributions.getByRole('link', { name: 'Feedback' }).count(), 1);
       await screenshot(mobile, 'mobile-footer');
       await noHorizontalOverflow(mobile);
     });

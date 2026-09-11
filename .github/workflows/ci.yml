@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npm run verify:export
+      - name: Confirm admin routes stay out of the public export
+        run: |
+          test ! -e out/admin
+          test ! -e out/admin.html
+          test ! -e out/admin/index.html
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+            const banned = /submissions-admin|SUBMISSIONS_REVIEW_DATABASE_URL|SUBMISSIONS_DATABASE_URL|\/api\/admin/;
+            function walk(dir) {
+              for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+                const full = path.join(dir, entry.name);
+                if (entry.isDirectory()) {
+                  if (entry.name === 'admin') throw new Error('Public admin directory found: ' + full);
+                  walk(full);
+                  continue;
+                }
+                if (!/\.(html|js|css|json|txt|map)$/.test(entry.name)) continue;
+                const text = fs.readFileSync(full, 'utf8');
+                if (banned.test(text)) throw new Error('Forbidden admin/secret marker in ' + full);
+              }
+            }
+            walk('out');
+            console.log('Public export has no admin routes or secret env names.');
+          "

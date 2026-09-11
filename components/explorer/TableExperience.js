@@ -103,6 +103,8 @@ export default function TableExperience({ timeline = false }) {
     openSlot,
     selectSlot,
   ]);
+  // Keep notice layout tied to the committed selection, not transient hover.
+  const selectedIsAbsent = !design.membership.includes(selected.number);
   return (
     <>
       <Head>
@@ -131,7 +133,7 @@ export default function TableExperience({ timeline = false }) {
         </div>
         {timeline && <p className="explorerIntro">{design.introduction}</p>}
         <div
-          className={`explorerStage ${panel ? "explorerPanelOpen" : ""} ${!panel && !activeSlot && !design.membership.includes(selected.number) ? "explorerHasNotice" : ""}`}
+          className={`explorerStage ${panel ? "explorerPanelOpen" : ""} ${!panel && selectedIsAbsent ? "explorerHasNotice" : ""}`}
         >
           {!webglFailed && (
             <View
@@ -246,8 +248,11 @@ export default function TableExperience({ timeline = false }) {
                   <ArrowRight aria-hidden="true" />
                 </button>
               </div>
-              {!activeSlot && !design.membership.includes(selected.number) && (
-                <p className="explorerAbsent explorerAbsenceNotice">
+              {selectedIsAbsent && (
+                <p
+                  className={`explorerAbsent explorerAbsenceNotice${activeSlot ? " explorerAbsenceNoticeHidden" : ""}`}
+                  aria-hidden={activeSlot ? "true" : undefined}
+                >
                   <TriangleAlert aria-hidden="true" />
                   <span>
                     {selected.name} is not included in this historical

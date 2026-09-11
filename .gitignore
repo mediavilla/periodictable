@@ -29,9 +29,17 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
 
 /.next-development/
 /.next-development-*/
+
+# local submissions admin
+/tools/submissions-admin/.next/
+/tools/submissions-admin/node_modules/
+/tools/submissions-admin/out/
+/tools/submissions-admin/.env*.local
+/tools/submissions-admin/exports/
