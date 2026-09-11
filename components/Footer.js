@@ -1,9 +1,12 @@
 import React from 'react';
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from "next/router";
+import { assetPath } from "../utils/assetPath";
 import footerStyles from '../styles/footer.module.css';
 
-export default function Footer() { 
+export default function Footer() {
+    const { basePath } = useRouter(); 
 
     return (
 
@@ -25,7 +28,7 @@ export default function Footer() {
                 <div><Link href="/contact" className={footerStyles.bottomLink}>Contact</Link></div>
                 <div>&nbsp;</div>
             </div>
-            <div className={footerStyles.footerLogo}><Image src="./images/logo.svg" height="200" width="200" alt="logo" /></div>
+            <div className={footerStyles.footerLogo}><Image src={assetPath("/images/logo.svg", basePath)} height={200} width={200} alt="logo" /></div>
         </footer >
     );
 }
