@@ -36,6 +36,19 @@ test("accepts a valid submission payload", () => {
   assert.equal(result.value.contactEmail, "person@example.com");
 });
 
+test("accepts a contact message payload", () => {
+  const result = validateSubmissionInput(
+    base({
+      kind: "contact_message",
+      sourcePath: "/contact/",
+      message: "I would like to collaborate on the project.",
+    }),
+  );
+  assert.equal(result.ok, true);
+  assert.equal(result.value.kind, "contact_message");
+  assert.equal(result.value.sourcePath, "/contact/");
+});
+
 test("normalizes whitespace and lowercases email", () => {
   const result = validateSubmissionInput(
     base({

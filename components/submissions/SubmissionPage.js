@@ -10,6 +10,7 @@ export default function SubmissionPage({
   type,
   children,
   showForm = true,
+  formSectionClassName,
 }) {
   return (
     <>
@@ -27,7 +28,12 @@ export default function SubmissionPage({
           {children ? <div className={styles.sections}>{children}</div> : null}
 
           {showForm ? (
-            <section className={styles.formSection} aria-label={type.formTitle}>
+            <section
+              className={[styles.formSection, formSectionClassName]
+                .filter(Boolean)
+                .join(" ")}
+              aria-label={type.formTitle}
+            >
               <SubmissionForm type={type} />
             </section>
           ) : null}

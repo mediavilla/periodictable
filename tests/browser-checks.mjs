@@ -309,8 +309,8 @@ export async function runBrowserChecks(browser, baseURL = 'http://localhost:3017
       const gold = await projectedPoint(desktop, 79); await desktop.mouse.move(gold.x, gold.y);
       await measureFrames(desktop, 'desktop 1440×1000', 'hover Gold');
     });
-    await step('FAQ, roadmap, and feedback forms expose accessible validation and success retry', desktop, async () => {
-      for (const route of ['/faq/', '/roadmap/', '/feedback/']) {
+    await step('FAQ, roadmap, feedback, and contact forms expose accessible validation and success retry', desktop, async () => {
+      for (const route of ['/faq/', '/roadmap/', '/feedback/', '/contact/']) {
         await desktop.goto(url(route), { waitUntil: 'domcontentloaded', timeout: 45000 });
         const form = desktop.locator('form').first();
         await form.waitFor();

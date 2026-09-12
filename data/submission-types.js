@@ -2,6 +2,7 @@ export const SUBMISSION_KINDS = Object.freeze([
   "faq_question",
   "roadmap_suggestion",
   "site_feedback",
+  "contact_message",
 ]);
 
 export const SUBMISSION_STATUSES = Object.freeze([
@@ -94,6 +95,28 @@ export const SUBMISSION_TYPES = Object.freeze({
     links: Object.freeze([
       { href: "/faq/", label: "Ask a FAQ question" },
       { href: "/roadmap/", label: "Suggest a roadmap item" },
+    ]),
+  }),
+  contact_message: Object.freeze({
+    kind: "contact_message",
+    path: "/contact/",
+    title: "Contact",
+    eyebrow: "Get in touch",
+    description:
+      "For collaborations, press, or anything that does not belong on FAQ, roadmap, or feedback.",
+    formTitle: "Send a message",
+    formHelp:
+      "Messages go into a private review queue. Optional email is only used if a reply would help.",
+    subjectLabel: "Subject (optional)",
+    subjectPlaceholder: "Collaboration, press, something else…",
+    messageLabel: "Your message",
+    messagePlaceholder: "What would you like to say?",
+    submitLabel: "Send message",
+    successTitle: "Message received",
+    successBody: "Thanks. Your note is in the review queue.",
+    links: Object.freeze([
+      { href: "/faq/", label: "Ask a FAQ question" },
+      { href: "/feedback/", label: "Send site feedback" },
     ]),
   }),
 });

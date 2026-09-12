@@ -61,7 +61,7 @@ assert.equal(
   0,
   `Missing static targets:\n${[...missing].join("\n")}`,
 );
-for (const page of ["faq", "roadmap", "feedback"]) {
+for (const page of ["faq", "roadmap", "feedback", "contact"]) {
   await stat(path.join(root, page, "index.html"));
 }
 console.log(

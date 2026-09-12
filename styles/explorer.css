@@ -717,6 +717,8 @@
   color: #333;
   margin-bottom: 30px;
   font-size: 14px;
+  background: none;
+  border-radius: 0;
 }
 @media (max-width: 767px) {
   .explorerSearchHeader {

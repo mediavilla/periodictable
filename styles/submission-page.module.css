@@ -3,6 +3,10 @@
   margin-top: clamp(40px, 7vw, 80px);
 }
 
+.sectionHalf {
+  margin-top: clamp(20px, 3.5vw, 40px);
+}
+
 .sections {
   max-width: 760px;
   margin-top: clamp(36px, 6vw, 64px);
@@ -43,13 +47,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px 24px;
-  margin-top: clamp(40px, 6vw, 72px);
+  margin: clamp(40px, 6vw, 72px) 0 0;
   max-width: 680px;
-}
-
-.relatedLink {
-  font-size: 16px;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  color: inherit;
+  background: none;
+  border-radius: 0;
+  text-align: unset;
 }

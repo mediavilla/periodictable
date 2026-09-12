@@ -13,6 +13,7 @@ const KINDS = [
   "faq_question",
   "roadmap_suggestion",
   "site_feedback",
+  "contact_message",
 ];
 
 function formatDate(value) {

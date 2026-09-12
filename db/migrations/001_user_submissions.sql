@@ -1,4 +1,4 @@
--- Shared moderation queue for FAQ questions, roadmap suggestions, and site feedback.
+-- Shared moderation queue for FAQ questions, roadmap suggestions, site feedback, and contact messages.
 -- Apply with a Neon admin/migration role. Role grants are intentionally least-privilege.
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -9,7 +9,8 @@ BEGIN
     CREATE TYPE submission_kind AS ENUM (
       'faq_question',
       'roadmap_suggestion',
-      'site_feedback'
+      'site_feedback',
+      'contact_message'
     );
   END IF;
 

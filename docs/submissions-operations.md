@@ -4,7 +4,7 @@ How to run, protect, and review the FAQ / roadmap / feedback intake system.
 
 ## Architecture
 
-- Public pages: `/faq/`, `/roadmap/`, `/feedback/`
+- Public pages: `/faq/`, `/roadmap/`, `/feedback/`, `/contact/`
 - Write endpoint: `POST /api/submissions` (standalone Vercel Function)
 - Storage: Neon Postgres table `user_submissions`
 - Review UI: `tools/submissions-admin` on `127.0.0.1:3025` only
@@ -12,6 +12,7 @@ How to run, protect, and review the FAQ / roadmap / feedback intake system.
 ## Neon setup
 
 1. Apply [`db/migrations/001_user_submissions.sql`](../db/migrations/001_user_submissions.sql) with an admin role.
+1b. If the database already exists, also apply [`db/migrations/003_contact_kind.sql`](../db/migrations/003_contact_kind.sql).
 2. Replace `REPLACE_WRITER_PASSWORD` and `REPLACE_REVIEWER_PASSWORD` before or immediately after apply.
 3. Create connection strings:
    - Vercel `SUBMISSIONS_DATABASE_URL` → `submissions_writer` pooled URL

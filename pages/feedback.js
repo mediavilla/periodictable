@@ -6,8 +6,9 @@ const type = SUBMISSION_TYPES.site_feedback;
 
 export default function FeedbackPage() {
   return (
-    <SubmissionPage type={type}>
-
-    </SubmissionPage>
+    <SubmissionPage
+      type={type}
+      formSectionClassName={styles.sectionHalf}
+    />
   );
 }

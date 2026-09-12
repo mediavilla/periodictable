@@ -14,12 +14,15 @@ export default function Footer() {
             <div className={footerStyles.footerContainer}>
                 <div><Link href="/" className={footerStyles.bottomLink}>Design</Link></div >
                 <div><Link href="/about" className={footerStyles.bottomLink}>About</Link></div>
-                <div><Link href="https://x.com/Tablelements " className={footerStyles.bottomLink}>Twitter [ X ]</Link></div>
+                <div><Link href="https://x.com/Tablelements " className={footerStyles.bottomLink}>X</Link></div>
                 <div><Link href="/timeline" className={footerStyles.bottomLink}>Timeline</Link></div>
-                <div><Link href="/sponsor" className={footerStyles.bottomLink}>Sponsor</Link></div>
+                <div><Link href="/faq" className={footerStyles.bottomLink}>FAQs</Link></div>
                 <div>&nbsp;</div>
                 <div><Link href="/elements" className={footerStyles.bottomLink}>Elements</Link></div>
-                <div><Link href="/donate" className={footerStyles.bottomLink}>Donate</Link></div>
+                <div><Link href="/roadmap" className={footerStyles.bottomLink}>Roadmap</Link></div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div><Link href="/sponsor" className={footerStyles.bottomLink}>Sponsor</Link></div>
                 <div>&nbsp;</div>
                 <div>&nbsp;</div>
                 <div><Link href="/feedback" className={footerStyles.bottomLink}>Feedback</Link></div>
