@@ -48,7 +48,7 @@ export default function About() {
               left for elements nobody had found yet. Moseley reordering
               everything by atomic number. And that&apos;s just the science.
               Along the way, chemists, designers and enthusiasts have drawn the
-              table as <Link href="/timeline?design=benfey" className={styles.textLink}>spirals</Link>, <Link href="/timeline/?design=telluric" className={styles.textLink}>towers</Link> and <Link href="/timeline/?design=giguere" className={styles.textLink}>3D shapes</Link>, showing that
+              table as <Link href="/?design=benfey" className={styles.textLink}>spirals</Link>, <Link href="/timeline/?design=telluric" className={styles.textLink}>towers</Link> and <Link href="/timeline/?design=giguere" className={styles.textLink}>3D shapes</Link>, showing that
               creativity and science can go hand in hand.
             </p>
             <p>
