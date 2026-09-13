@@ -152,3 +152,37 @@ test('invalid masks, orientations and allocations fail explicitly', () => {
     { subshells: [{ id: '1s' }], resolution: 256 },
   ]) assert.throws(() => buildOrbitalField(options), RangeError);
 });
+
+test('surface density envelopes cross a fixed threshold with preserved sign colour channels', () => {
+  const allSubshells = getOrbitalPreset(6).subshells;
+  const options = {
+    allSubshells,
+    subshells: [{ id: '2p', orientation: 'z' }],
+    sizeMode: 'normalized',
+  };
+  // Normalized display coordinates map the 2p domain onto the unit ball.
+  let entered = false;
+  let positiveHit = false;
+  let negativeHit = false;
+  let previous = evaluateOrbitalField(options, 0, 0, 0.99);
+  for (let index = 98; index >= 0; index -= 1) {
+    const z = index / 100;
+    const current = evaluateOrbitalField(options, 0, 0, z);
+    const previousDensity = previous[0] + previous[1];
+    const density = current[0] + current[1];
+    if (previousDensity < 0.35 && density >= 0.35) {
+      entered = true;
+      if (current[0] > current[1]) positiveHit = true;
+      if (current[1] > current[0]) negativeHit = true;
+    }
+    previous = current;
+  }
+  assert.equal(entered, true, 'A radial ray along +z must enter the 2p density envelope');
+  assert.equal(positiveHit || negativeHit, true);
+  const north = evaluateOrbitalField(options, 0, 0, 0.35);
+  const south = evaluateOrbitalField(options, 0, 0, -0.35);
+  assert.ok(north[0] + north[1] > 0);
+  assert.ok(south[0] + south[1] > 0);
+  // Opposite lobes of real 2p_z occupy opposite sign channels.
+  assert.notEqual(north[0] > north[1], south[0] > south[1]);
+});

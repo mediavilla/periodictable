@@ -38,6 +38,11 @@ class OrbitalBoundary extends Component {
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 const cameraDefaults = { yaw: 0.85, pitch: 0.32, zoom: 1 };
 
+const APPEARANCES = [
+  { id: "surface", label: "Surface" },
+  { id: "cloud", label: "Cloud" },
+];
+
 export default function OrbitalViewport({
   element,
   preset,
@@ -48,6 +53,10 @@ export default function OrbitalViewport({
   cameraRef,
   cutaway,
   onCutawayChange,
+  appearance = "surface",
+  onAppearanceChange,
+  surfaceOpacity = 0.55,
+  onSurfaceOpacityChange,
 }) {
   const { webglFailed, registerViewport } = useExplorer();
   const id = useId(),
@@ -67,6 +76,8 @@ export default function OrbitalViewport({
   const controller = useRef({
     ...(cameraRef.current || cameraDefaults),
     cutaway,
+    appearance,
+    surfaceOpacity,
     resetSerial: cameraRef.current ? 0 : 1,
     width: 0,
     height: 0,
@@ -85,6 +96,8 @@ export default function OrbitalViewport({
     onFailure,
   });
   controller.current.cutaway = cutaway;
+  controller.current.appearance = appearance;
+  controller.current.surfaceOpacity = surfaceOpacity;
   controller.current.pending = loading;
   controller.current.saveCamera = (camera) => {
     cameraRef.current = camera;
@@ -98,6 +111,9 @@ export default function OrbitalViewport({
     },
     [cameraRef],
   );
+  useEffect(() => {
+    update({ appearance, surfaceOpacity, cutaway });
+  }, [appearance, surfaceOpacity, cutaway, update]);
   useEffect(() => {
     if (!surface.current) return;
     const previous = JSON.parse(surface.current.dataset.orbitalState || "{}");
@@ -279,7 +295,9 @@ export default function OrbitalViewport({
               <small>
                 {cutaway
                   ? "Front half removed"
-                  : "Representative orbital overlay"}
+                  : appearance === "surface"
+                    ? "Density surface overlay"
+                    : "Representative orbital overlay"}
               </small>
             </span>
             <svg
@@ -312,18 +330,42 @@ export default function OrbitalViewport({
           </div>
         )}
       </div>
-      <div
-        className={styles.legend}
-        aria-label="Individual wavefunction sign colours"
-      >
-        <span>
-          <i className={styles.positive} />
-          Positive sign
-        </span>
-        <span>
-          <i className={styles.negative} />
-          Negative sign
-        </span>
+      <div className={styles.legendRow}>
+        <div
+          className={styles.legend}
+          aria-label="Individual wavefunction sign colours"
+        >
+          <span>
+            <i className={styles.positive} />
+            Positive sign
+          </span>
+          <span>
+            <i className={styles.negative} />
+            Negative sign
+          </span>
+        </div>
+        {!unavailable && onAppearanceChange && (
+          <div
+            className={styles.appearanceToggle}
+            role="group"
+            aria-label="Orbital appearance"
+            data-testid="orbital-appearance"
+          >
+            {APPEARANCES.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                aria-pressed={appearance === item.id}
+                onClick={() => {
+                  onAppearanceChange(item.id);
+                  update({ appearance: item.id });
+                }}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
       <label className={styles.cutaway}>
         <input
@@ -337,6 +379,26 @@ export default function OrbitalViewport({
       </label>
       {!unavailable && (
         <>
+          {appearance === "surface" && onSurfaceOpacityChange && (
+            <label className={styles.opacityControl}>
+              <span>Surface opacity</span>
+              <input
+                type="range"
+                min="0.2"
+                max="0.9"
+                step="0.05"
+                value={surfaceOpacity}
+                aria-valuemin={0.2}
+                aria-valuemax={0.9}
+                aria-valuenow={surfaceOpacity}
+                onChange={(event) => {
+                  const next = Number(event.target.value);
+                  onSurfaceOpacityChange(next);
+                  update({ surfaceOpacity: next });
+                }}
+              />
+            </label>
+          )}
           {touchAvailable && (
             <button
               type="button"
@@ -424,6 +486,9 @@ export default function OrbitalViewport({
         One representative shape per visible subshell. Colours show the signs of
         individual wavefunctions; overlapping colours do not describe an atomic
         wavefunction.{" "}
+        {appearance === "surface"
+          ? "Surface mode draws a fixed illustrative density envelope so nested lobes stay readable through semi-transparent shells. "
+          : "Cloud mode softens density into a volumetric overlay. "}
         {sizeMode === "ratios"
           ? "Sizes preserve hydrogen-like model ratios, not measured atom sizes. Hide outer shapes and reset to inspect the centre."
           : "Sizes are normalized to compare the shapes."}

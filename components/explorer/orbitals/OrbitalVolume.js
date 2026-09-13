@@ -8,6 +8,9 @@ import { ORBITAL_MODELS } from "./orbitalMath.mjs";
 // those peaks in view; they are display bounds, not probability percentiles.
 const outerShellFitFractions = { 5: 0.55, 6: 0.58, 7: 0.6 };
 
+/** Fixed illustrative density cutoff for Surface mode; not a probability percentile. */
+export const SURFACE_DENSITY_THRESHOLD = 0.35;
+
 const vertexShader = `
 out vec2 screenUV;
 void main() {
@@ -64,7 +67,29 @@ uniform float aspect;
 uniform float exposure;
 uniform int steps;
 uniform bool cutaway;
+uniform int appearance;
+uniform float surfaceOpacity;
+uniform float surfaceThreshold;
 ${orbitalFieldSamplingGLSL}
+vec3 fieldNormal(vec3 p, float radius) {
+  float delta = max(1e-4, radius / gridSize);
+  vec2 px = overlayField(p + vec3(delta, 0.0, 0.0));
+  vec2 nx = overlayField(p - vec3(delta, 0.0, 0.0));
+  vec2 py = overlayField(p + vec3(0.0, delta, 0.0));
+  vec2 ny = overlayField(p - vec3(0.0, delta, 0.0));
+  vec2 pz = overlayField(p + vec3(0.0, 0.0, delta));
+  vec2 nz = overlayField(p - vec3(0.0, 0.0, delta));
+  return normalize(vec3(
+    (px.x + px.y) - (nx.x + nx.y),
+    (py.x + py.y) - (ny.x + ny.y),
+    (pz.x + pz.y) - (nz.x + nz.y)
+  ) + 1e-8);
+}
+vec3 shadeSurface(vec3 colour, vec3 normal, vec3 viewDir) {
+  float facing = abs(dot(normalize(normal), normalize(-viewDir)));
+  float rim = pow(1.0 - facing, 2.0);
+  return mix(colour * (0.42 + 0.58 * facing), vec3(1.0), rim * 0.22);
+}
 void main() {
   vec3 background = vec3(0.045, 0.060, 0.075);
   vec2 xy = (screenUV * 2.0 - 1.0) * vec2(aspect, 1.0) * 0.3639702343;
@@ -99,13 +124,34 @@ void main() {
         if (ends[j] > t+1e-6) boundary = min(boundary, ends[j]);
       }
       float stepLength = max(1e-6,min(2.0*localRadius/float(steps),boundary-t));
-      vec2 field = overlayField(eye+direction*(t+0.5*stepLength));
+      vec3 samplePoint = eye+direction*(t+0.5*stepLength);
+      vec2 field = overlayField(samplePoint);
       float density = field.x+field.y;
-      float alpha = 1.0-exp(-density*exposure*stepLength);
-      vec3 colour = (field.x*vec3(1.0,0.19,0.35)+field.y*vec3(0.12,0.94,0.88))/max(density,1e-12);
-      colour = mix(colour,vec3(1.0),min(0.32,density*exposure*0.02));
-      cloud.rgb += (1.0-cloud.a)*alpha*colour;
-      cloud.a += (1.0-cloud.a)*alpha;
+      if (appearance == 1) {
+        float threshold = surfaceThreshold * max(exposure, 1e-4);
+        vec2 previousField = overlayField(eye+direction*max(entry, t-0.5*stepLength));
+        float previousDensity = previousField.x + previousField.y;
+        bool entered = previousDensity < threshold && density >= threshold;
+        bool exited = previousDensity >= threshold && density < threshold;
+        if (entered || exited) {
+          float mixAmount = clamp((threshold - previousDensity) / max(1e-8, density - previousDensity), 0.0, 1.0);
+          float hitT = mix(max(entry, t-0.5*stepLength), t+0.5*stepLength, mixAmount);
+          vec3 hit = eye + direction * hitT;
+          vec2 hitField = overlayField(hit);
+          float hitDensity = max(hitField.x + hitField.y, 1e-12);
+          vec3 colour = (hitField.x*vec3(1.0,0.19,0.35)+hitField.y*vec3(0.12,0.94,0.88))/hitDensity;
+          colour = shadeSurface(colour, fieldNormal(hit, localRadius), direction);
+          float alpha = clamp(surfaceOpacity * (exited ? 0.72 : 1.0), 0.05, 0.95);
+          cloud.rgb += (1.0-cloud.a)*alpha*colour;
+          cloud.a += (1.0-cloud.a)*alpha;
+        }
+      } else {
+        float alpha = 1.0-exp(-density*exposure*stepLength);
+        vec3 colour = (field.x*vec3(1.0,0.19,0.35)+field.y*vec3(0.12,0.94,0.88))/max(density,1e-12);
+        colour = mix(colour,vec3(1.0),min(0.32,density*exposure*0.02));
+        cloud.rgb += (1.0-cloud.a)*alpha*colour;
+        cloud.a += (1.0-cloud.a)*alpha;
+      }
       t += stepLength;
     }
   }
@@ -146,6 +192,9 @@ function resources() {
     radii: { value: new Float32Array([1, 1, 1, 1, 1, 1]) },
     steps: { value: 96 },
     cutaway: { value: false },
+    appearance: { value: 0 },
+    surfaceOpacity: { value: 0.55 },
+    surfaceThreshold: { value: SURFACE_DENSITY_THRESHOLD },
   };
   for (let i = 0; i < 6; i++) uniforms[`grid${i}`] = { value: empty };
   const material = new THREE.ShaderMaterial({
@@ -291,9 +340,15 @@ export default function OrbitalVolume({
     );
     const height = Math.max(1, Math.round(width / aspect));
     const steps = c.interacting ? (c.coarse ? 48 : 64) : 96;
+    const appearance = c.appearance === "surface" ? 1 : 0;
+    const surfaceOpacity = Number.isFinite(c.surfaceOpacity)
+      ? c.surfaceOpacity
+      : 0.55;
     const key = [
       next.generation,
       c.cutaway,
+      appearance,
+      surfaceOpacity,
       c.yaw,
       c.pitch,
       distance,
@@ -319,6 +374,8 @@ export default function OrbitalVolume({
     u.aspect.value = aspect;
     u.steps.value = steps;
     u.cutaway.value = c.cutaway;
+    u.appearance.value = appearance;
+    u.surfaceOpacity.value = surfaceOpacity;
     cache.displayMaterial.uniforms.viewSize.value.set(c.width, c.height);
     const oldTarget = gl.getRenderTarget();
     gl.getViewport(cache.viewport);
@@ -359,6 +416,8 @@ export default function OrbitalVolume({
         sizeMode: next.sizeMode,
         pending: c.pending,
         cutaway: c.cutaway,
+        appearance: appearance === 1 ? "surface" : "cloud",
+        surfaceOpacity,
         yaw: c.yaw,
         pitch: c.pitch,
         zoom: c.zoom,

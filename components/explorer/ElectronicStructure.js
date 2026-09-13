@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { ExternalLink } from "lucide-react";
 import BohrViewport from "./BohrViewport";
 import ConfigurationStrip from "./ConfigurationStrip";
+import { useExplorer } from "./ExplorerProvider";
 import { createConfigurationModel } from "../../data/electron-configuration.mjs";
 import styles from "./ElementDetail.module.css";
 
@@ -60,7 +61,12 @@ const SHELL_NOTE =
 function StructureExplorer({ block, element }) {
   const preset = block.orbitals;
   const model = useMemo(() => createConfigurationModel(element), [element]);
-  const [mode, setMode] = useState("shell");
+  const {
+    electronicStructureMode: mode,
+    setElectronicStructureMode: setMode,
+    orbitalAppearance,
+    setOrbitalAppearance,
+  } = useExplorer();
   const [expanded, setExpanded] = useState(false);
   const [visibleSubshells, setVisibleSubshells] = useState(() =>
     model.entries.map((entry) => entry.id),
@@ -74,6 +80,7 @@ function StructureExplorer({ block, element }) {
   );
   const [sizeMode, setSizeMode] = useState("normalized");
   const [cutaway, setCutaway] = useState(false);
+  const [surfaceOpacity, setSurfaceOpacity] = useState(0.55);
   const [paused, setPaused] = useState(false);
   const [highlightedShells, setHighlightedShells] = useState([]);
   const [stripPage, setStripPage] = useState(0);
@@ -216,6 +223,10 @@ function StructureExplorer({ block, element }) {
               cameraRef={cameraRef}
               cutaway={cutaway}
               onCutawayChange={setCutaway}
+              appearance={orbitalAppearance}
+              onAppearanceChange={setOrbitalAppearance}
+              surfaceOpacity={surfaceOpacity}
+              onSurfaceOpacityChange={setSurfaceOpacity}
             />
           </OrbitalBoundary>
         )}

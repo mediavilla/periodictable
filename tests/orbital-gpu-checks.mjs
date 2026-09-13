@@ -29,6 +29,20 @@ function readSamplingGLSL() {
   return match[1];
 }
 
+function readSurfaceShaderContract() {
+  const text = readFileSync(source, "utf8");
+  assert.match(text, /export const SURFACE_DENSITY_THRESHOLD = 0\.35/);
+  assert.match(text, /uniform int appearance/);
+  assert.match(text, /uniform float surfaceOpacity/);
+  assert.match(text, /uniform float surfaceThreshold/);
+  assert.match(text, /if \(appearance == 1\)/);
+  assert.match(text, /shadeSurface\(/);
+  return {
+    threshold: 0.35,
+    hasAppearanceBranch: true,
+  };
+}
+
 function reference(field, point) {
   const radius = Math.hypot(...point);
   const index = field.grids.findIndex((grid) => radius < grid.radius);
@@ -51,6 +65,7 @@ export async function runOrbitalGPUChecks(
   baseURL = "http://localhost:3000",
 ) {
   const shader = readSamplingGLSL();
+  const surfaceContract = readSurfaceShaderContract();
   const scenarios = [
     { number: 1, sizeMode: "normalized" },
     { number: 6, sizeMode: "normalized", orientation: "x" },
@@ -273,6 +288,7 @@ export async function runOrbitalGPUChecks(
       shaderSHA256: createHash("sha256").update(shader).digest("hex"),
       shaderSource:
         "components/explorer/orbitals/OrbitalVolume.js#orbitalFieldSamplingGLSL",
+      surfaceContract,
       readback:
         "Production RG16F sampler with actual nested textures; floatBitsToUint encoded into RGBA8",
       tolerance:

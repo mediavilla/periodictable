@@ -54,6 +54,9 @@ export function ExplorerProvider({ children }) {
   const [reducedMotion, setReducedMotion] = useState(false);
   const [webglFailed, setWebglFailed] = useState(false);
   const [viewports, setViewports] = useState({});
+  const [electronicStructureMode, setElectronicStructureMode] =
+    useState("shell");
+  const [orbitalAppearance, setOrbitalAppearance] = useState("surface");
   const returnFocus = useRef(null);
   const wasPanel = useRef(false);
   useEffect(() => {
@@ -125,6 +128,10 @@ export function ExplorerProvider({ children }) {
     reducedMotion,
     webglFailed,
     setWebglFailed,
+    electronicStructureMode,
+    setElectronicStructureMode,
+    orbitalAppearance,
+    setOrbitalAppearance,
     command,
     registerViewport,
     sceneActive: Object.values(viewports).some(Boolean),

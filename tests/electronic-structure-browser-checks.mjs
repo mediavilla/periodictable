@@ -243,6 +243,142 @@ export async function runOrbitalChecks(
     record();
 
     current =
+      "Cloud/Surface appearance toggle, opacity, tab persistence and no field rebuild";
+    await p
+      .getByRole("checkbox", { name: "Show cross-section", exact: true })
+      .uncheck();
+    await ready(p, { cutaway: false });
+    const appearance = card(p).getByTestId("orbital-appearance");
+    assert.deepEqual(await appearance.getByRole("button").allTextContents(), [
+      "Surface",
+      "Cloud",
+    ]);
+    assert.equal(
+      await appearance
+        .getByRole("button", { name: "Surface", exact: true })
+        .getAttribute("aria-pressed"),
+      "true",
+    );
+    const appearanceLayout = await appearance.evaluate((toggle) => {
+      const legend = toggle.previousElementSibling;
+      const legendBox = legend.getBoundingClientRect();
+      const toggleBox = toggle.getBoundingClientRect();
+      const buttonStyle = getComputedStyle(toggle.querySelector("button"));
+      return {
+        aligned: Math.abs(
+          legendBox.top +
+            legendBox.height / 2 -
+            (toggleBox.top + toggleBox.height / 2),
+        ),
+        buttonHeight: buttonStyle.minHeight,
+        buttonRadius: buttonStyle.borderTopLeftRadius,
+      };
+    });
+    assert.ok(
+      appearanceLayout.aligned < 4,
+      "Appearance toggle must align with the sign key",
+    );
+    assert.equal(appearanceLayout.buttonHeight, "30px");
+    assert.equal(appearanceLayout.buttonRadius, "6px");
+    const beforeAppearance = await ready(p, { appearance: "surface" });
+    assert.match(
+      await card(p).getByTestId("orbital-visualization").innerText(),
+      /Density surface overlay/,
+    );
+    const opacity = card(p).getByRole("slider", { name: "Surface opacity" });
+    await opacity.waitFor();
+    await opacity.focus();
+    for (let step = 0; step < 3; step += 1) await opacity.press("ArrowRight");
+    await ready(p, { appearance: "surface", surfaceOpacity: 0.7 });
+    await appearance
+      .getByRole("button", { name: "Cloud", exact: true })
+      .click();
+    const cloudState = await ready(p, { appearance: "cloud" });
+    assert.equal(cloudState.fieldGeneration, beforeAppearance.fieldGeneration);
+    assert.equal(cloudState.textures, beforeAppearance.textures);
+    assert.equal(cloudState.geometries, beforeAppearance.geometries);
+    assert.ok(Math.abs(cloudState.yaw - beforeAppearance.yaw) < 1e-6);
+    assert.equal(await opacity.count(), 0);
+    await tab(p, "Shell model").click();
+    await tab(p, "Orbitals").click();
+    const afterAppearanceTab = await ready(p, {
+      appearance: "cloud",
+      surfaceOpacity: 0.7,
+    });
+    assert.equal(afterAppearanceTab.appearance, "cloud");
+    assert.equal(afterAppearanceTab.surfaceOpacity, 0.7);
+    await appearance
+      .getByRole("button", { name: "Surface", exact: true })
+      .click();
+    await ready(p, { appearance: "surface" });
+    record();
+
+    current =
+      "Orbitals tab and appearance stay selected when changing elements";
+    const browse = p.locator(".explorerElementNav");
+    await browse.getByRole("link", { name: /Iron/ }).click();
+    await p
+      .getByRole("article", { name: "Iron details", exact: true })
+      .waitFor();
+    assert.equal(
+      await tab(p, "Orbitals").getAttribute("aria-selected"),
+      "true",
+    );
+    await ready(p, { appearance: "surface" });
+    await appearance
+      .getByRole("button", { name: "Cloud", exact: true })
+      .click();
+    await ready(p, { appearance: "cloud" });
+    await browse.getByRole("link", { name: /Calcium/ }).click();
+    await p
+      .getByRole("article", { name: "Calcium details", exact: true })
+      .waitFor();
+    assert.equal(
+      await tab(p, "Orbitals").getAttribute("aria-selected"),
+      "true",
+    );
+    await ready(p, { appearance: "cloud" });
+    await tab(p, "Shell model").click();
+    await browse.getByRole("link", { name: /Carbon/ }).click();
+    await p
+      .getByRole("article", { name: "Carbon details", exact: true })
+      .waitFor();
+    assert.equal(
+      await tab(p, "Shell model").getAttribute("aria-selected"),
+      "true",
+    );
+    record();
+
+    current = "Calcium surface overlay and isolated iron d(z²) representative";
+    await open(p, "calcium", "Calcium");
+    await orbitals(p);
+    await card(p)
+      .getByTestId("orbital-appearance")
+      .getByRole("button", { name: "Surface", exact: true })
+      .click();
+    await ready(p, { appearance: "surface" });
+    await shot(p, "calcium-surface");
+    await open(p, "iron", "Iron");
+    await orbitals(p);
+    await card(p)
+      .getByTestId("orbital-appearance")
+      .getByRole("button", { name: "Surface", exact: true })
+      .click();
+    await p.getByRole("button", { name: "Hide all", exact: true }).click();
+    await eye(p, "3d").click();
+    const isolatedD = await ready(p, {
+      visibleSubshells: ["3d"],
+      appearance: "surface",
+    });
+    assert.deepEqual(isolatedD.visibleSubshells, ["3d"]);
+    assert.match(
+      await card(p).getByTestId("orbital-visualization").innerText(),
+      /3d/,
+    );
+    await shot(p, "iron-3d-surface");
+    record();
+
+    current =
       "Og abbreviated/expanded counts, 19 subshells and mixed core visibility";
     await open(p, "oganesson", "Oganesson");
     assert.deepEqual(await counts(p), [86, 14, 10, 8]);

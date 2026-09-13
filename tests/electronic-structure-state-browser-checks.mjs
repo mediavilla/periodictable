@@ -122,24 +122,38 @@ export async function runElectronicStructureStateChecks(
       .getByRole("article", { name: `${element.name} details`, exact: true })
       .waitFor();
   };
-  const assertDefaults = async (page, element) => {
+  const assertDefaults = async (
+    page,
+    element,
+    { mode = "orbitals", appearance = "surface" } = {},
+  ) => {
     assert.equal(
-      await tab(page, "Shell model").getAttribute("aria-selected"),
+      await tab(
+        page,
+        mode === "shell" ? "Shell model" : "Orbitals",
+      ).getAttribute("aria-selected"),
       "true",
     );
     assert.equal(
       await card(page).locator(STRIP).getAttribute("data-expanded"),
       "false",
     );
-    assert.equal(await page.locator(SURFACE).count(), 0);
-    await card(page)
-      .getByRole("button", { name: "Pause orbit", exact: true })
-      .waitFor();
-    const value = await orbitals(page, {
+    if (mode === "shell") {
+      assert.equal(await page.locator(SURFACE).count(), 0);
+      await card(page)
+        .getByRole("button", { name: "Pause orbit", exact: true })
+        .waitFor();
+    }
+    const expected = {
       visibleSubshells: element.ids,
       sizeMode: "normalized",
       cutaway: false,
-    });
+      appearance,
+    };
+    const value =
+      mode === "shell"
+        ? await orbitals(page, expected)
+        : await ready(page, expected);
     assert.equal(
       await page
         .getByRole("checkbox", {
@@ -155,6 +169,18 @@ export async function runElectronicStructureStateChecks(
         .isChecked(),
       false,
     );
+    assert.equal(
+      await card(page)
+        .getByTestId("orbital-appearance")
+        .getByRole("button", {
+          name: appearance === "surface" ? "Surface" : "Cloud",
+          exact: true,
+        })
+        .getAttribute("aria-pressed"),
+      "true",
+    );
+    assert.equal(value.appearance, appearance);
+    assert.equal(value.surfaceOpacity, 0.55);
     for (const [id, axis] of Object.entries(value.orientations))
       if (id.endsWith("p")) assert.equal(axis, "z");
     assert.ok(
@@ -184,7 +210,19 @@ export async function runElectronicStructureStateChecks(
     await page
       .getByRole("button", { name: "Rotate orbital right", exact: true })
       .click();
-    await ready(page, { sizeMode: "ratios", cutaway: true });
+    await card(page)
+      .getByTestId("orbital-appearance")
+      .getByRole("button", { name: "Surface", exact: true })
+      .click();
+    const opacity = card(page).getByRole("slider", { name: "Surface opacity" });
+    await opacity.focus();
+    for (let step = 0; step < 4; step += 1) await opacity.press("ArrowRight");
+    await ready(page, {
+      sizeMode: "ratios",
+      cutaway: true,
+      appearance: "surface",
+      surfaceOpacity: 0.75,
+    });
     if (element.number !== 1) {
       await eye(page, "1s").click();
       await ready(page, {
@@ -195,7 +233,12 @@ export async function runElectronicStructureStateChecks(
     await card(page)
       .getByRole("button", { name: "Pause orbit", exact: true })
       .click();
-    await orbitals(page, { sizeMode: "ratios", cutaway: true });
+    await orbitals(page, {
+      sizeMode: "ratios",
+      cutaway: true,
+      appearance: "surface",
+      surfaceOpacity: 0.75,
+    });
   };
   const alignment = async (page) =>
     card(page).evaluate((element) => {
@@ -218,7 +261,7 @@ export async function runElectronicStructureStateChecks(
   try {
     const { page } = await makePage();
     current =
-      "SPA element changes reset structure state and retain one renderer";
+      "SPA element changes reset element state, retain view choices and keep one renderer";
     await page.goto(url("?element=hydrogen"), {
       waitUntil: "domcontentloaded",
     });
@@ -227,7 +270,7 @@ export async function runElectronicStructureStateChecks(
     await page.locator("canvas").waitFor();
     const canvas = await page.locator("canvas").elementHandle();
     const resourceSamples = [];
-    await assertDefaults(page, hydrogen);
+    await assertDefaults(page, hydrogen, { mode: "shell" });
     await dirtyCurrent(page, hydrogen);
     for (let index = 0; index < switches; index++) {
       const element = pilots[(index + 1) % pilots.length];
@@ -322,6 +365,68 @@ export async function runElectronicStructureStateChecks(
     record({ generation: latest.fieldGeneration });
 
     current =
+      "Tab and appearance persist across elements without regenerating the field";
+    const beforeStyle = await ready(page, { appearance: "surface" });
+    await card(page)
+      .getByTestId("orbital-appearance")
+      .getByRole("button", { name: "Cloud", exact: true })
+      .click();
+    const cloudStyle = await ready(page, { appearance: "cloud" });
+    assert.equal(cloudStyle.fieldGeneration, beforeStyle.fieldGeneration);
+    assert.equal(cloudStyle.textures, beforeStyle.textures);
+    assert.equal(cloudStyle.geometries, beforeStyle.geometries);
+    assert.ok(Math.abs(cloudStyle.yaw - beforeStyle.yaw) < 1e-6);
+
+    await tab(page, "Shell model").click();
+    await chooseElement(page, hydrogen);
+    assert.equal(
+      await tab(page, "Shell model").getAttribute("aria-selected"),
+      "true",
+    );
+    assert.equal(await page.locator(SURFACE).count(), 0);
+
+    await tab(page, "Orbitals").click();
+    await ready(page, { appearance: "cloud" });
+    await chooseElement(page, oganesson);
+    assert.equal(
+      await tab(page, "Orbitals").getAttribute("aria-selected"),
+      "true",
+    );
+    const rememberedCloud = await ready(page, { appearance: "cloud" });
+    await card(page)
+      .getByTestId("orbital-appearance")
+      .getByRole("button", { name: "Surface", exact: true })
+      .click();
+    const surfaceStyle = await ready(page, { appearance: "surface" });
+    assert.equal(surfaceStyle.fieldGeneration, rememberedCloud.fieldGeneration);
+    await card(page)
+      .getByRole("slider", { name: "Surface opacity" })
+      .evaluate((element) => {
+        element.focus();
+      });
+    const opacityControl = card(page).getByRole("slider", {
+      name: "Surface opacity",
+    });
+    for (let step = 0; step < 3; step += 1)
+      await opacityControl.press("ArrowLeft");
+    const opacityStyle = await ready(page, {
+      appearance: "surface",
+      surfaceOpacity: 0.4,
+    });
+    assert.equal(opacityStyle.fieldGeneration, surfaceStyle.fieldGeneration);
+    await chooseElement(page, hydrogen);
+    await assertDefaults(page, hydrogen);
+    await chooseElement(page, oganesson);
+    await assertDefaults(page, oganesson);
+    record({
+      rememberedShell: true,
+      rememberedOrbitals: true,
+      rememberedAppearance: true,
+      preservedGeneration:
+        surfaceStyle.fieldGeneration === rememberedCloud.fieldGeneration,
+    });
+
+    current =
       "A→B→A cancels pending work without a stuck loader or late stale field";
     const stateA = await ready(page, { sizeMode: "normalized" });
     const ratio = page.getByRole("checkbox", {
@@ -358,6 +463,11 @@ export async function runElectronicStructureStateChecks(
     });
 
     current = "Show all restores visibility without resetting other card state";
+    if (
+      (await card(page).locator(STRIP).getAttribute("data-expanded")) !== "true"
+    ) {
+      await card(page).getByTestId("core-toggle").click();
+    }
     await card(page)
       .getByRole("button", { name: "2p y orbital", exact: true })
       .click();
@@ -379,8 +489,8 @@ export async function runElectronicStructureStateChecks(
     assert.equal(
       await card(page)
         .getByRole("button", { name: "Hide all", exact: true })
-        .isDisabled(),
-      true,
+        .getAttribute("aria-pressed"),
+      "true",
     );
     await card(page)
       .getByRole("button", { name: "Show all", exact: true })
@@ -398,8 +508,8 @@ export async function runElectronicStructureStateChecks(
     assert.equal(
       await card(page)
         .getByRole("button", { name: "Show all", exact: true })
-        .isDisabled(),
-      true,
+        .getAttribute("aria-pressed"),
+      "true",
     );
     for (const key of ["yaw", "pitch", "zoom"])
       assert.ok(
