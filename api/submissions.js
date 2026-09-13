@@ -64,6 +64,23 @@ async function checkBot(request) {
   }
 }
 
+function classifyWriteError(error) {
+  const code = typeof error?.code === "string" ? error.code : "";
+  const message = String(error?.message || "");
+
+  if (message === "missing_database_url") return "missing_database_url";
+  if (code === "22P02" || code === "42804") return "invalid_kind_or_type";
+  if (code === "28P01" || code === "28000") return "database_auth_failed";
+  if (code === "42501") return "permission_denied";
+  if (code === "42P01") return "missing_table";
+  if (code === "42704") return "missing_type";
+  if (code === "23514") return "check_constraint";
+  if (/ENOTFOUND|getaddrinfo|fetch failed|ECONNREFUSED/i.test(message)) {
+    return "database_host_unreachable";
+  }
+  return "insert_failed";
+}
+
 async function insertSubmission(value) {
   const databaseUrl = process.env.SUBMISSIONS_DATABASE_URL;
   if (!databaseUrl) {
@@ -162,9 +179,16 @@ export async function POST(request) {
     });
     return json(201, { ok: true });
   } catch (error) {
+    const reason = classifyWriteError(error);
     const code = error?.code || error?.message;
-    console.error("submission_failed", typeof code === "string" ? code : "error");
-    return json(500, { error: "Could not save submission." });
+    console.error("submission_failed", {
+      reason,
+      code: typeof code === "string" ? code : "error",
+    });
+    return json(500, {
+      error: "Could not save submission.",
+      reason,
+    });
   }
 }
 

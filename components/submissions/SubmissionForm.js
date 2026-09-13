@@ -69,14 +69,23 @@ export default function SubmissionForm({ type }) {
         return;
       }
 
-      const data = await response.json().catch(() => ({}));
+      const contentType = response.headers.get("content-type") || "";
+      const data = contentType.includes("application/json")
+        ? await response.json().catch(() => ({}))
+        : {};
       if (!response.ok) {
         if (Array.isArray(data.fields)) {
           const next = {};
           for (const item of data.fields) next[item.field] = item.message;
           setFieldErrors(next);
         }
-        setError(data.error || "Could not send your submission.");
+        if (response.status === 404 || !contentType.includes("application/json")) {
+          setError(
+            "The save endpoint is not running on this server. Test the deployed Vercel site, or run `vercel dev`.",
+          );
+        } else {
+          setError(data.error || "Could not send your submission.");
+        }
         setStatus("error");
         return;
       }

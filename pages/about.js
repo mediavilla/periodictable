@@ -77,9 +77,8 @@ export default function About() {
               started to wear down. I parked it again.
             </p>
             <p>
-              However, in September 2026 OpenAI released <Link href="https://openai.com/index/gpt-6-astra/" className={styles.textLink} target="_blank" rel="noopener noreferrer">GPT-6 Astra<SquareArrowOutUpRight aria-hidden="true" /></Link>, so I gave it my old project and wrote a long prompt asking it to finish
-              it. Two hours later the site was pretty much done. It wasn&apos;t
-              great, it wasn&apos;t perfect, but it was 80% there. I spent the
+              In September 2026 OpenAI released <Link href="https://openai.com/index/gpt-6-astra/" className={styles.textLink} target="_blank" rel="noopener noreferrer">GPT-6 Astra<SquareArrowOutUpRight aria-hidden="true" /></Link>, so I gave it my old project and wrote a long prompt asking it to finish
+              it. The result wasn&apos;t perfect, but it was 80% there. I spent the
               next few days tweaking the things that mattered most to me and
               decided to make it public.
             </p>

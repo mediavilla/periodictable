@@ -72,4 +72,7 @@ test("fails closed when database url is missing", async () => {
   delete process.env.SUBMISSIONS_DATABASE_URL;
   const response = await POST(request(valid));
   assert.equal(response.status, 500);
+  const body = await response.json();
+  assert.equal(body.error, "Could not save submission.");
+  assert.equal(body.reason, "missing_database_url");
 });
