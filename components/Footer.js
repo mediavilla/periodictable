@@ -22,9 +22,6 @@ export default function Footer() {
                 <div><Link href="/roadmap" className={footerStyles.bottomLink}>Roadmap</Link></div>
                 <div>&nbsp;</div>
                 <div>&nbsp;</div>
-                <div><Link href="/sponsor" className={footerStyles.bottomLink}>Sponsor</Link></div>
-                <div>&nbsp;</div>
-                <div>&nbsp;</div>
                 <div><Link href="/feedback" className={footerStyles.bottomLink}>Feedback</Link></div>
                 <div>&nbsp;</div>
                 <div>&nbsp;</div>

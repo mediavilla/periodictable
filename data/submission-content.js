@@ -26,7 +26,7 @@ export const ROADMAP_ITEMS = Object.freeze([
     status: "Now",
     title: "Stable explorer foundation",
     detail:
-      "Keep the interactive tables, element pages, and navigation reliable across desktop and phone.",
+      "Interactive tables, element pages, and navigation reliable across desktop and phone.",
   }),
   Object.freeze({
     status: "Next",
