@@ -60,8 +60,8 @@ export default function About() {
             </p>
             <p>
               I also read a lot of books about the elements. Two that really
-              stood out are <em>The Disappearing Spoon</em> by Sam Kean and{" "}
-              <em>Elemental</em> by Tim James. They inspired me to take the
+              stood out are <Link href="https://en.wikipedia.org/wiki/The_Disappearing_Spoon" className={styles.textLink} target="_blank" rel="noopener noreferrer"><em>The Disappearing Spoon</em><SquareArrowOutUpRight aria-hidden="true" /></Link> by <Link href="https://x.com/sam_kean" className={styles.textLink} target="_blank" rel="noopener noreferrer">Sam Kean<SquareArrowOutUpRight aria-hidden="true" /></Link> and{" "}
+              <Link href="https://www.amazon.co.uk/dp/B07D5GPQSW?plink=wjeOrXmD9FhKEYbD&ref=adblp13nvvxx_0_0_im" className={styles.textLink} target="_blank" rel="noopener noreferrer"><em>Elemental</em><SquareArrowOutUpRight aria-hidden="true" /></Link> by <Link href="https://www.grahammawchristie.com/talent-library/tim-james" className={styles.textLink} target="_blank" rel="noopener noreferrer">Tim James<SquareArrowOutUpRight aria-hidden="true" /></Link>. They inspired me to take the
               project forward, and I started learning <Link href="https://react.dev/" className={styles.textLink} target="_blank" rel="noopener noreferrer">React</Link> and <Link href="https://threejs.org/" className={styles.textLink} target="_blank" rel="noopener noreferrer">Three.js</Link> to
               build the site. Then Covid happened, other priorities took over,
               and I parked the idea... for a long time.
